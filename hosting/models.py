@@ -7,7 +7,7 @@ class Webpage(models.Model):
     # Therefore it should be easy with access to the database to reach the file easily.
     # There should be everything
 
-class User(model.Model):
+class User(models.Model):
     name = models.CharField(max_length=128)
     surname = models.CharField(max_length=64, blank=True)
     email = models.EmailField()
