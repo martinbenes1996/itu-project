@@ -6,5 +6,5 @@ It is done by command:
 As next step, open browser and open:
     http://localhost:8000/admin
 Authentization:
-    username: root
-    password: abcdefgh
+    username: admin
+    password: itumajsters
