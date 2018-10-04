@@ -1,0 +1,10 @@
+
+## How to run the server? ##
+You must run server in terminal and let it run.
+It is done by command:
+    $ python3 manage.py runserver
+As next step, open browser and open:
+    http://localhost:8000/admin
+Authentization:
+    username: root
+    password: abcdefgh
