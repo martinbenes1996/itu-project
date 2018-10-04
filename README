@@ -8,3 +8,7 @@ As next step, open browser and open:
 Authentization:
     username: admin
     password: itumajsters
+
+## Where to add html ##
+Add files to hosting/templates.
+To integrate them into webpage, you must edit urls.py and views.py.

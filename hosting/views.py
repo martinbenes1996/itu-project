@@ -7,3 +7,8 @@ def hello(request):
 
 def index(request):
    return render(request, "index.html", {})
+
+# add function with the name matching from urls.py
+# def function(request, parameters...):
+#       return render(request, file from template, dict())
+# watch documentation for more information

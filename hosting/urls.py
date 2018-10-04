@@ -21,4 +21,6 @@ from hosting import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name=''),
+    # here add new pages
+    # path(keyword, views.function)
 ]
