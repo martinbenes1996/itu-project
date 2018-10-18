@@ -3,5 +3,31 @@
     </head>
     <body>
         <h1>Hello, World!</h1>
+        <table>
+            <tr>
+                <th>Primární klíč</th>
+                <th>Jméno</th>
+                <th>E-mail</th>
+                <th>Odstranit</th>
+            </tr>
+
+            {% for a in authors %}
+            <tr>
+                <th>{{a.pk}}</th>
+                <th>{{a.name}} {{a.surname}}</th>
+                <th>{{a.email}}</th>
+                <th>
+                    <form method="post" action="">{% csrf_token %}
+                        <input name="pk" type="hidden" value="{{ a.pk }}" required />
+                        <button type="Submit">Odstranit</button>
+                    </form>
+                </th>
+
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="register"><button>Register</button></a>
+        <a href="login"><button>Login</button></a>
+        
     </body>
 </html>

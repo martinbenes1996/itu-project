@@ -11,7 +11,6 @@ class User(models.Model):
     name = models.CharField(max_length=128)
     surname = models.CharField(max_length=64, blank=True)
     email = models.EmailField()
-    phone = models.CharField(max_length=64)
-    birthday = models.DateTimeField('date of a birth', blank=True)
 
     webpages = models.ManyToManyField(Webpage)
+    

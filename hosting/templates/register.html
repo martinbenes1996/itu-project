@@ -1,0 +1,13 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <div>{{ message }}</div>
+        <form method="post" action="">{% csrf_token %}
+            <input name="name" placeholder="Jan" value="{{ name }}" required />
+            <input name="surname" placeholder="Novák" value="{{ surname }}" />
+            <input name="email" placeholder="JanNovak@mail.cz" value="{{ email }}" required />
+            <button type="Submit">Odeslat</button>
+        </form>
+    </body>
+</html>
