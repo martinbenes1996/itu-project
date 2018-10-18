@@ -7,40 +7,39 @@ import os
 '''
     This module uses folder named userXML located in the same directory.
 
-    List of return values:
-        0 -> ok (function GetInfo returns dict!)
-        1 -> user or entity already exists
-        2 -> user does not exist yet
-        3 -> function parameter is not convertable to string (name, value, what, ...)
-        4 -> error while opening or writing the file or any other possible error
+    Functions do not have return value except for GetInfo(name) which returns dictionary.
+    Two exceptions can be raised:
+        AlreadyExistsError -> user or entity already exists
+        DoesNotExistError  -> user or entity does not exist
+
+    Other exceptions (file cant be opened/closed) are ignored! Deal with them.
 '''
+
+class AlreadyExistsError(Exception):
+    pass
+class DoesNotExistError(Exception):
+    pass
 
 def RegisterUser(name):
     ''' Register a new user. '''
-    try:
-        if os.path.exists("userXML/"+name+".xml"):
-            return 1
+    if os.path.exists("userXML/"+name+".xml"):
+        raise AlreadyExistsError
 
-        root = ET.Element(str(name))
+    root = ET.Element(str(name))
 
-        files = ET.SubElement(root, "files")
-        ET.SubElement(root, "DNS")
-        ET.SubElement(root, "emails")
+    files = ET.SubElement(root, "files")
+    ET.SubElement(root, "DNS")
+    ET.SubElement(root, "emails")
 
-        tree = ET.ElementTree(root)
-        tree.write("userXML/"+name+".xml")
-        return 0
-    except UnicodeDecodeError:
-        return 2
-    except:
-        return 3
+    tree = ET.ElementTree(root)
+    tree.write("userXML/"+name+".xml")
+
 
 def RemoveUser(name):
-    ''' Remove user xml. Always returns 0 (compatibility with other functions). '''
+    ''' Remove user xml. '''
     if os.path.exists("userXML/"+name+".xml"):
         os.remove("userXML/"+name+".xml")
 
-    return 0
 
 def AddToUser(name, what, value):
     ''' Add things to user. Everything must be convertable to string!
@@ -61,7 +60,7 @@ def AddToUser(name, what, value):
             for child in files.iter():
                 if child is not files:
                     if child.text == value:
-                        return 1
+                        raise AlreadyExistsError
             ET.SubElement(files, "file").text = str(value)
         if what == "dns":
             dns = root[1]
@@ -69,7 +68,7 @@ def AddToUser(name, what, value):
             for child in dns.iter():
                 if child is not dns:
                     if child.text == value:
-                        return 1
+                        raise AlreadyExistsError
             ET.SubElement(dns, "dns").text = str(value)
         if what == "email":
             email = root[2]
@@ -77,15 +76,14 @@ def AddToUser(name, what, value):
             for child in email.iter():
                 if child is not email:
                     if child.text == value:
-                        return 1
+                        raise AlreadyExistsError
             ET.SubElement(email, "email").text = str(value)
 
         tree.write("userXML/"+name+".xml")
-        return 0
-    except xml.etree.ElementTree.ParseError:
-        return 2
-    except:
-        return 4
+
+    except ET.ParseError:
+        raise DoesNotExistError
+
 
 def RemoveFromUser(name, what, value):
     ''' Remove things from user. Everything must be convertable to string!
@@ -116,11 +114,10 @@ def RemoveFromUser(name, what, value):
                     victim.remove(child)
 
         tree.write("userXML/"+name+".xml")
-        return 0
-    except xml.etree.ElementTree.ParseError:
-        return 2
-    except:
-        return 4
+
+    except ET.ParseError:
+        raise DoesNotExistError
+
 
 def GetInfo(name):
     ''' Get all information about user. Info is stored in a dictionary.
@@ -139,10 +136,8 @@ def GetInfo(name):
         UserInfo["emails"] = [email.text for email in root[2].iter() if email is not root[2]]
 
         return UserInfo
-    except xml.etree.ElementTree.ParseError:
-        return 2
-    except:
-        return 4
+    except ET.ParseError:
+        raise DoesNotExistError
 
 
 
@@ -192,18 +187,18 @@ def SignIn(name):
 '''
 # tests
 '''
-print("Register: "+str(RegisterUser("xpolan")))
-print("Register: "+str(RegisterUser("xxx666")))
-print("Remove: "+str(RemoveUser("xxx666")))
-print(AddToUser("xpolan", "file", "soubor"))
-print(AddToUser("xpolan", "file", "soubor"))
-print(AddToUser("xpolan", "dns", "soubor"))
-print(AddToUser("xpolan", "file", "kotatka"))
-print(AddToUser("xpolan", "email", "email@email.cz"))
+RegisterUser("xpolan")
+RegisterUser("xxx666")
+RemoveUser("xxx666")
+AddToUser("xpolan", "file", "soubor")
+# AddToUser("xpolan", "file", "soubor")
+AddToUser("xpolan", "dns", "soubor")
+AddToUser("xpolan", "file", "kotatka")
+AddToUser("xpolan", "email", "email@email.cz")
 print(GetInfo("xpolan"))
-print(RemoveFromUser("xpolan", "email", "email@email.cz"))
+RemoveFromUser("xpolan", "email", "email@email.cz")
 print(GetInfo("xpolan"))
-print(RemoveFromUser("xpolan", "file", "soubor"))
+RemoveFromUser("xpolan", "file", "soubor")
 print(GetInfo("xpolan"))
-print("Remove: "+str(RemoveUser("xpolan")))
+RemoveUser("xpolan")
 '''
