@@ -71,13 +71,13 @@ def AddToUser(name, what, value):
                         raise AlreadyExistsError
             ET.SubElement(dns, "dns").text = str(value)
         if what == "email":
-            email = root[2]
+            emails = root[2]
             # checks if the new info is not saved already
-            for child in email.iter():
-                if child is not email:
+            for child in emails.iter():
+                if child is not emails:
                     if child.text == value:
                         raise AlreadyExistsError
-            ET.SubElement(email, "email").text = str(value)
+            ET.SubElement(emails, "email").text = str(value)
 
         tree.write("userXML/"+name+".xml")
 
@@ -143,48 +143,6 @@ def GetInfo(name):
 
 
 
-# garbage
-'''
-ET.SubElement(files, "file").text = "some value1"
-    ET.SubElement(files, "file").text = "some value2"
-
-    print(files[0].tag, files[1].tag)
-    for file in root.iter('file'):
-        if file.text == "some value1":
-            file.text = "newname"
-'''
-
-'''
-root = ET.Element("root")
-doc = ET.SubElement(root, "doc")
-
-ET.SubElement(doc, "field1", name="blah").text = "some value1"
-ET.SubElement(doc, "field2", name="asdfasd").text = "some vlaue2"
-
-tree = ET.ElementTree(root)
-tree.write("filename.xml")
-
-
-XMLTree = None      # possibly a dict of active users: {username:XMLTree}
-
-def CreateXML():
-    Cretaes XML file in case it does not exist. Use for exception.
-    root = ET.Element("users")
-    tree = ET.ElementTree(root)
-    tree.write("userXML/filename.xml")
-
-def SignIn(name):
-    Load XML file.
-    tree = ET.parse("userXML/filename.xml")
-    root = tree.getroot()
-
-    files = root[0]
-    print(files.tag)
-
-    # root.remove(files)
-    # tree.write("userXML/filename.xml")
-
-'''
 # tests
 '''
 RegisterUser("xpolan")
