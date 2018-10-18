@@ -12,7 +12,7 @@
 
             {% for a in authors %}
             <tr>
-                <th>{{a.name}} {{a.surname}}</th>
+                <th>{{a.first_name}} {{a.last_name}}</th>
                 <th>{{a.email}}</th>
                 <th>
                     <form method="post" action="">{% csrf_token %}

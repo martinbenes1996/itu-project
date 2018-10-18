@@ -2,6 +2,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, render_to_response
 from hosting.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 import re
 
 def index(request):
@@ -39,9 +41,13 @@ def register(request):
 
         if 'message' in d:
             return render(request, "register.html", d)
+
         
-        u = User(name=d['name'], surname=d['surname'], email=d['email'])
-        u.save()
+        user = User.objects.create_user(d['email'], password='')
+        user.email = d['email']
+        user.first_name = d['name']
+        user.last_name = d['surname']
+        user.save()
         return redirect('')
     else:
         return render(request, "register.html", {})
@@ -54,15 +60,18 @@ def login(request):
         except KeyError:
             d['message'] = 'No email given'
         else:
-            try:
-                u = User.objects.get(email=d['email'])
-            except ObjectDoesNotExist:
+            
+            user = authenticate(username=d['email'], password='')
+            if user is not None:
+                request.session['member_id'] = user.id
+                return render(request, 'dashboard.html', {'user': d})
+            else:
                 d['message'] = 'No user with given email'
 
         if 'message' in d:
             return render(request, "login.html", d)
 
-        return redirect('')
+        
     else:
         return render(request, "login.html", {})
 
