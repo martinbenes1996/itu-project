@@ -1,0 +1,16 @@
+<html>
+    <head>
+    </head>
+    <body>
+        {% if message %}
+            <h1>{{ message }}</h1>
+            <a href="{% url '' %}"><button>Main page</button></a>
+        {% else %}
+            <h1>Logged user:</h1>
+            Name: {{ first_name }} {{ last_name }} <br>
+            Email: {{ email }} <br>
+            <a href="{% url 'logout' %}"><button>Log out</button></a>
+        {% endif %}
+        
+    </body>
+</html>
