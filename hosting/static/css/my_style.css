@@ -14,25 +14,26 @@
 .scrollTo{
     border: none;
     color: inherit;
-    /* font-size: 0.8em; */
-    /* height: 8.5em; */
     left: 50%;
     letter-spacing: 0.225em;
-    margin-left: -3.8em;
-    /* opacity: 1; */
     outline: none;
-    /* padding-left: 0.225em; */
     position: absolute;
-    /* text-align: center; */
     text-transform: uppercase;
-
 }
+
+.centerize-one{
+    margin-left: -3.8em;
+}
+.centerize-two{
+    margin-left: -2em;
+}
+
 
 .wrapper.section2{
     background-color: #505393;
     color: #d3d4e4;
     text-align: center;
-    padding: 6em 0 6em 0;
+    padding: 2em 0 6em 0;
     margin-top: 2em;
 }
 
