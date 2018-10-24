@@ -1,7 +1,7 @@
-<html>
-    <head>
-    </head>
-    <body>
+{% extends "base.html" %}
+{% block content %}
+<!-- html here -->
+
         <h1>Hello, World!</h1>
         <table>
             <tr>
@@ -24,8 +24,9 @@
             </tr>
             {% endfor %}
         </table>
-        <a href="register"><button>Register</button></a>
-        <a href="login"><button>Login</button></a>
+        <a href="{% url '' %}register"><button>Register</button></a>
+        <a href="{% url '' %}login"><button>Login</button></a>
+
+        <a href="{% url '' %}"><button>Hlavní stránka</button></a>
         
-    </body>
-</html>
+{% endblock %}
