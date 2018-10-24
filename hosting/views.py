@@ -15,7 +15,7 @@ def index(request):
         User.objects.get(pk=pk).delete()
         return HttpResponseRedirect('')
     authors = User.objects.all()
-    return render(request, "index.html", {"authors": authors})
+    return render(request, "homepage.html", {"authors": authors})
 
 def register(request):
     if request.method == 'POST':
