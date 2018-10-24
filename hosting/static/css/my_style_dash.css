@@ -1,0 +1,18 @@
+.menu{
+    text-align: center;
+    background-color: dimgrey;
+    color: white;
+}
+
+.dashboard{
+    display: flex;
+    min-height: 969px;
+}
+
+.user{
+    padding-bottom: 5em;
+}
+
+.martin{
+    display: inline-block;
+}

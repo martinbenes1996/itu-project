@@ -1,16 +1,54 @@
-<html>
-    <head>
-    </head>
-    <body>
-        {% if message %}
-            <h1>{{ message }}</h1>
-            <a href="{% url '' %}"><button>Main page</button></a>
-        {% else %}
-            <h1>Logged user:</h1>
-            Name: {{ first_name }} {{ last_name }} <br>
-            Email: {{ email }} <br>
-            <a href="{% url 'logout' %}"><button>Log out</button></a>
-        {% endif %}
-        
-    </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<!-- html here -->
+
+
+    {% load static %}
+
+
+
+<div class="dashboard">
+    <div class="col-2 menu">
+        <div class="user">
+            <h5>Welcome</h5>
+            <h1>{{ first_name }}</h1>
+        </div>
+        <div class="list">
+            <ul>
+                <li>Option1</li>
+                <li>Option2</li>
+                <li>Option3</li>
+                <li>Option4</li>
+                <li>Option5</li>
+                <li><a href="{% url 'logout' %}"><button>Log out</button></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-10">
+        <h1>Martin smrdí</h1>
+        <div class="martin">
+            <img src="{% static 'img/martin.jpg' %}" width="600px">
+            <img src="{% static 'img/martin2.jpg' %}" width="600px">
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}
+
+
+
+<!--
+{% if message %}
+    <h1>{{ message }}</h1>
+    <a href="{% url '' %}"><button>Main page</button></a>
+{% else %}
+    <h1>Logged user:</h1>
+    Name: {{ first_name }} {{ last_name }} <br>
+    Email: {{ email }} <br>
+    <a href="{% url 'logout' %}"><button>Log out</button></a>
+{% endif %}
