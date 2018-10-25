@@ -61,16 +61,9 @@ def login(request):
         else:
             user = authenticate(username=d['email'], password='')
             if user is not None:
-                #d['first_name'] = user.first_name
-                #d['last_name'] = user.last_name
-                #d['email'] = user.email
-                #response = render_to_response("dashboard.html", d, context_instance=RequestContext(request))
                 response = redirect('dashboard')
                 response.set_cookie('user', d['email'], max_age=7200)
-                #response.set_cookie('user', d['email'], max_age = 7200)
                 return response
-                #request.session['member_id'] = user.id
-                #return render(request, 'dashboard.html', {'user': d})
             else:
                 d['message'] = 'No user with given email'
 
