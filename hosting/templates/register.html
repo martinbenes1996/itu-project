@@ -1,3 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- html here -->
+
+    {% load static %}
+
+    <section id="one" class="section-padding">
+      <div class="container">
+        <div class="row intro-text align-items-center justify-content-center">
+          <div class="col-md-10 text-center">
+            <h1 class="site-heading site-animate">Welcome to <strong>GoFlamingo</strong></h1>
+            <p class="lead site-subheading mb-4 site-animate">This is an online webhosting system that allows you to manage multiple websites completely for free!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="one" class="section-padding no_top">
+      <div class="container">
+        <div class="row mb-5 align-items-center">
+          <div class="col-lg-7 pr-lg-5 mb-5 mb-lg-0">
+            <img src="{% static 'img/flamingo.png' %}" alt="Image placeholder" class="img-fluid" width="75%">
+          </div>
+          <div class="col-lg-5 pl-lg-5">
+            <div class="section-heading">
+              <h2>Register</h2>
+            </div>
+            <p class="lead">Register a new account or <a href="{% url '' %}login">log in</a> with an existing account.</p>
+
+              <div>
+                  <form method="post" action="">{% csrf_token %}
+
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="example-text-input" class="col-2 col-form-label">Name</label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" type="text" required="true" name="name" value="{{ name }}" placeholder="John">
+                          </div>
+                        </div>
+
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="example-text-input" class="col-2 col-form-label">Surname</label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" type="text" required="true" name="surname" value="{{ surname }}" placeholder="Bart">
+                          </div>
+                        </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label for="lgFormGroupInput" class="col-2 col-form-label">Email</label>
+                        </div>
+                        <div class="col-8">
+                            <input name="email" value="{{ email }}" class="form-control" type="email" placeholder="johny.bart@example.com">
+                            <div class="form-control-feedback error-text">{{ message }}</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label for="smFormGroupInput" class="col-2 col-form-label">Password</label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" type="password" id="password-input">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label for="smFormGroupInput" class="col-2 col-form-label">Repeat</label>
+                        </div>
+                        <div class="col-8">
+                            <input class="form-control" type="password" id="password-input">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <button type="Submit" class="btn btn-warning btn-lg col-12">Register</button>
+                        </div>
+                    </div>
+
+
+                  </form>
+
+              </div>
+              <p class="lead">Go <a href="{% url '' %}">Back</a> to main page.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}>
+
+<!--
+
 <html>
     <head>
     </head>

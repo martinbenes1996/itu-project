@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="utf-8" />
+		<title>GoFlamingo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		{% load static %}
+<!-- FAVICON.ICO -->
+		<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+<!-- CSS -->
+        <link rel="stylesheet" href="{% static 'css/my_style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/my_style_dash.css' %}">
+        <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+        <link rel="stylesheet" href="{% static 'css/ie9.css' %}">
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	</head>
+
+<!-- HEADER -->
+
+
+        {% block content %}
+<!-- MY CODE -->
+        {% endblock %}
+
+
+<!-- FOOTER -->
+<footer id="footer" class="footer">
+    <p>Kliknutím na toto písmeno '<a href="{% url '' %}info">A</a>' zobrazíte registrované uživatele.</p>
+</footer>
+
+<!-- JAVASCRIPT -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/my_js.js' %}"></script>
+    </body>
+</html>
+
+
+
+
+

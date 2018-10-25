@@ -15,7 +15,7 @@ def index(request):
         User.objects.get(pk=pk).delete()
         return HttpResponseRedirect('')
     authors = User.objects.all()
-    return render(request, "index.html", {"authors": authors})
+    return render(request, "homepage.html", {"authors": authors})
 
 def register(request):
     if request.method == 'POST':
@@ -41,7 +41,7 @@ def register(request):
         if 'message' in d:
             return render(request, "register.html", d)
 
-        
+
         user = User.objects.create_user(d['email'], password='')
         user.email = d['email']
         user.first_name = d['name']
@@ -71,7 +71,11 @@ def login(request):
             return render(request, "login.html", d)
     else:
         return render(request, "login.html", {})
-    
+
+def info(request):
+    authors = User.objects.all()
+    return render(request, "info.html", {"authors": authors})
+
 def dashboard(request):
     email = request.COOKIES.get('user')
     d = dict()
