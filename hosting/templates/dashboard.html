@@ -2,29 +2,50 @@
 {% block content %}
 <!-- html here -->
 
+<!--
+If !uset.logged{
+    redirect(homepage)
+} else {
+-->
 
     {% load static %}
-
 
 
 <div class="dashboard">
     <div class="col-2 menu">
         <div class="user">
-            <h5>Welcome</h5>
-            <h1>{{ first_name }}</h1>
+            <h5 class="welcome">Welcome</h5>
+            <h1 class="username">{{ first_name }}</h1>
         </div>
         <div class="list">
-            <ul>
-                <li>Option1</li>
-                <li>Option2</li>
-                <li>Option3</li>
-                <li>Option4</li>
-                <li>Option5</li>
-                <li><a href="{% url 'logout' %}"><button>Log out</button></a></li>
+            <ul class="list-dash">
+                <a href="#1"><li>MyPage1</li></a>
+                <a href="#2"><li>MyPage2</li></a>
+                <a href="#3"><li>MyPage3</li></a>
+                <a href="#4"><li>MyPage4</li></a>
+                <a href="#5"><li>MyPage5</li></a>
             </ul>
+        </div>
+        <div class="form-group row logout">
+            <a href="{% url 'logout' %}"><button class="btn btn-danger btn-lg col-12">Logout</button></a>
         </div>
     </div>
     <div class="col-10">
+        <div class="inline col-12">
+            <div class="col-1"></div>
+            <div class="col-10 grid">
+                <div class="page-menu">
+                    <ul class="list-menu">
+                        <a href="#1"><li class="col-2 center">Option1</li></a>
+                        <a href="#2"><li class="col-2 center">Option2</li></a>
+                        <a href="#3"><li class="col-2 center">Option3</li></a>
+                        <a href="#4"><li class="col-2 center">Option4</li></a>
+                        <a href="#5"><li class="col-2 center">Option5</li></a>
+                        <a href="#6"><li class="col-2 center">Option6</li></a>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <h1>Martin smrdí</h1>
         <div class="martin">
             <img src="{% static 'img/martin.jpg' %}" width="600px">

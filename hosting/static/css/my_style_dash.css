@@ -2,11 +2,26 @@
     text-align: center;
     background-color: dimgrey;
     color: white;
+    border-right-style: solid;
+    border-width: thick;
+    border-color: rgba(0, 0, 0, 0.210);
+    font-family: "Open Sans", Helvetica, sans-serif;
+    color: #d3d4e4;
+}
+
+.col-2.menu{
+   /* padding: 0; !important; */
 }
 
 .dashboard{
     display: flex;
     min-height: 969px;
+}
+
+.username{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
 }
 
 .user{
@@ -15,4 +30,86 @@
 
 .martin{
     display: inline-block;
+}
+
+.welcome{
+    margin: 2em 0em 1em 0em;
+}
+
+.logout{
+    margin-top: 6em;
+}
+
+.logout a{
+
+    margin: 0 auto;
+}
+
+.list-dash{
+    padding: 0;
+}
+
+.list-dash li{
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    display: block;
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.list-dash li:hover{
+    background-color: rgba(0,0,0,0.2);
+}
+
+.list-dash a:link{
+    text-decoration: none;
+    color: white;
+    color: #d3d4e4;
+}
+
+.list-menu li{
+    display: flex;
+    position: relative;
+    width: 20%;
+    float: left;
+    height: 100%;
+}
+
+.list-menu li:hover{
+    background-color: rgba(0,0,0,0.2);
+}
+
+.list-menu a:link{
+    text-decoration: none;
+    color: white;
+    color: #d3d4e4;
+}
+
+.list-menu{
+    height: 100%;
+}
+
+.page-menu{
+    text-align: center;
+    background-color: dimgrey;
+    color: white;
+    border-bottom-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-width: thick;
+    border-color: rgba(0, 0, 0, 0.210);
+    font-family: "Open Sans", Helvetica, sans-serif;
+    color: #d3d4e4;
+    height: 4em;
+}
+
+.grid{
+    display: grid;
+}
+
+.inline{
+    display: flex;
 }
