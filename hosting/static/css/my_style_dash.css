@@ -9,13 +9,32 @@
     color: #d3d4e4;
 }
 
-.col-2.menu{
-   /* padding: 0; !important; */
-}
-
 .dashboard{
     display: flex;
     min-height: 969px;
+}
+
+.back-to-dash{
+    position: absolute;
+    left: 0px;
+    width: 50px;
+    min-height: 100%;
+    background-color: #171717;
+    text-align: left;
+}
+
+.padding-left-extra{
+    padding-left: 50px;
+}
+
+.back-arrow{
+    color: rgba(255,255,255,.5);
+    padding-left: 15px;
+    padding-top: 75px;
+    top: 0em;
+    /* margin-top: 129px; */
+    font-size: 1.5em;
+    position: fixed;
 }
 
 .username{
@@ -25,7 +44,8 @@
 }
 
 .user{
-    padding-bottom: 3em;
+    padding-bottom: 1em;
+    padding-top: 1em;
     border-bottom-style: solid;
     border-bottom-color: rgba(0,0,0,0.2);
 }
@@ -35,7 +55,7 @@
 }
 
 .welcome{
-    margin: 2em 0em 1em 0em;
+    margin: 1em 0em 1em 0em;
 }
 
 .logout{
@@ -43,12 +63,18 @@
 }
 
 .list{
-    margin-top: 2em;
+    margin-top: 2.5em;
 }
 
-.logout a{
+.logout form{
     margin: 0 auto;
 }
+
+.delete{
+    margin-top: 15em;
+}
+
+
 
 .list-dash{
     padding: 0;
@@ -63,11 +89,24 @@
     border-radius: 10px;
 }
 
+.btn-create{
+    margin-top: 0.5em;
+}
+
+.help{
+    padding-right: 1em;
+}
+
 .list-dash li:hover{
     background-color: rgba(0,0,0,0.2);
 }
 
 .list-dash a:link{
+    text-decoration: none;
+    color: white;
+    color: #d3d4e4;
+}
+.list-dash a:visited{
     text-decoration: none;
     color: white;
     color: #d3d4e4;
@@ -118,4 +157,8 @@
 
 .inline{
     display: flex;
+}
+
+.flamingo-icon{
+    margin-left: 10px;
 }

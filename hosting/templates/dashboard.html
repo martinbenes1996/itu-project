@@ -1,66 +1,103 @@
 {% extends "base.html" %}
 {% block content %}
-<!-- html here -->
+{% load static %}
 
+						<!-- TODO -->
 <!--
-If !uset.logged{
-    redirect(homepage)
-} else {
+  If (!user.logged){
+      redirect(homepage)
+  } else {
 -->
+						<!-- TODO -->
 
-    {% load static %}
 
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand navbar-dark bg-dark static-top" style="
+	border-radius: 0;
+	margin-bottom: 0;">
+
+	<img src="{% static 'img/icon.png' %}/" class="flamingo-icon">
+	<a class="navbar-brand mr-1" href="/">GoFlamingo</a>
+
+	<ul class="navbar-nav ml-auto mr-md-0">
+
+		<!-- HELP -->
+		<li class="nav-item help">
+			<a class="nav-link" href="#" rule="button" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-envelope"></i>
+				Help
+			</a>
+		</li>
+
+		<!-- USER -->
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="userDropdown" rule="button" data-toggle="dropdown"
+				 aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-user-circle fa-fw"></i>
+				Jan Bartošek
+			</a>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+				<a class="dropdown-item" href="#">Settings</a>
+				<a class="dropdown-item" href="#">Activity Log</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="{% url 'logout' %}" data-toggle="modal">Logout</a>
+			</div>
+		</li>
+	</ul>
+</nav>
 
 <div class="dashboard">
 
-    <!-- SIDE MENU -->
-    <div class="col-2 menu">
-        <!-- MENU HEADER -->
-        <div class="user">
-            <h5 class="welcome">Welcome</h5>
-            <h1 class="username">{{ u.first_name }}</h1>
-        </div>
-        <!-- PAGE LIST -->
-        <div class="list">
-            <ul class="list-dash">
-                {% for page in page_list %}
-                    <a href="/pageboard/?id={{page.id}}"><li>{{page.name}}</li></a>
-                {% endfor %}
-            </ul>
-        </div>
-        <!-- LOGOUT BUTTON -->
-        <div class="form-group row logout">
-            <a href="{% url 'logout' %}"><button class="btn btn-danger btn-lg col-12">Logout</button></a>
-        </div>
-    </div>
+	<!-- SIDE MENU -->
+	<div class="col-2 menu">
 
-    <div class="col-10">
-        <h1>My Pages</h1>
-        <div class="martin">
-            <form method="post" action="/createpage/">{% csrf_token %}
-                <input class="form-control" name="name" placeholder="Name">
-                <button type="submit" class="btn btn-block btn-warning">Create page</button>
-            </form>
+		<!-- MENU HEADER -->
+		<div class="user">
+			<h5 class="welcome">Page List</h5>
+		</div>
 
-        </div>
-    </div>
+		<!-- PAGE LIST -->
+		<div class="list">
+			<ul class="list-dash">
+				{% for page in page_list %}
+					<a href="/pageboard/?id={{ page.id }}">
+						<li>{{ page.name }}</li>
+					</a>
+				{% endfor %}
+			</ul>
+		</div>
 
+		<!-- CREATE PAGE -->
+		<div class="form-group row logout">
+			<form method="post" action="/createpage/">{% csrf_token %}
+				<input class="form-control" name="name" placeholder="Name" autocomplete="off">
+				<button type="submit" class="btn .btn-sm btn-warning btn-create">Create Page</button>
+			</form>
+		</div>
+
+	</div>
+
+	<div class="col-10">
+		<h1>#Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Et harum quidem rerum facilis est et expedita
+			distinctio. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam ante.
+			Mauris tincidunt sem sed arcu. Curabitur vitae diam non enim vestibulum interdum. Aenean id metus id velit
+			ullamcorper pulvinar. In enim a arcu imperdiet malesuada. Morbi leo mi, nonummy eget tristique non, rhoncus non
+			leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Aliquam id
+			dolor. Nullam feugiat, turpis at pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus sit
+			amet ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer
+			malesuada. Integer in sapien. Vestibulum fermentum tortor id mi. Etiam egestas wisi a erat. Cras pede libero,
+			dapibus nec, pretium sit amet, tempor quis. Et harum quidem rerum facilis est et expedita distinctio. Etiam
+			ligula pede, sagittis quis, interdum ultricies, scelerisque eu. Maecenas aliquet accumsan leo. Etiam sapien
+			elit, consequat eget, tristique non, venenatis quis, ante. Phasellus enim erat, vestibulum vel, aliquam a,
+			posuere eu, velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos.
+			Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Curabitur
+			vitae diam non enim vestibulum interdum. Praesent id justo in neque elementum ultrices. Etiam egestas wisi a
+			erat. Maecenas ipsum velit, consectetuer eu lobortis ut, dictum at dui. Aliquam erat volutpat. Proin pede metus,
+			vulputate nec, fermentum fringilla, vehicula vitae, justo. Maecenas libero. Sed elit dui, pellentesque a,
+			faucibus vel, interdum nec, diam. Phasellus enim erat, vestibulum vel, aliquam a, posuere eu, velit. Itaque
+			earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut
+			perferendis doloribus asperiores repellat.</h1>
+	</div>
 </div>
 
-
-
-
 {% endblock %}
-
-
-
-<!--
-{% if message %}
-    <h1>{{ message }}</h1>
-    <a href="{% url '' %}"><button>Main page</button></a>
-{% else %}
-    <h1>Logged user:</h1>
-    Name: {{ first_name }} {{ last_name }} <br>
-    Email: {{ email }} <br>
-    <a href="{% url 'logout' %}"><button>Log out</button></a>
-{% endif %}

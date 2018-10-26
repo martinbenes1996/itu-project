@@ -1,136 +1,97 @@
 {% extends "base.html" %}
 {% block content %}
-<!-- html here -->
+{% load static %}
 
-    {% load static %}
+<!-- SECTION 1 -->
+<section id="one" class="section-padding">
+	<div id="" class="container">
 
-    <section id="one" class="section-padding">
-      <div class="container">
-        <div class="row intro-text align-items-center justify-content-center">
-          <div class="col-md-10 text-center">
-            <h1 class="site-heading site-animate">Welcome to <strong>GoFlamingo</strong></h1>
-            <p class="lead site-subheading mb-4 site-animate">This is an online webhosting system that allows you to manage multiple websites completely for free!</p>
-          </div>
-        </div>
-      </div>
-    </section>
+		<!-- WELCOME TEXT -->
+		<div class="row intro-text align-items-center justify-content-center">
+			<div class="col-md-10 text-center">
+				<h1 class="site-heading site-animate">Welcome to <strong>GoFlamingo</strong></h1>
+				<p class="lead site-subheading mb-4 site-animate">This is an online webhosting system that allows you to
+					manage multiple websites completely for free!</p>
+			</div>
+		</div>
 
-    <section id="one" class="section-padding no_top">
-      <div class="container">
-        <div class="row mb-5 align-items-center">
-          <div class="col-lg-7 pr-lg-5 mb-5 mb-lg-0">
-            <img src="{% static 'img/flamingo.png' %}" alt="Image placeholder" class="img-fluid" width="75%">
-          </div>
-          <div class="col-lg-5 pl-lg-5">
-            <div class="section-heading">
-              <h2>Get Started</h2>
-            </div>
-            <p class="lead">Create your own website has never been easier. You can do all your stuff just on one place. </p>
-            <p class="mb-5  ">Start with logging in. If you don't have an account, you can easily create one.</p>
+		<div class="row mb-5 align-items-center section-padding">
 
-            <div class="row">
+			<!-- FLAMINGO IMG -->
+			<div class="col-lg-7 pr-lg-5 mb-5 mb-lg-0">
+				<img src="{% static 'img/flamingo.png' %}" alt="Image placeholder" class="img-fluid" width="75%">
+			</div>
 
-               <div class="col-1"></div>
-              <div class="col-5">
-                  <a href="register" class="col-12 btn btn-warning px-4 py-2 btn-sm">Register</a>
-              </div>
-              <div class="col-5">
+			<!-- RIGHT TEXT -->
+			<div class="col-lg-5 pl-lg-5">
+				<div class="section-heading">
+					<h2>Get Started</h2>
+				</div>
+				<p class="lead">Create your own website has never been easier. You can do all your stuff just on one place. </p>
+				<p class="mb-5">Start with logging in. If you don't have an account, you can easily create one.</p>
 
+				<div class="row">
+					<div class="col-1"></div>
+					<div class="col-5">
+						<a href="register" class="col-12 btn btn-warning px-4 py-2 btn-sm">Register</a>
+					</div>
+					<div class="col-5">
+						<a href="login" class="col-12 btn btn-success px-4 py-2 btn-sm">Login</a>
+					</div>
+				</div>
 
-                  <a href="login" class="col-12 btn btn-success px-4 py-2 btn-sm">Login</a>
-              </div>
-              </div>
+			</div>
+		</div>
 
-          </div>
-        </div>
-          <div class="more">
-              <a href="#two" class="scrollTo centerize-one">Learn More</a>
-          </div>
-      </div>
-    </section>
+		<!-- SCROLL DOWN -->
+		<div class="more">
+			<a href="#two" class="scrollTo">Learn More</a>
+		</div>
 
-    <section id="two" class="wrapper section2 section-padding">
-        <div class="inner">
-            <header class="major">
-                <h2>What does our service provide?</h2>
-                <p>Here you can see the list of the services we offer to you. All is for free and ready to use.</p>
-            </header>
-            <ul class="features">
-                <li>
-                    <h3>Create Websites</h3>
-                    <p>In your account you can easily create just as many websites as you want. Changing between them can be easily done in the menu.</p>
-                </li>
-                <li>
-                    <h3>Set Domain Name Server</h3>
-                    <p>You can set your own DNS in the settings of each of your websites. You can do so in the tab 'DNS'.</p>
-                </li>
-                <li>
-                    <h3>Manage File Transfer Protocol</h3>
-                    <p>With all the options you can set the File Transfer Protocol the way you like it to be used.</p>
-                </li>
-                <li>
-                    <h3>Database Edit</h3>
-                    <p>You wouldn't really be able to manage your own website without an access to the database. With our service you can do it all.</p>
-                </li>
-                <li>
-                    <h3>Aenean Primis</h3>
-                    <p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
-                </li>
-                <li>
-                    <h3>Tortor Ut</h3>
-                    <p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula consequat consequat.</p>
-                </li>
-            </ul>
-        </div>
-        <div class="more">
-            <a href="#one" class="scrollTo centerize-two">Go Up</a>
-        </div>
-    </section>
+	</div>
+</section>
 
+<!-- SECTION 2 -->
+<section id="two" class="wrapper section2 section-padding">
+	<div class="inner">
+		<header class="major">
+			<h2>What does our service provide?</h2>
+			<p>Here you can see the list of the services we offer to you. All is for free and ready to use.</p>
+		</header>
+		<ul class="features">
+			<li>
+				<h3>Create Websites</h3>
+				<p>In your account you can easily create just as many websites as you want. Changing between them can be
+					easily done in the menu.</p>
+			</li>
+			<li>
+				<h3>Set Domain Name Server</h3>
+				<p>You can set your own DNS in the settings of each of your websites. You can do so in the tab 'DNS'.</p>
+			</li>
+			<li>
+				<h3>Manage File Transfer Protocol</h3>
+				<p>With all the options you can set the File Transfer Protocol the way you like it to be used.</p>
+			</li>
+			<li>
+				<h3>Database Edit</h3>
+				<p>You wouldn't really be able to manage your own website without an access to the database. With our service
+					you can do it all.</p>
+			</li>
+			<li>
+				<h3>Aenean Primis</h3>
+				<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula
+					consequat consequat.</p>
+			</li>
+			<li>
+				<h3>Tortor Ut</h3>
+				<p>Augue consectetur sed interdum imperdiet et ipsum. Mauris lorem tincidunt nullam amet leo Aenean ligula
+					consequat consequat.</p>
+			</li>
+		</ul>
+		<div class="more go-up">
+			<a href="#one" class="scrollTo">Go Up</a>
+		</div>
+	</div>
+</section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-
-<h1>Hello, World!</h1>
-
-
-
-<table>
-            <tr>
-                <th>Jméno</th>
-                <th>E-mail</th>
-                <th>Odstranit</th>
-            </tr>
-
-            {% for a in authors %}
-            <tr>
-                <th>{{a.first_name}} {{a.last_name}}</th>
-                <th>{{a.email}}</th>
-                <th>
-                    <form method="post" action="">{% csrf_token %}
-                        <input name="pk" type="hidden" value="{{ a.pk }}" required />
-                        <button type="Submit">Odstranit</button>
-                    </form>
-                </th>
-
-            </tr>
-            {% endfor %}
-        </table>
-        <a href="register"><button>Register</button></a>
-        <a href="login"><button>Login</button></a>
-<!-- html there -->
 {% endblock %}>
