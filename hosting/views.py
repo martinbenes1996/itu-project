@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, render_to_response
-from hosting.models import User
+from hosting import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -80,15 +80,40 @@ def dashboard(request):
     email = request.COOKIES.get('user')
     d = dict()
     try:
-        u = User.objects.get(email=email)
+        d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
     else:
-        d['email'] = email
-        d['first_name'] = u.first_name
-        d['last_name'] = u.last_name
+        d['page_list'] = models.Webpage.getWebpages(d['user'])
     
     return render(request, "dashboard.html", d)
+
+def pageboard(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    else:
+        pass
+    
+    return render(request, "pageboard.html", d)
+
+def createpage(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    else:
+        if request.method == 'POST':
+            d['name'] = request.POST['name']
+            w = models.Webpage(name=d['name'], user=d['user'])
+            w.save()
+
+    return redirect('dashboard')
 
 def logout(request):
     response = redirect('')
