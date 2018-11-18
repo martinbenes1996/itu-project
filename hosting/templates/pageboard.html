@@ -66,13 +66,12 @@
 			<!-- PAGE LIST -->
 			<div class="list">
 				<ul class="list-dash">
-						<a href="#"><li>Setting1</li></a>
-						<a href="#"><li>Setting2</li></a>
-						<a href="#"><li>Setting3</li></a>
-						<a href="#"><li>Setting4</li></a>
-						<a href="#"><li>Setting5</li></a>
-						<a href="#"><li>Setting6</li></a>
-						<a href="#"><li>Setting7</li></a>
+						<a data-toggle="tab" href="#Dashboard"><li class="active">Dashboard</li></a>
+						<a data-toggle="tab" href="#Ftp"><li>FTP</li></a>
+						<a data-toggle="tab" href="#Dns"><li>DNS</li></a>
+						<a data-toggle="tab" href="#Database"><li>Database</li></a>
+						<a data-toggle="tab" href="#Email"><li>Email</li></a>
+						<a data-toggle="tab" href="#Users"><li>Users</li></a>
 				</ul>
 
 				<!-- DELETE BUTTON -->
@@ -83,27 +82,52 @@
 		</div>
 	</div>
 
-	<div class="col-10">
-		<h1>#Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Et harum quidem rerum facilis est et expedita
-			distinctio. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam ante.
-			Mauris tincidunt sem sed arcu. Curabitur vitae diam non enim vestibulum interdum. Aenean id metus id velit
-			ullamcorper pulvinar. In enim a arcu imperdiet malesuada. Morbi leo mi, nonummy eget tristique non, rhoncus non
-			leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Aliquam id
-			dolor. Nullam feugiat, turpis at pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus sit
-			amet ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer
-			malesuada. Integer in sapien. Vestibulum fermentum tortor id mi. Etiam egestas wisi a erat. Cras pede libero,
-			dapibus nec, pretium sit amet, tempor quis. Et harum quidem rerum facilis est et expedita distinctio. Etiam
-			ligula pede, sagittis quis, interdum ultricies, scelerisque eu. Maecenas aliquet accumsan leo. Etiam sapien
-			elit, consequat eget, tristique non, venenatis quis, ante. Phasellus enim erat, vestibulum vel, aliquam a,
-			posuere eu, velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos.
-			Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Curabitur
-			vitae diam non enim vestibulum interdum. Praesent id justo in neque elementum ultrices. Etiam egestas wisi a
-			erat. Maecenas ipsum velit, consectetuer eu lobortis ut, dictum at dui. Aliquam erat volutpat. Proin pede metus,
-			vulputate nec, fermentum fringilla, vehicula vitae, justo. Maecenas libero. Sed elit dui, pellentesque a,
-			faucibus vel, interdum nec, diam. Phasellus enim erat, vestibulum vel, aliquam a, posuere eu, velit. Itaque
-			earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut
-			perferendis doloribus asperiores repellat.</h1>
+	<div class="col-10 tab-content">
+		<div id="Dashboard" class="tab-pane fade in active">
+			<h1>Dashboard</h1>
+			<p>
+				Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+			</p>
+		</div>
+
+		<div id="Ftp" class="tab-pane fade">
+			<h1>FTP</h1>
+			<p>
+				Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+			</p>
+		</div>
+
+		<div id="Dns" class="tab-pane fade">
+			<h1>DNS</h1>
+			<p>
+				Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+			</p>
+		</div>
+
+		<div id="Database" class="tab-pane fade">
+			<h1>Database</h1>
+			{% include 'snippets/dbasebrowser.html' %}
+			<p>
+				Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+			</p>
+		</div>
+
+		<div id="Email" class="tab-pane fade">
+			<h1>Email</h1>
+			<p>
+				Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+			</p>
+		</div>
+
+		<div id="Users" class="tab-pane fade">
+			<h1>Users</h1>
+			<p>
+				Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+			</p>
+		</div>
 	</div>
+
+
 </div>
 
 {% endblock %}

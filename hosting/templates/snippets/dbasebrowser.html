@@ -1,0 +1,19 @@
+<div id="pathbar"></div>
+
+<script>
+    function zavolej() {
+        alert("Press!");
+    }
+    function generatePathButtons(l) {
+        //$('#pathbar').text("");
+        var x = "";
+        for(var i = 0; i < l.length; i++) {
+            x += "<button data-role=\"button\" data-inline=\"true\" id=\""+l[i]+"\" text=\""+l[i]+"\" onclick=\"zavolej()\">Button</button>";
+        };
+        alert(x);
+        $('#pathbar').append(x);
+    }
+    $(document).ready(function() {
+        generatePathButtons(['alfa', 'beta', 'romeo']);
+    });
+</script>
