@@ -1,61 +1,96 @@
 
 <script>
-    
-    function refreshData(response) {
-        console.log(response);
-        generatePathButtons(response.path)
-        generateContent(response.content)
+    var currentData;
+
+    function refreshData() {
+        //console.log(currentData);
+        generatePathButtons(currentData.path);
+        generateContent(currentData.content, undefined);
     }
     function errorResponse(rs, e) {
 
     }
-    function requestData(path) {
-        console.log(path);
-        var datapath = JSON.parse(path);
-        $.get("{% url 'dirdata' %}",
-              {requestpath: datapath},
-              refreshData
+    function requestData(datapath) {
+        var path = JSON.stringify(datapath);
+        //console.log(path)
+        $.post("{% url 'dirdata' %}",
+            {'requestpath': path},
+            function(data) { 
+                currentData = data;
+                refreshData();
+            }
         );
     }
 
-    function generateButton(name, path) {
+    function generateButton(name, p) {
         var x = $('<button>', {id: name})
-                    .text(name)
-                    .click(
-                        {p:path}, function(p){ 
-                            requestData(p);
-                        }
-                    )
+            .text(name)
+            .click(p, function(event){
+                requestData(event.data);
+            })
         ;
         return x;
     }
     function generatePathButtons(l) {
+        $('#pathbar').empty();
         for(var i = 0; i < l.length; i++) {
             // append button
-            $('#pathbar').append( generateButton(l[i], JSON.stringify( (l.slice(0,i+1)) )) );
+            var lslice = l.slice(0, i+1);
+            $('#pathbar').append( generateButton(l[i], lslice) );
         }
     }
 
     function generateItem(key,val) {
-        return $('<div>', {id:key})
+        return $('<tr>')
+            .append(
+                $('<td>')
                     .text(key)
-                    .click(
-                        {k: key, v: val}, function(k,v) {
-                            showProperities(k,v);
+                    .click({k: key, v: val}, function(event) {
+                        if(event.data.v['type'] == 'd') {
+                            var lslice = currentData['path'].slice();
+                            lslice.push(event.data.k);
+                            requestData(lslice);
+                        } else {
+                            showProperties(event.data.k, event.data.v);
                         }
-                    );
+                    })
+            )
+        ;
     }
-    function generateContent(content) {
+    function generateContent(content, mode) {
+        $('#dircontent').empty();
+        var t = $('<table>');
         $.each(content, function( key, value ) {
-            $('#dircontent').append( generateItem(key,value) );
+            // tady bude rozhodovani podle mode (typ zobrazeni)
+            t.append( generateItem(key, value) );
         });
+        $('#dircontent').append(t);
     }
 
-    function showProperities(key, val) {
-        console.log('Properities: '+key)
+    function showProperties(key, val) {
+        $('#dircontent').empty();
+        $('#dircontent').append($('<button>')
+            .text("Go back")
+            .click({content: currentData.content, mode: undefined}, function(event) {
+                generateContent(event.data.content, event.data.mode)
+            })
+        );
+        var t = $('<table>');
+        $.each(val, function(k, v) {
+            t.append($('<tr>')
+                .append($('<td>')
+                    .text(k)
+                )
+                .append($('<td>')
+                    .text(v)
+                )
+            );
+        });
+        $('#dircontent').append(t);
+        //console.log('Properities: '+key)
     }
 
     $(document).ready(function() {
-        requestData('[]');
+        requestData(["home"]);
     });
 </script>

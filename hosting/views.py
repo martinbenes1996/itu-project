@@ -22,6 +22,17 @@ def generateSampleDir():
         }
     }
 
+def generateHierarchy(l):
+    print(l)
+    return {
+        'path': l,
+        'content': {
+            'file1': {'type': 'f', 'size': 1, 'data': '1-1-1970', 'owner': 'Martin'},
+            'dir': {'type': 'd'}
+        }
+    }
+
+
 def index(request):
     #User.objects.all().delete()
     #u = User(name="Martin", surname="Beneš", email="martinbenes1996@gmail.com")
@@ -138,12 +149,11 @@ def logout(request):
 
 @csrf_exempt
 def getDirData(request):
-    print(request.is_ajax())
-    if request.method == 'GET':
-        print(request)
-        path = request.GET['requestpath']
+    if request.method == 'POST':
+        path = json.loads( request.POST['requestpath'] )
         print(path)
-        jsonresponse = json.dumps(generateSampleDir())
+        jsonresponse = json.dumps(generateHierarchy(path))
+        #jsonresponse = json.dumps(generateSampleDir())
         return HttpResponse(jsonresponse, content_type='application/json')
 
 
