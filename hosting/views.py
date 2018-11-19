@@ -23,7 +23,7 @@ def generateSampleDir():
     }
 
 def generateHierarchy(l):
-    print(l)
+    #print(l)
     return {
         'path': l,
         'content': {
@@ -151,7 +151,7 @@ def logout(request):
 def getDirData(request):
     if request.method == 'POST':
         path = json.loads( request.POST['requestpath'] )
-        print(path)
+        #print(path)
         jsonresponse = json.dumps(generateHierarchy(path))
         #jsonresponse = json.dumps(generateSampleDir())
         return HttpResponse(jsonresponse, content_type='application/json')
