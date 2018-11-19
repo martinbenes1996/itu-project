@@ -4,7 +4,23 @@ from hosting import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.views.decorators.csrf import csrf_exempt
+try:
+    from django.utils import simplejson as json
+except ImportError:
+    import json
 import re
+
+def generateSampleDir():
+    return {
+        'path': ['dir1', 'dir2', 'dir3'],
+        'content': {
+            'dir1' : {'type': 'd', 'size': 0, 'date': '12-04-2018', 'owner': 'Martin'},
+            'file1': {'type': 'f', 'size': 5, 'date': '12-01-2018', 'owner': 'Martin'},
+            'file2': {'type': 'f', 'size': 10, 'date': '12-02-2018', 'owner': 'Jan'},
+            'file3': {'type': 'f', 'size': 15, 'date': '12-03-2018', 'owner': 'Ondrej'}
+        }
+    }
 
 def index(request):
     #User.objects.all().delete()
@@ -120,6 +136,15 @@ def logout(request):
     response.delete_cookie('user')
     return response
 
+@csrf_exempt
+def getDirData(request):
+    print(request.is_ajax())
+    if request.method == 'GET':
+        print(request)
+        path = request.GET['requestpath']
+        print(path)
+        jsonresponse = json.dumps(generateSampleDir())
+        return HttpResponse(jsonresponse, content_type='application/json')
 
 
 

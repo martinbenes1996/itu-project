@@ -85,9 +85,12 @@
 	<div class="col-10 tab-content">
 		<div id="Dashboard" class="tab-pane fade in active">
 			<h1>Dashboard</h1>
+			{% include 'snippets/dbasebrowser.html' %}
+			<div id="pathbar"></div>
 			<p>
 				Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 			</p>
+			<div id="dircontent"></div>
 		</div>
 
 		<div id="Ftp" class="tab-pane fade">
@@ -106,7 +109,6 @@
 
 		<div id="Database" class="tab-pane fade">
 			<h1>Database</h1>
-			{% include 'snippets/dbasebrowser.html' %}
 			<p>
 				Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 			</p>

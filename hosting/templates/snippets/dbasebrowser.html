@@ -1,19 +1,61 @@
-<div id="pathbar"></div>
 
 <script>
-    function zavolej() {
-        alert("Press!");
+    
+    function refreshData(response) {
+        console.log(response);
+        generatePathButtons(response.path)
+        generateContent(response.content)
+    }
+    function errorResponse(rs, e) {
+
+    }
+    function requestData(path) {
+        console.log(path);
+        var datapath = JSON.parse(path);
+        $.get("{% url 'dirdata' %}",
+              {requestpath: datapath},
+              refreshData
+        );
+    }
+
+    function generateButton(name, path) {
+        var x = $('<button>', {id: name})
+                    .text(name)
+                    .click(
+                        {p:path}, function(p){ 
+                            requestData(p);
+                        }
+                    )
+        ;
+        return x;
     }
     function generatePathButtons(l) {
-        //$('#pathbar').text("");
-        var x = "";
         for(var i = 0; i < l.length; i++) {
-            x += "<button data-role=\"button\" data-inline=\"true\" id=\""+l[i]+"\" text=\""+l[i]+"\" onclick=\"zavolej()\">Button</button>";
-        };
-        alert(x);
-        $('#pathbar').append(x);
+            // append button
+            $('#pathbar').append( generateButton(l[i], JSON.stringify( (l.slice(0,i+1)) )) );
+        }
     }
+
+    function generateItem(key,val) {
+        return $('<div>', {id:key})
+                    .text(key)
+                    .click(
+                        {k: key, v: val}, function(k,v) {
+                            showProperities(k,v);
+                        }
+                    );
+    }
+    function generateContent(content) {
+        $.each(content, function( key, value ) {
+            $('#dircontent').append( generateItem(key,value) );
+        });
+    }
+
+    function showProperities(key, val) {
+        console.log('Properities: '+key)
+    }
+
     $(document).ready(function() {
-        generatePathButtons(['alfa', 'beta', 'romeo']);
+        requestData('[]');
     });
 </script>

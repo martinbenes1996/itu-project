@@ -27,7 +27,8 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('info/', views.info, name='info'),
     path('createpage/', views.createpage, name="createpage"),
-    path('pageboard/', views.pageboard, name='pageboard')
+    path('pageboard/', views.pageboard, name='pageboard'),
+    path('getDirData/', views.getDirData, name='dirdata')
     # here add new pages
     # path(keyword, views.function)
 ]
