@@ -24,8 +24,8 @@
 
     function generateButton(name, p) {
         var x = $('<div>')
-            //.addClass('col')
             .append( $('<a>', {id: name})
+                .css({'color': 'blue'})
                 .addClass('pathButton')
                 .text(name)
                 .click(p, function(event){
@@ -33,9 +33,9 @@
                 })
                 .hover(
                     function() {
-                        $(this).css('text-decoration', 'underline');
+                        $(this).css({'text-decoration':'underline', 'color':'red'});
                     }, function() {
-                        $(this).css('text-decoration', 'none');
+                        $(this).css({'text-decoration':'none', 'color':'blue'});
                     }
                 )
             )
@@ -77,9 +77,8 @@
     }
 
     function generateRowItem(key, val) {
-        return
         // border box
-        $('<div>').addClass('row')
+        return $('<div>').addClass('row')
             .append($('<div>').addClass('col-lg-8 border border-primary')
                 .append($('<div>').addClass('row')
                     // left column

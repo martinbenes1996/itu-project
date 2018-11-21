@@ -32,6 +32,37 @@ def generateHierarchy(l):
         }
     }
 
+def generateDatabase():
+    return {
+        'name': 'databaze1',
+        'tables': {
+            'tabulka1': {
+                'columns': {
+                    'jmeno': 's',
+                    'prijmeni': 's',
+                    'stastne_cislo': 'i'
+                },
+                'data': [
+                    {'jmeno': 'matej', 'prijmeni': 'navratil', 'stastne_cislo': 666},
+                    {'jmeno': 'adolf', 'prijmeni': 'hitler', 'stastne_cislo': 13},
+                    {'jmeno': 'ondrej', 'prijmeni': 'polansky', 'stastne_cislo': 42},
+                    {'jmeno': 'martin', 'prijmeni': 'benes', 'stastne_cislo': 69}
+                ]
+            },
+            'tabulka2': {
+                'columns': {
+                    'carodej': 's',
+                    'kouzlo': 's'
+                },
+                'data': [
+                    {'carodej': 'kolovrat', 'kouzlo': 'abrakadabra'},
+                    {'carodej': 'uchomaz', 'kouzlo': 'ententyky'},
+                    {'carodej': 'lapiduch', 'kouzlo': 'popokatepetl'}
+                ]
+            }
+        }
+    }
+
 
 def index(request):
     #User.objects.all().delete()
@@ -156,6 +187,11 @@ def getDirData(request):
         #jsonresponse = json.dumps(generateSampleDir())
         return HttpResponse(jsonresponse, content_type='application/json')
 
+@csrf_exempt
+def getDbData(request):
+    if request.method == 'POST':
+        jsonresponse = json.dumps(generateDatabase())
+        return HttpResponse(jsonresponse, content_type='application/json')
 
 
 # add function with the name matching from urls.py
