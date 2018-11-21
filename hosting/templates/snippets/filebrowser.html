@@ -77,10 +77,12 @@
     }
 
     function generateRowItem(key, val) {
-        return $('<div>').addClass('row')
+        return
+        // border box
+        $('<div>').addClass('row')
             .append($('<div>').addClass('col-lg-8 border border-primary')
-
                 .append($('<div>').addClass('row')
+                    // left column
                     .append($('<div>').addClass('col display-4')
                         .text(key)
                         .click({k: key, v: val}, function(event) {
@@ -93,7 +95,7 @@
                             }
                         })
                     )
-
+                    // right column
                     .append($('<div>').addClass('col text-right')
                         .append($('<button>').addClass('btn btn-lg btn-warning')
                             .text('delete')
@@ -106,6 +108,7 @@
                     )
                 )
             )
+            // right vertical
             .append($('<div>').addClass('col-lg-4')
             )
         ;
