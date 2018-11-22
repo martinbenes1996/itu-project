@@ -5,6 +5,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
+import XML
+
 try:
     from django.utils import simplejson as json
 except ImportError:
@@ -112,7 +114,7 @@ def dashboard(request):
         d['message'] = 'Unknown user.'
     else:
         d['page_list'] = models.Webpage.getWebpages(d['user'])
-    
+
     return render(request, "dashboard.html", d)
 
 def pageboard(request):
@@ -124,7 +126,7 @@ def pageboard(request):
         d['message'] = 'Unknown user.'
     else:
         pass
-    
+
     return render(request, "pageboard.html", d)
 
 def createpage(request):
@@ -151,8 +153,9 @@ def logout(request):
 def getDirData(request):
     if request.method == 'POST':
         path = json.loads( request.POST['requestpath'] )
-        #print(path)
-        jsonresponse = json.dumps(generateHierarchy(path))
+        print(path)
+        jsonresponse = json.dumps(XML.GetInfoFromFiletree("id101", path))
+        #jsonresponse = json.dumps(generateHierarchy(path))
         #jsonresponse = json.dumps(generateSampleDir())
         return HttpResponse(jsonresponse, content_type='application/json')
 
