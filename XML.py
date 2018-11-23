@@ -31,10 +31,10 @@ class IncompatibleRowDataError(Exception):
 class TableNotFoundError(Exception):
     pass
 
-def CreateProject(name, owner):
+def CreateProject(name, owner="unknown"):
     ''' Register a new project.
         name  -> name of the project
-        owner -> user who created it (to set the 'owner' attribute)
+        owner -> user who created it (to set the 'owner' attribute), default value is "unknown"
     '''
     if os.path.exists("XML/"+name+".xml"):
         raise AlreadyExistsError
@@ -53,13 +53,15 @@ def CreateProject(name, owner):
 
 
 def DeleteProject(name):
-    ''' Delete project. '''
+    ''' Delete project.
+        name -> name of the project
+    '''
     if os.path.exists("XML/"+name+".xml"):
         os.remove("XML/"+name+".xml")
 
 # --------------------------- FTP ------------------------------------------------
 def FindInXML(root, path, what="FTP"):
-    ''' Returns an element specified by path. INTERNAL FUNCTION.'''
+    ''' Returns an element specified by path. INTERNAL FUNCTION, DO NOT USE IT.'''
     string = ''
     for x in path:
         string = string + "/" + str(x)
@@ -71,9 +73,8 @@ def AddToFiletree(projName, path, objName, type, owner="unknown", size=0):
         projName -> name of the modified project (string!)
         path     -> LIST with path to target directory (without the added file/dir) INCLUDING HOME
             examples: ["home"], ["home", "dir1", "dir2"]
-            pokud nebudes chtit uvadet "home" slozku, jde to jednoduse zmenit
         objName  -> name of the added file/dir
-        type     -> "d", "f": dir/file
+        type     -> "d"/"f": dir/file
         owner    -> which user owns it (default value is "unknown")
         size     -> size (default is 0)
     '''
@@ -102,7 +103,6 @@ def DeleteFromFiletree(projName, path, objName):
         projName -> name of the modified project (string!)
         path     -> LIST with path to target directory (without the removed file/dir) INCLUDING HOME
             examples: ["home"], ["home", "dir1", "dir2"]
-            pokud nebudes chtit uvadet "home" slozku, jde to jednoduse zmenit
         objName  -> name of the removed file/dir
     '''
     try:
@@ -130,7 +130,6 @@ def GetInfoFromFiletree(projName, path):
         projName -> name of the project (string!)
         path     -> LIST with path to target directory (without the removed file/dir) INCLUDING HOME
             examples: ["home"], ["home", "dir1", "dir2"]
-            pokud nebudes chtit uvadet "home" slozku, jde to jednoduse zmenit
     '''
     try:
         tree = ET.parse("XML/"+str(projName)+".xml")
@@ -167,7 +166,7 @@ def AddDNS(projName, objName):
     if elem == None:                    # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # looks for DNSes with same name
+    test = elem.findall("*")            # looks for DNSes with same name
     for x in test:
         if x.text == objName:
             raise AlreadyExistsError
@@ -187,10 +186,10 @@ def DeleteDNS(projName, objName):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "DNS")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # find children
+    test = elem.findall("*")                # find children
     for x in test:
         if x.text == objName:
             try:
@@ -212,10 +211,10 @@ def GetDNS(projName):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "DNS")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # find children
+    test = elem.findall("*")                # find children
     result = []
     for x in test:
         result.append(x.text)
@@ -234,10 +233,10 @@ def AddEmail(projName, objName):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "emails")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # looks for emails with same name
+    test = elem.findall("*")                # looks for emails with same name
     for x in test:
         if x.text == objName:
             raise AlreadyExistsError
@@ -257,10 +256,10 @@ def DeleteEmail(projName, objName):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "emails")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # find children
+    test = elem.findall("*")                # find children
     for x in test:
         if x.text == objName:
             try:
@@ -282,10 +281,10 @@ def GetEmail(projName):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "emails")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # find children
+    test = elem.findall("*")                # find children
     result = []
     for x in test:
         result.append(x.text)
@@ -304,10 +303,10 @@ def AddUser(projName, objName):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "users")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # looks for users with same name
+    test = elem.findall("*")                # looks for users with same name
     for x in test:
         if x.text == objName:
             raise AlreadyExistsError
@@ -327,10 +326,10 @@ def DeleteUser(projName, objName):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "users")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # find children
+    test = elem.findall("*")                # find children
     for x in test:
         if x.text == objName:
             try:
@@ -352,10 +351,10 @@ def GetUser(projName):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "users")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # find children
+    test = elem.findall("*")                # find children
     result = []
     for x in test:
         result.append(x.text)
@@ -379,10 +378,10 @@ def CreateTable(projName, tableName, definition):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "database")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # looks for tables with same name
+    test = elem.findall("*")                # looks for tables with same name
     for x in test:
         if x.text == tableName:
             raise AlreadyExistsError
@@ -408,10 +407,10 @@ def DeleteTable(projName, tableName):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "database")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # find children
+    test = elem.findall("*")                # find children
     for x in test:
         if x.text == tableName:
             try:
@@ -436,10 +435,10 @@ def AddRow(projName, tableName, rowData):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "database")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # find children
+    test = elem.findall("*")                # find children
     for x in test:
         if x.text == tableName:                                 # find the requested table
             columns = x.find("definition").attrib['length']     # get the number of columns
@@ -468,10 +467,10 @@ def DeleteRow(projName, tableName, rowid):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "database")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")        # find children
+    test = elem.findall("*")                # find children
     for x in test:
         if x.text == tableName:                                 # find the requested table
             rows = x.find("rows")                               # get rows element
@@ -501,7 +500,7 @@ def GetDatabase(projName):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "database")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
     result = []
@@ -542,17 +541,17 @@ def AddColumn(projName, tableName, column, defaultValue="NULL"):
         raise DoesNotExistError
 
     elem = FindInXML(root, [], "database")
-    if elem == None:                    # path does not exist - should not happen
+    if elem == None:                                # path does not exist - should not happen
         raise DoesNotExistError
 
-    test = elem.findall("*")                                    # find children
+    test = elem.findall("*")                        # find children
     for x in test:
-        if x.text == tableName:
-            definition = x.find("definition")
+        if x.text == tableName:                     # find the right table
+            definition = x.find("definition")       # add column name and type to definition
             ET.SubElement(definition, "def", datatype=str(column[1])).text = str(column[0])
             rows = x.find("rows")
             rowlist = rows.findall("row")
-            for row in rowlist:
+            for row in rowlist:                     # add a default value to the new column
                 ET.SubElement(row, "record").text = str(defaultValue)
 
     tree.write("XML/"+str(projName)+".xml")

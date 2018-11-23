@@ -210,8 +210,8 @@ def getDirData(request):
 @csrf_exempt
 def getDbData(request):
     if request.method == 'POST':
-        jsonresponse = json.dumps(GetDatabase("dat007"))
-        #jsonresponse = json.dumps(generateDatabase())
+        #jsonresponse = json.dumps(XML.GetDatabase("dat007"))
+        jsonresponse = json.dumps(generateDatabase())
         return HttpResponse(jsonresponse, content_type='application/json')
 
 
