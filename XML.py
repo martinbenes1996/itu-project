@@ -369,8 +369,8 @@ def CreateTable(projName, tableName, definition):
     ''' Create a new table in a database.
         projName   -> name of the project (string!)
         tableName  -> name of the added table (string!)
-        definition -> list of names of columns
-            example: ["id","jmeno","prijmeni","vek"]
+        definition -> list of lists: [[name of column,data type],...]
+            example: [["id","i"],["jmeno","s"],["prijmeni","s"],["vek","i"]]
     '''
     try:
         tree = ET.parse("XML/"+str(projName)+".xml")
@@ -391,7 +391,7 @@ def CreateTable(projName, tableName, definition):
     table.text = str(tableName)
     defin = ET.SubElement(table, "definition", length=str(len(definition)))
     for d in definition:
-        ET.SubElement(defin, "def").text = str(d)
+        ET.SubElement(defin, "def", datatype=str(d[1])).text = str(d[0])
     ET.SubElement(table, "rows")
 
     tree.write("XML/"+str(projName)+".xml")
@@ -489,9 +489,10 @@ def GetDatabase(projName):
             list of dictionaries(each table)
                 each dictionary contains name of the table, list of column definitions and list of lists(rows)
             example:
-                [{'name': 'hrusky', 'rows': [], 'definition': ['id', 'jmeno', 'odruda']},
-                 {'name': 'jabka', 'rows': [['0', 'Granny Smith', 'green'], ['1', 'Granny Smith', 'green'],
-                                            ['2', 'Granny Smith', 'green']], 'definition': ['id', 'jmeno', 'barva']}]
+                [{'name': 'hrusky', 'rows': [], 'definition': [['id','i'],['jmeno','s'],['odruda','s']]},
+                 {'name': 'jabka',
+                  'rows': [['0', 'Granny Smith', 'green'], ['1', 'Granny Smith', 'green'],['2', 'Granny Smith', 'green']],
+                  'definition': [['id','i'],['jmeno','s'],['barva','s']]}]
     '''
     try:
         tree = ET.parse("XML/"+str(projName)+".xml")
@@ -512,7 +513,8 @@ def GetDatabase(projName):
         defin = definition.findall("*")                         # find all definitions
         result[counter]['definition'] = []
         for d in defin:                                         # add them to the list
-            result[counter]['definition'].append(d.text)
+            defunit = [d.text,d.attrib['datatype']]             # create a list of column name and data type
+            result[counter]['definition'].append(defunit)
         rows = x.find("rows")
         rowlist = rows.findall("row")                           # find all rows of a table
         result[counter]['rows'] = []
@@ -526,26 +528,99 @@ def GetDatabase(projName):
         counter = counter + 1
     return result
 
+def AddColumn(projName, tableName, column, defaultValue="NULL"):
+    ''' Add column to a table. Adds column to the end of a column list.
+        projName   -> name of the project (string!)
+        tableName  -> name of the table (string!)
+        column     -> name of the new column and its data type (string!)
+            example: ["name","s"]
+    '''
+    try:
+        tree = ET.parse("XML/"+str(projName)+".xml")
+        root = tree.getroot()
+    except:
+        raise DoesNotExistError
+
+    elem = FindInXML(root, [], "database")
+    if elem == None:                    # path does not exist - should not happen
+        raise DoesNotExistError
+
+    test = elem.findall("*")                                    # find children
+    for x in test:
+        if x.text == tableName:
+            definition = x.find("definition")
+            ET.SubElement(definition, "def", datatype=str(column[1])).text = str(column[0])
+            rows = x.find("rows")
+            rowlist = rows.findall("row")
+            for row in rowlist:
+                ET.SubElement(row, "record").text = str(defaultValue)
+
+    tree.write("XML/"+str(projName)+".xml")
+
+def DeleteColumn(projName, tableName, column):
+    ''' Delete column from a table.
+        projName   -> name of the project (string!)
+        tableName  -> name of the table (string!)
+        column     -> name of the deleted column (string!)
+            example: "name"
+    '''
+    try:
+        tree = ET.parse("XML/"+str(projName)+".xml")
+        root = tree.getroot()
+    except:
+        raise DoesNotExistError
+
+    elem = FindInXML(root, [], "database")
+    if elem == None:                    # path does not exist - should not happen
+        raise DoesNotExistError
+
+    test = elem.findall("*")                                    # find children
+    for x in test:
+        if x.text == tableName:                                 # find the right table
+            definition = x.find("definition")
+            deflist = definition.findall("def")                 # find all defs
+            counter = 0                                         # count the position of a column in a list
+            for d in deflist:
+                if d.text == column:                            # remove the right column
+                    definition.remove(d)
+                    break
+                counter = counter + 1
+            if counter == len(deflist):                         # if the column was not found, nothing happens
+                return
+
+            rows = x.find("rows")
+            rowlist = rows.findall("row")                       # find all rows of a table
+            for row in rowlist:                                 # for every row
+                recordlist = row.findall("record")              # find records
+                row.remove(recordlist[counter])                 # and remove the record on the right position
+
+    tree.write("XML/"+str(projName)+".xml")
+
 # ----------------------------- database end ------------------------------------------------
 
 
 # tests
 '''
 CreateProject("dat007", "Ondrej")
-CreateTable("dat007", "hrusky", ["id","jmeno","odruda"])
-CreateTable("dat007", "jabka", ["id","jmeno","barva"])
-CreateTable("dat007", "balon", ["neco"])
+CreateTable("dat007", "hrusky", [["id","i"],["jmeno","s"],["odruda","s"]])
+CreateTable("dat007", "jabka", [["id","i"],["jmeno","s"],["barva","s"]])
+CreateTable("dat007", "balon", [["neco","s"]])
 DeleteTable("dat007", "balon")
 
 AddRow("dat007", "jabka", ["0","Granny Smith","green"])
 AddRow("dat007", "jabka", ["1","Granny Smith","green"])
 AddRow("dat007", "jabka", ["2","Granny Smith","green"])
+AddColumn("dat007", "jabka", ["kyselost","i"], "0")
+AddColumn("dat007", "jabka", ["vune","s"])
+DeleteColumn("dat007", "jabka", "vune")
+#DeleteColumn("dat007", "jabka", "barva")
+#DeleteColumn("dat007", "jabka", "id")
 
 print(GetDatabase("dat007"))
 
 #AddRow("dat007", "hruska", ["0","Granny Smith","green"])
-DeleteRow("dat007", "jabka", "1")
-DeleteRow("dat007", "jabka", "10")
+#DeleteRow("dat007", "jabka", "1")
+#DeleteRow("dat007", "jabka", "10")
 '''
 
 '''
