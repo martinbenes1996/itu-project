@@ -14,6 +14,7 @@ except ImportError:
 import re
 
 def generateSampleDir():
+    ''' Tady formát sedí '''
     return {
         'path': ['dir1', 'dir2', 'dir3'],
         'content': {
@@ -35,6 +36,22 @@ def generateHierarchy(l):
     }
 
 def generateDatabase():
+    '''
+        example:
+                [{tablename,row_data,definition_of_rows},{...},...]
+                    - row_data = [['polozky','dle','definice','radku'],[...],...]
+                    - definition_of_rows = [["rowname","rowdatatype"],[...],...]
+
+                [
+                 {'name': 'hrusky',
+                  'rows': [],
+                  'definition': [['id','i'],['jmeno','s'],['odruda','s']]},
+
+                 {'name': 'jabka',
+                  'rows': [['0', 'Granny Smith', 'green'], ['1', 'Granny Smith', 'green'],['2', 'Granny Smith', 'green']],
+                  'definition': [['id','i'],['jmeno','s'],['barva','s']]}
+                ]
+    '''
     return {
         'name': 'databaze1',
         'tables': {
@@ -193,7 +210,8 @@ def getDirData(request):
 @csrf_exempt
 def getDbData(request):
     if request.method == 'POST':
-        jsonresponse = json.dumps(generateDatabase())
+        jsonresponse = json.dumps(GetDatabase("dat007"))
+        #jsonresponse = json.dumps(generateDatabase())
         return HttpResponse(jsonresponse, content_type='application/json')
 
 
