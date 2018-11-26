@@ -102,10 +102,11 @@
     }
 
     function generateRowItem(key, val) {
-        // border box
-        return $('<div>').addClass('row dir-bar')
+        if (val['type'] == 'd') {
+            return $('<div>').addClass('row dir-bar')
             .append($('<div>').addClass('my-border dir-bar')
                 .append($('<div>').addClass('row dir-bar')
+										.append($('<i>').addClass('far fa-folder folder-align'))
                     // left column
 										.append($('<div>').addClass('col lead my-align')
 												.text(key)
@@ -141,11 +142,51 @@
                 )
             )
             // right vertical
-            .append($('<div>').addClass('col-lg-4')
+            .append($('<div>').addClass('col-lg-4'));
+				} else {
+            return $('<div>').addClass('row dir-bar')
+            .append($('<div>').addClass('my-border dir-bar')
+                .append($('<div>').addClass('row dir-bar')
+										.append($('<i>').addClass('far fa-file file-align'))
+                    // left column
+										.append($('<div>').addClass('col lead my-align')
+												.text(key)
+												.click({k: key, v: val}, function (event) {
+														if (event.data.v['type'] == 'd') {
+																var lslice = currentData['path'].slice();
+																lslice.push(event.data.k);
+																requestData(lslice);
+														} else {
+																showProperties(event.data.k, event.data.v);
+														}
+												})
+										)
+										// right column
+										.append($('<div>').addClass('col text-right')
+												.append($('<button>').addClass('btn btn-align rename-align btn-secondary')
+														.text('rename')
+														.click({k: key, v: val}, function (event) {
+																var p = currentData.path.slice();
+																p.push(event.data.k);
+																alert('rename ' + JSON.stringify(p));
+														})
+												)
+												.append($('<button>').addClass('btn btn-align btn-warning')
+														.text('delete')
+														.click({k: key, v: val}, function (event) {
+																var p = currentData.path.slice();
+																p.push(event.data.k);
+																alert('delete ' + JSON.stringify(p));
+														})
+												)
+										)
+                )
             )
+            // right vertical
+            .append($('<div>').addClass('col-lg-4'));
+				}
+        // border box
 
-
-            ;
 
     }
 
