@@ -345,6 +345,7 @@ def GetUser(projName):
         projName -> name of the project (string!)
     '''
     try:
+        print("XML/"+str(projName)+".xml")
         tree = ET.parse("XML/"+str(projName)+".xml")
         root = tree.getroot()
     except:

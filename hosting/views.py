@@ -170,6 +170,8 @@ def pageboard(request):
     d = dict()
     try:
         d['user'] = User.objects.get(email=email)
+        pageid = request.GET['id']
+        d['page'] = models.Webpage.objects.get(id=pageid)
     except:
         d['message'] = 'Unknown user.'
     else:
@@ -212,6 +214,14 @@ def getDbData(request):
     if request.method == 'POST':
         #jsonresponse = json.dumps(XML.GetDatabase("dat007"))
         jsonresponse = json.dumps(generateDatabase())
+        return HttpResponse(jsonresponse, content_type='application/json')
+
+@csrf_exempt
+def getUserData(request):
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        jsonresponse = json.dumps(XML.GetUser(projname))
+        print(XML.GetUser(projname))
         return HttpResponse(jsonresponse, content_type='application/json')
 
 
