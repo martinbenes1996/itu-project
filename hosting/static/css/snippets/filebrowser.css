@@ -35,15 +35,15 @@ a.pathButton{
 }
 
 .file-align{
-    margin-top: 18px;
-    margin-left: 19px;
-    margin-right: -17px;
+    padding-top: 18px;
+    padding-left: 19px;
+    cursor: pointer;
 }
 
 .folder-align{
-    margin-top: 18px;
-    margin-left: 17px;
-    margin-right: -17px;
+    padding-top: 18px;
+    padding-left: 17px;
+    cursor: pointer;
 }
 
 .create{
@@ -65,9 +65,10 @@ a.pathButton{
 }
 
 .my-align{
-    margin-left: 15px;
-    margin-bottom: 0px; !important;
-    margin-top: 8px;
+    margin-bottom: 0px; !important: ;
+    padding-top: 8px;
+    padding-top: 9px;
+    padding-left: 13px;
     vertical-align: center;
     cursor: pointer;
 }
