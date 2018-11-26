@@ -22,26 +22,26 @@
 
 
 <script>
-    var currentData;
+    var currentDirData;
 
-    function refreshData() {
-        //console.log(currentData);
-        generatePathButtons(currentData.path);
-        generateContent(currentData.content, undefined);
+    function refreshFileData() {
+        //console.log(currentDirData);
+        generatePathButtons(currentDirData.path);
+        generateFileContent(currentDirData.content, undefined);
     }
 
     function errorResponse(rs, e) {
 
     }
 
-    function requestData(datapath) {
+    function requestFileData(datapath) {
         var path = JSON.stringify(datapath);
         //console.log(path)
         $.post("{% url 'dirdata' %}",
             {'requestpath': path},
             function (data) {
-                currentData = data;
-                refreshData();
+                currentDirData = data;
+                refreshFileData();
             }
         );
     }
@@ -53,7 +53,7 @@
                 .addClass('pathButton')
                 .text(name)
                 .click(p, function (event) {
-                    requestData(event.data);
+                    requestFileData(event.data);
                 })
                 .hover(
                     function () {
@@ -91,9 +91,9 @@
             )
             .click({k: key, v: val}, function (event) {
                 if (event.data.v['type'] == 'd') {
-                    var lslice = currentData['path'].slice();
+                    var lslice = currentDirData['path'].slice();
                     lslice.push(event.data.k);
-                    requestData(lslice);
+                    requestFileData(lslice);
                 } else {
                     showProperties(event.data.k, event.data.v);
                 }
@@ -109,9 +109,9 @@
 										.append($('<i>').addClass('far fa-folder folder-align'))
 														.click({k: key, v: val}, function (event) {
 														if (event.data.v['type'] == 'd') {
-																var lslice = currentData['path'].slice();
+																var lslice = currentDirData['path'].slice();
 																lslice.push(event.data.k);
-																requestData(lslice);
+																requestFileData(lslice);
 														} else {
 																showProperties(event.data.k, event.data.v);
 														}
@@ -121,9 +121,9 @@
 												.text(key)
 												.click({k: key, v: val}, function (event) {
 														if (event.data.v['type'] == 'd') {
-																var lslice = currentData['path'].slice();
+																var lslice = currentDirData['path'].slice();
 																lslice.push(event.data.k);
-																requestData(lslice);
+																requestFileData(lslice);
 														} else {
 																showProperties(event.data.k, event.data.v);
 														}
@@ -134,7 +134,7 @@
 												.append($('<button>').addClass('btn btn-align rename-align btn-secondary')
 														.text('rename')
 														.click({k: key, v: val}, function (event) {
-																var p = currentData.path.slice();
+																var p = currentDirData.path.slice();
 																p.push(event.data.k);
 																alert('rename ' + JSON.stringify(p));
 														})
@@ -142,7 +142,7 @@
 												.append($('<button>').addClass('btn btn-align btn-warning')
 														.text('delete')
 														.click({k: key, v: val}, function (event) {
-																var p = currentData.path.slice();
+																var p = currentDirData.path.slice();
 																p.push(event.data.k);
 																alert('delete ' + JSON.stringify(p));
 														})
@@ -159,9 +159,9 @@
 											.append($('<i>').addClass('far fa-file file-align'))
 															.click({k: key, v: val}, function (event) {
 														if (event.data.v['type'] == 'd') {
-																var lslice = currentData['path'].slice();
+																var lslice = currentDirData['path'].slice();
 																lslice.push(event.data.k);
-																requestData(lslice);
+																requestFileData(lslice);
 														} else {
 																showProperties(event.data.k, event.data.v);
 														}
@@ -171,9 +171,9 @@
 												.text(key)
 												.click({k: key, v: val}, function (event) {
 														if (event.data.v['type'] == 'd') {
-																var lslice = currentData['path'].slice();
+																var lslice = currentDirData['path'].slice();
 																lslice.push(event.data.k);
-																requestData(lslice);
+																requestFileData(lslice);
 														} else {
 																showProperties(event.data.k, event.data.v);
 														}
@@ -184,7 +184,7 @@
 												.append($('<button>').addClass('btn btn-align rename-align btn-secondary')
 														.text('rename')
 														.click({k: key, v: val}, function (event) {
-																var p = currentData.path.slice();
+																var p = currentDirData.path.slice();
 																p.push(event.data.k);
 																alert('rename ' + JSON.stringify(p));
 														})
@@ -192,7 +192,7 @@
 												.append($('<button>').addClass('btn btn-align btn-warning')
 														.text('delete')
 														.click({k: key, v: val}, function (event) {
-																var p = currentData.path.slice();
+																var p = currentDirData.path.slice();
 																p.push(event.data.k);
 																alert('delete ' + JSON.stringify(p));
 														})
@@ -208,20 +208,30 @@
 
     }
 
-    function generateContent(content, mode) {
+    function generateFileContent(content, mode) {
         $('#dircontent').empty();
         //var t = $('<div>')
         //    .addClass('row');
         $.each(content, function (key, value) {
+            if(value['type'] == 'd') { $('#dircontent').append(generateRowItem(key, value)); }
             // tady bude rozhodovani podle mode (typ zobrazeni)
+<<<<<<< HEAD
             $('#dircontent').append(generateRowItem(key, value));
         })
+=======
+        });
+        $.each(content, function (key, value) {
+            if(value['type'] == 'f') { $('#dircontent').append(generateRowItem(key, value)); }
+            // tady bude rozhodovani podle mode (typ zobrazeni)
+        });
+
+>>>>>>> origin/master
 				$('#dircontent').append(
 						$('<div>').addClass('create')
 						.append($('<button>').addClass('btn btn-primary btn-align')
 								.text('create')
 								.click(function (event) {
-										alert('create ' + JSON.stringify(content));
+										alert('create ' + JSON.stringify(currentData));
 								})
 						)
 				)
@@ -235,7 +245,7 @@
             .addClass('btn btn-sm btn-info')
             .text("Go back")
             .click({content: currentData.content, mode: undefined}, function (event) {
-                generateContent(event.data.content, event.data.mode)
+                generateFileContent(event.data.content, event.data.mode)
             })
         );
         var t = $('<table>');
@@ -254,7 +264,7 @@
     }
 
     $(document).ready(function () {
-        requestData(["home"]);
+        requestFileData(["home"]);
     });
 
 
