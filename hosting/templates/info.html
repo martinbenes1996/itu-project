@@ -1,32 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
-<!-- html here -->
+	<!-- html here -->
 
-        <h1>Hello, World!</h1>
-        <table>
-            <tr>
-                <th>Jméno</th>
-                <th>E-mail</th>
-                <th>Odstranit</th>
-            </tr>
+	<h1>Hello, World!</h1>
+	<table>
+		<tr>
+			<th>Jméno</th>
+			<th>E-mail</th>
+			<th>Odstranit</th>
+		</tr>
 
-            {% for a in authors %}
-            <tr>
-                <th>{{a.first_name}} {{a.last_name}}</th>
-                <th>{{a.email}}</th>
-                <th>
-                    <form method="post" action="">{% csrf_token %}
-                        <input name="pk" type="hidden" value="{{ a.pk }}" required />
-                        <button type="Submit">Odstranit</button>
-                    </form>
-                </th>
+		{% for a in authors %}
+			<tr>
+				<th>{{ a.first_name }} {{ a.last_name }}</th>
+				<th>{{ a.email }}</th>
+				<th>
+					<form method="post" action="">{% csrf_token %}
+						<input name="pk" type="hidden" value="{{ a.pk }}" required/>
+						<button type="Submit">Odstranit</button>
+					</form>
+				</th>
 
-            </tr>
-            {% endfor %}
-        </table>
-        <a href="{% url '' %}register"><button>Register</button></a>
-        <a href="{% url '' %}login"><button>Login</button></a>
+			</tr>
+		{% endfor %}
+	</table>
+	<a href="{% url '' %}register">
+		<button>Register</button>
+	</a>
+	<a href="{% url '' %}login">
+		<button>Login</button>
+	</a>
 
-        <a href="{% url '' %}"><button>Hlavní stránka</button></a>
-        
+	<a href="{% url '' %}">
+		<button>Hlavní stránka</button>
+	</a>
+
 {% endblock %}
