@@ -1,3 +1,8 @@
+html,
+body{
+    height: 100%;
+}
+
 .menu{
     text-align: center;
     background-color: dimgrey;
@@ -11,7 +16,7 @@
 
 .dashboard{
     display: flex;
-    min-height: 969px;
+    min-height: 907px;
 }
 
 .back-to-dash{
@@ -161,4 +166,16 @@
 
 .flamingo-icon{
     margin-left: 10px;
+}
+
+#modal-title{
+    margin-top: 0.1rem;
+}
+
+#modal-close-button{
+    margin-top: -0.6rem;
+}
+
+#modal-dialog{
+    margin: 150px auto;
 }

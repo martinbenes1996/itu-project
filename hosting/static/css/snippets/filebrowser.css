@@ -1,0 +1,73 @@
+h1{
+    text-align: center;
+}
+
+#pathbar{
+    margin: 7em 5em 1em 13em;
+}
+
+#pathbar a{
+    cursor: pointer;
+}
+
+.center{
+    text-align: center;
+}
+
+a.pathButton:hover{
+    color: rgba(255,255,255,.75);
+}
+a.pathButton{
+    color: rgba(255,255,255,.5);
+}
+
+.dir-bar{
+    width: 100%;
+    height: 100%;
+}
+
+.my-container{
+    max-width: 840px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.create{
+    padding-left: 15px;
+}
+
+.btn-align{
+    margin-right: 10px;
+    margin-top: 8px;
+    width: 100px;
+}
+
+.text-right{
+    padding-right: 0; !important
+}
+
+.row{
+    margin: 0; !important;
+}
+
+.my-align{
+    margin-left: 15px;
+    margin-bottom: 0px; !important;
+    margin-top: 8px;
+    vertical-align: center;
+    cursor: pointer;
+}
+
+.my-border{
+    border-style: solid;
+    height: 50px;
+    border-color: #888888;
+    border-width: 1px;
+    margin-bottom: -2px;
+}
+
+.my-border:hover {
+    background-color: #e5e5e5;
+}
