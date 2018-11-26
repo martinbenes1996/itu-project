@@ -1,6 +1,11 @@
+
+
+
+
 .section-padding{
   padding: 5.5em 0;
 }
+
 .section-padding.no_top{
   padding-top: 0 !important;
 }
@@ -8,37 +13,29 @@
 .more{
     height: 50px;
     padding-bottom: 1em;
-    padding-top: 3em;
+    width: 100%;
+    margin-top: -1em;
+    text-align: center;
 }
 
 .scrollTo{
     border: none;
     color: inherit;
-    left: 50%;
     letter-spacing: 0.225em;
     outline: none;
-    position: absolute;
     text-transform: uppercase;
 }
-
-.centerize-one{
-    margin-left: -3.8em;
-}
-.centerize-two{
-    margin-left: -2em;
-}
-
 
 .wrapper.section2{
     background-color: #505393;
     color: #d3d4e4;
     text-align: center;
-    padding: 2em 0 6em 0;
+    padding: 2em 0 2.6em 0;
     margin-top: 2em;
 }
 
 .inner{
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
     font-family: "Open Sans", Helvetica, sans-serif;
     font-weight: 400;
@@ -47,8 +44,13 @@
 }
 
 .major{
-    margin: 0 0 3.5em 0;
+    margin-bottom: 4em;
     display: block;
+}
+
+.features{
+
+    padding-left: 0;
 }
 
 .features li:nth-child(1) {
@@ -72,7 +74,7 @@
 
 
 .features li{
-    padding: 4em 4em 2em 6em;
+    padding: 4em 4em 4em 4em;
     display: block;
     position: relative;
     text-align: left;
@@ -90,6 +92,9 @@
     font-weight: bold;
 }
 
+.go-up{
+    margin-top: 2em;
+}
 
 .error-text{
     color: red;

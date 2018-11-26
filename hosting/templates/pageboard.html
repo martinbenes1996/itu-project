@@ -1,72 +1,166 @@
 {% extends "base.html" %}
 {% block content %}
+	{% load static %}
 
-{% load static %}
-
-
-<div class="dashboard">
-
-    <!-- SIDE MENU -->
-    <div class="col-2 menu">
-        <!-- MENU HEADER -->
-        <div class="user">
-            <h5 class="welcome">Welcome</h5>
-            <h1 class="username">{{ u.first_name }}</h1>
-        </div>
-        <!-- PAGE LIST -->
-        <div class="list">
-            <ul class="list-dash">
-                {% for page in page_list %}
-                    <a href="webpage?id={{page.id}}"><li>{{page.name}}</li></a>
-                {% endfor %}
-            </ul>
-        </div>
-        <!-- LOGOUT BUTTON -->
-        <div class="form-group row logout">
-            <a href="{% url 'logout' %}"><button class="btn btn-danger btn-lg col-12">Logout</button></a>
-        </div>
-    </div>
-
-    <div class="col-10">
-        <div class="inline col-12">
-            <div class="col-1"></div>
-            <div class="col-10 grid">
-                <div class="page-menu">
-                    <ul class="list-menu">
-                        <a href="#1"><li class="col-2 center"><p>Option1</p></li></a>
-                        <a href="#2"><li class="col-2 center">Option2</li></a>
-                        <a href="#3"><li class="col-2 center">Option3</li></a>
-                        <a href="#4"><li class="col-2 center">Option4</li></a>
-                        <a href="#5"><li class="col-2 center">Option5</li></a>
-                        <a href="#6"><li class="col-2 center">Option6</li></a>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <h1>{{page.name}}</h1>
-        <div class="martin">
-            <!--<img src="{% static 'img/martin.jpg' %}" width="600px">
-            <img src="{% static 'img/martin2.jpg' %}" width="600px">-->
-
-        </div>
-    </div>
-
-</div>
+	<!-- TODO -->
+	<!--
+      If (!user.logged){
+              redirect(homepage)
+      } else {
+  -->
+	<!-- TODO -->
 
 
 
+	<!-- NAVBAR -->
+	<nav class="navbar navbar-expand navbar-dark bg-dark static-top" style="
+	border-radius: 0;
+	margin-bottom: 0;">
+
+		<img src="{% static 'img/icon.png' %}/" class="flamingo-icon">
+		<a class="navbar-brand mr-1" href="/">GoFlamingo</a>
+
+		<ul class="navbar-nav ml-auto mr-md-0">
+
+			<!-- HELP -->
+			<li class="nav-item help">
+				<a class="nav-link" href="#" aria-haspopup="true" aria-expanded="false" data-toggle="modal"
+					 data-target="#myModal">
+					<i class="fas fa-envelope"></i>
+					Help
+				</a>
+			</li>
+
+			<!-- USER -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="userDropdown" rule="button" data-toggle="dropdown"
+					 aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-user-circle fa-fw"></i>
+					{{user.first_name}}
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+					<a class="dropdown-item" href="#">Settings</a>
+					<a class="dropdown-item" href="#">Activity Log</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{% url 'logout' %}" data-toggle="modal">Logout</a>
+				</div>
+			</li>
+		</ul>
+	</nav>
+
+
+	<div class="dashboard">
+
+		<div class="col-2 menu">
+
+			<!-- GO BACK -->
+			<div class="user">
+				<ul class="list-dash welcome">
+					<a href="/dashboard/"><li>Back</li></a>
+				</ul>
+			</div>
+
+			<!-- MENU HEADER -->
+			<div class="user">
+				<h5 class="welcome">{{page.name}}</h5>
+			</div>
+
+			<!-- PAGE LIST -->
+			<div class="list">
+				<ul class="list-dash">
+					<a data-toggle="tab" href="#Dashboard">
+						<li class="active">Dashboard</li>
+					</a>
+					<a data-toggle="tab" href="#Ftp">
+						<li>FTP</li>
+					</a>
+					<a data-toggle="tab" href="#Dns">
+						<li>DNS</li>
+					</a>
+					<a data-toggle="tab" href="#Database">
+						<li>Database</li>
+					</a>
+					<a data-toggle="tab" href="#Email">
+						<li>Email</li>
+					</a>
+					<a data-toggle="tab" href="#Users">
+						<li>Users</li>
+					</a>
+				</ul>
+
+				<!-- DELETE BUTTON -->
+				<div class="form-group delete">
+					<button type="submit" class="btn .btn-sm btn-danger btn-create">Delete Page</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-10 tab-content">
+			<div id="Dashboard" class="tab-pane fade in active">
+				{% include 'snippets/dashboardbrowser.html' %}
+			</div>
+
+			<div id="Ftp" class="tab-pane fade">
+				{% include 'snippets/filebrowser.html' %}
+			</div>
+
+			<div id="Dns" class="tab-pane fade">
+				{% include 'snippets/dnsbrowser.html' %}
+			</div>
+
+			<div id="Database" class="tab-pane fade">
+				{% include 'snippets/dbbrowser.html' %}
+			</div>
+
+			<div id="Email" class="tab-pane fade">
+				{% include 'snippets/emailbrowser.html' %}
+			</div>
+
+			<div id="Users" class="tab-pane fade">
+				{% include 'snippets/usersbrowser.html' %}
+			</div>
+		</div>
+
+
+
+		<!-- CONTACT FORM -->
+		<div id="myModal" class="modal fade" role="dialog">
+			<div class="modal-dialog" id="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="modal-title">Contact Us</h4>
+						<button type="button" class="close" id="modal-close-button" data-dismiss="modal"><i
+										class="far fa-window-close"></i></button>
+					</div>
+					<div class="modal-body">
+						<form role="form" method="post" id="reused_form">
+							<p> We will answer your message as soon as possible. </p>
+							<div class="form-group">
+								<label for="name"> Name:</label>
+								<input type="text" class="form-control" id="name" name="name" required maxlength="50">
+							</div>
+							<div class="form-group">
+								<label for="email"> Email:</label>
+								<input type="email" class="form-control" id="email" name="email" required maxlength="50">
+							</div>
+							<div class="form-group">
+								<label for="name"> Message:</label>
+								<textarea class="form-control" type="textarea" name="message" id="message"
+													placeholder="Your Message Here" maxlength="6000" rows="7"></textarea>
+							</div>
+							<button type="submit" class="btn btn-lg btn-success btn-block" id="btnContactUs">Send</button>
+						</form>
+						<div id="success_message" style="width:100%; height:100%; display:none; "><h3>Sent your message
+							successfully!</h3></div>
+						<div id="error_message" style="width:100%; height:100%; display:none; "><h3>Error</h3> Sorry there was an
+							error sending your form.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
 
 {% endblock %}
-
-
-
-<!--
-{% if message %}
-    <h1>{{ message }}</h1>
-    <a href="{% url '' %}"><button>Main page</button></a>
-{% else %}
-    <h1>Logged user:</h1>
-    Name: {{ first_name }} {{ last_name }} <br>
-    Email: {{ email }} <br>
-    <a href="{% url 'logout' %}"><button>Log out</button></a>
-{% endif %}

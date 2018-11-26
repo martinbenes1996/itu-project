@@ -4,7 +4,84 @@ from hosting import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.views.decorators.csrf import csrf_exempt
+import XML
+
+try:
+    from django.utils import simplejson as json
+except ImportError:
+    import json
 import re
+
+def generateSampleDir():
+    ''' Tady formát sedí '''
+    return {
+        'path': ['dir1', 'dir2', 'dir3'],
+        'content': {
+            'dir1' : {'type': 'd', 'size': 0, 'date': '12-04-2018', 'owner': 'Martin'},
+            'file1': {'type': 'f', 'size': 5, 'date': '12-01-2018', 'owner': 'Martin'},
+            'file2': {'type': 'f', 'size': 10, 'date': '12-02-2018', 'owner': 'Jan'},
+            'file3': {'type': 'f', 'size': 15, 'date': '12-03-2018', 'owner': 'Ondrej'}
+        }
+    }
+
+def generateHierarchy(l):
+    #print(l)
+    return {
+        'path': l,
+        'content': {
+            'file1': {'type': 'f', 'size': 1, 'data': '1-1-1970', 'owner': 'Martin'},
+            'dir': {'type': 'd'}
+        }
+    }
+
+def generateDatabase():
+    '''
+        example:
+                [{tablename,row_data,definition_of_rows},{...},...]
+                    - row_data = [['polozky','dle','definice','radku'],[...],...]
+                    - definition_of_rows = [["rowname","rowdatatype"],[...],...]
+
+                [
+                 {'name': 'hrusky',
+                  'rows': [],
+                  'definition': [['id','i'],['jmeno','s'],['odruda','s']]},
+
+                 {'name': 'jabka',
+                  'rows': [['0', 'Granny Smith', 'green'], ['1', 'Granny Smith', 'green'],['2', 'Granny Smith', 'green']],
+                  'definition': [['id','i'],['jmeno','s'],['barva','s']]}
+                ]
+    '''
+    return {
+        'name': 'databaze1',
+        'tables': {
+            'tabulka1': {
+                'columns': {
+                    'jmeno': 's',
+                    'prijmeni': 's',
+                    'stastne_cislo': 'i'
+                },
+                'data': [
+                    {'jmeno': 'matej', 'prijmeni': 'navratil', 'stastne_cislo': 666},
+                    {'jmeno': 'adolf', 'prijmeni': 'hitler', 'stastne_cislo': 13},
+                    {'jmeno': 'ondrej', 'prijmeni': 'polansky', 'stastne_cislo': 42},
+                    {'jmeno': 'martin', 'prijmeni': 'benes', 'stastne_cislo': 69}
+                ]
+            },
+            'tabulka2': {
+                'columns': {
+                    'carodej': 's',
+                    'kouzlo': 's'
+                },
+                'data': [
+                    {'carodej': 'kolovrat', 'kouzlo': 'abrakadabra'},
+                    {'carodej': 'uchomaz', 'kouzlo': 'ententyky'},
+                    {'carodej': 'lapiduch', 'kouzlo': 'popokatepetl'}
+                ]
+            }
+        }
+    }
+
 
 def index(request):
     #User.objects.all().delete()
@@ -85,7 +162,7 @@ def dashboard(request):
         d['message'] = 'Unknown user.'
     else:
         d['page_list'] = models.Webpage.getWebpages(d['user'])
-    
+
     return render(request, "dashboard.html", d)
 
 def pageboard(request):
@@ -93,11 +170,13 @@ def pageboard(request):
     d = dict()
     try:
         d['user'] = User.objects.get(email=email)
+        pageid = request.GET['id']
+        d['page'] = models.Webpage.objects.get(id=pageid)
     except:
         d['message'] = 'Unknown user.'
     else:
         pass
-    
+
     return render(request, "pageboard.html", d)
 
 def createpage(request):
@@ -120,7 +199,30 @@ def logout(request):
     response.delete_cookie('user')
     return response
 
+@csrf_exempt
+def getDirData(request):
+    if request.method == 'POST':
+        path = json.loads( request.POST['requestpath'] )
+        print(path)
+        jsonresponse = json.dumps(XML.GetInfoFromFiletree("id101", path))
+        #jsonresponse = json.dumps(generateHierarchy(path))
+        #jsonresponse = json.dumps(generateSampleDir())
+        return HttpResponse(jsonresponse, content_type='application/json')
 
+@csrf_exempt
+def getDbData(request):
+    if request.method == 'POST':
+        #jsonresponse = json.dumps(XML.GetDatabase("dat007"))
+        jsonresponse = json.dumps(generateDatabase())
+        return HttpResponse(jsonresponse, content_type='application/json')
+
+@csrf_exempt
+def getUserData(request):
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        jsonresponse = json.dumps(XML.GetUser(projname))
+        print(XML.GetUser(projname))
+        return HttpResponse(jsonresponse, content_type='application/json')
 
 
 # add function with the name matching from urls.py

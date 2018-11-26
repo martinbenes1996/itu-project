@@ -1,0 +1,276 @@
+{% load static %}
+
+<head>
+	<link rel="stylesheet" href="{% static 'css/snippets/base.css' %}">
+	<link rel="stylesheet" href="{% static 'css/snippets/filebrowser.css' %}">
+</head>
+<div class="inner-body">
+
+	<h1>FTP</h1>
+
+	<div class="container lead center">
+		<p>This is the right place, where you can manage your directories and files. Easily start by opening your root
+			directory. You can create new folders, upload new files or rename them as quick as deleting them.</p>
+	</div>
+
+	<div id="pathbar" class="row"></div>
+	<div class="my-container dir-bar">
+		<div class="container-fluid" id="dircontent"></div>
+	</div>
+
+</div>
+
+
+<script>
+    var currentDirData;
+
+    function refreshFileData() {
+        //console.log(currentDirData);
+        generatePathButtons(currentDirData.path);
+        generateFileContent(currentDirData.content, undefined);
+    }
+
+    function errorResponse(rs, e) {
+
+    }
+
+    function requestFileData(datapath) {
+        var path = JSON.stringify(datapath);
+        //console.log(path)
+        $.post("{% url 'dirdata' %}",
+            {'requestpath': path},
+            function (data) {
+                currentDirData = data;
+                refreshFileData();
+            }
+        );
+    }
+
+    function generateButton(name, p) {
+        var x = $('<div>')
+            .append($('<a>', {id: name})
+                .css({'color': 'blue'})
+                .addClass('pathButton')
+                .text(name)
+                .click(p, function (event) {
+                    requestFileData(event.data);
+                })
+                .hover(
+                    function () {
+                        $(this).css({'color': 'red'});
+                    }, function () {
+                        $(this).css({'color': 'blue'});
+                    }
+                )
+            )
+        ;
+        return x;
+    }
+
+    function generatePathButtons(l) {
+        $('#pathbar').empty();
+        for (var i = 0; i < l.length; i++) {
+            // append button
+            var lslice = l.slice(0, i + 1);
+            $('#pathbar').append($('<span style="font-size: 150%; margin: -.4rem .2rem 0 .2rem;">').text('/'));
+            $('#pathbar').append(generateButton(l[i], lslice));
+        }
+    }
+
+    function generateItem(key, val) {
+        return $('<div>')
+            .addClass('col')
+            .append($('<span>')
+                .text(key)
+                .append($('<span>')
+                    .text('delete')
+                    .click({k: key, v: val}, function (event) {
+                        alert('delete ' + event.data.v);
+                    })
+                )
+            )
+            .click({k: key, v: val}, function (event) {
+                if (event.data.v['type'] == 'd') {
+                    var lslice = currentDirData['path'].slice();
+                    lslice.push(event.data.k);
+                    requestFileData(lslice);
+                } else {
+                    showProperties(event.data.k, event.data.v);
+                }
+            })
+            ;
+    }
+
+    function generateRowItem(key, val) {
+        if (val['type'] == 'd') {
+            return $('<div>').addClass('row dir-bar')
+            .append($('<div>').addClass('my-border dir-bar')
+                .append($('<div>').addClass('row dir-bar')
+										.append($('<i>').addClass('far fa-folder folder-align'))
+														.click({k: key, v: val}, function (event) {
+														if (event.data.v['type'] == 'd') {
+																var lslice = currentDirData['path'].slice();
+																lslice.push(event.data.k);
+																requestFileData(lslice);
+														} else {
+																showProperties(event.data.k, event.data.v);
+														}
+												})
+                    // left column
+										.append($('<div>').addClass('col lead my-align')
+												.text(key)
+												.click({k: key, v: val}, function (event) {
+														if (event.data.v['type'] == 'd') {
+																var lslice = currentDirData['path'].slice();
+																lslice.push(event.data.k);
+																requestFileData(lslice);
+														} else {
+																showProperties(event.data.k, event.data.v);
+														}
+												})
+										)
+										// right column
+										.append($('<div>').addClass('col text-right')
+												.append($('<button>').addClass('btn btn-align rename-align btn-secondary')
+														.text('rename')
+														.click({k: key, v: val}, function (event) {
+																var p = currentDirData.path.slice();
+																p.push(event.data.k);
+																alert('rename ' + JSON.stringify(p));
+														})
+												)
+												.append($('<button>').addClass('btn btn-align btn-warning')
+														.text('delete')
+														.click({k: key, v: val}, function (event) {
+																var p = currentDirData.path.slice();
+																p.push(event.data.k);
+																alert('delete ' + JSON.stringify(p));
+														})
+												)
+										)
+                )
+            )
+            // right vertical
+            .append($('<div>').addClass('col-lg-4'));
+				} else {
+            return $('<div>').addClass('row dir-bar')
+            .append($('<div>').addClass('my-border dir-bar')
+                .append($('<div>').addClass('row dir-bar')
+											.append($('<i>').addClass('far fa-file file-align'))
+															.click({k: key, v: val}, function (event) {
+														if (event.data.v['type'] == 'd') {
+																var lslice = currentDirData['path'].slice();
+																lslice.push(event.data.k);
+																requestFileData(lslice);
+														} else {
+																showProperties(event.data.k, event.data.v);
+														}
+												})
+                    // left column
+										.append($('<div>').addClass('col lead my-align')
+												.text(key)
+												.click({k: key, v: val}, function (event) {
+														if (event.data.v['type'] == 'd') {
+																var lslice = currentDirData['path'].slice();
+																lslice.push(event.data.k);
+																requestFileData(lslice);
+														} else {
+																showProperties(event.data.k, event.data.v);
+														}
+												})
+										)
+										// right column
+										.append($('<div>').addClass('col text-right')
+												.append($('<button>').addClass('btn btn-align rename-align btn-secondary')
+														.text('rename')
+														.click({k: key, v: val}, function (event) {
+																var p = currentDirData.path.slice();
+																p.push(event.data.k);
+																alert('rename ' + JSON.stringify(p));
+														})
+												)
+												.append($('<button>').addClass('btn btn-align btn-warning')
+														.text('delete')
+														.click({k: key, v: val}, function (event) {
+																var p = currentDirData.path.slice();
+																p.push(event.data.k);
+																alert('delete ' + JSON.stringify(p));
+														})
+												)
+										)
+                )
+            )
+            // right vertical
+            .append($('<div>').addClass('col-lg-4'));
+				}
+        // border box
+
+
+    }
+
+    function generateFileContent(content, mode) {
+        $('#dircontent').empty();
+        //var t = $('<div>')
+        //    .addClass('row');
+        $.each(content, function (key, value) {
+            if(value['type'] == 'd') { $('#dircontent').append(generateRowItem(key, value)); }
+            // tady bude rozhodovani podle mode (typ zobrazeni)
+        });
+        $.each(content, function (key, value) {
+            if(value['type'] == 'f') { $('#dircontent').append(generateRowItem(key, value)); }
+            // tady bude rozhodovani podle mode (typ zobrazeni)
+        });
+
+				$('#dircontent').append(
+						$('<div>').addClass('create')
+						.append($('<button>').addClass('btn btn-primary btn-align')
+								.text('create')
+								.click(function (event) {
+										alert('create ' + JSON.stringify(currentData));
+								})
+						)
+				)
+				;
+        //$('#dircontent').append(t);
+    }
+
+    function showProperties(key, val) {
+        $('#dircontent').empty();
+        $('#dircontent').append($('<button>')
+            .addClass('btn btn-sm btn-info')
+            .text("Go back")
+            .click({content: currentData.content, mode: undefined}, function (event) {
+                generateFileContent(event.data.content, event.data.mode)
+            })
+        );
+        var t = $('<table>');
+        $.each(val, function (k, v) {
+            t.append($('<tr>')
+                .append($('<td>')
+                    .text(k)
+                )
+                .append($('<td>')
+                    .text(v)
+                )
+            );
+        });
+        $('#dircontent').append(t);
+        //console.log('Properities: '+key)
+    }
+
+    $(document).ready(function () {
+        requestFileData(["home"]);
+    });
+
+
+    var toggler = document.getElementsByClassName("my-caret");
+    var i;
+
+    for (i = 0; i < toggler.length; i++) {
+        toggler[i].addEventListener("click", function () {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("my-caret-down");
+        });
+    }
+
+</script>
