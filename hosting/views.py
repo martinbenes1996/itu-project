@@ -203,11 +203,30 @@ def logout(request):
 def getDirData(request):
     if request.method == 'POST':
         path = json.loads( request.POST['requestpath'] )
-        print(path)
         jsonresponse = json.dumps(XML.GetInfoFromFiletree("id101", path))
         #jsonresponse = json.dumps(generateHierarchy(path))
         #jsonresponse = json.dumps(generateSampleDir())
         return HttpResponse(jsonresponse, content_type='application/json')
+
+@csrf_exempt
+def renameFile(request):
+    if request.method == 'POST':
+        path = json.loads( request.POST['requestpath'] )
+        oldname = request.POST['origname']
+        newname = request.POST['newname']
+        print(path, ':', oldname, '->', newname)
+        #tady nastavit v XML
+        return getDirData(request)
+
+@csrf_exempt
+def deleteFile(request):
+    if request.method == 'POST':
+        path = json.loads( request.POST['requestpath'] )
+        name = request.POST['name']
+        print(path, ":", name)
+        #tady nastavit v xml
+        return getDirData(request)
+
 
 @csrf_exempt
 def getDbData(request):

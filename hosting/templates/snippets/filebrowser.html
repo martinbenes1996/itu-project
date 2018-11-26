@@ -46,6 +46,29 @@
         );
     }
 
+    function sendRenameFile(datapath, origname, newname) {
+        var path = JSON.stringify(datapath);
+        $.post("{% url 'renamefile' %}",
+                {'requestpath': path, 'origname': origname, 'newname': newname},
+                function(data) {
+                    currentDirData = data;
+                    refreshFileData();
+                }
+        );
+    }
+
+    function sendDeleteFile(datapath, name) {
+        var path = JSON.stringify(datapath);
+        $.post("{% url 'deletefile' %}",
+                {'requestpath': path, 'name': name},
+                function(data) {
+                    currentDirData = data;
+                    refreshFileData();
+                }
+
+        );
+    }
+
     function generateButton(name, p) {
         var x = $('<div>')
             .append($('<a>', {id: name})
@@ -102,136 +125,92 @@
     }
 
     function generateRowItem(key, val) {
-        if (val['type'] == 'd') {
-            return $('<div>').addClass('row dir-bar')
+        var iconclass;
+        if(val['type'] == 'd') { iconclass = 'far fa-folder folder-align'; }
+        else { iconclass = 'far fa-file file-align'; }
+
+        return $('<div>').addClass('row dir-bar')
             .append($('<div>').addClass('my-border dir-bar')
-                .append($('<div>').addClass('row dir-bar')
-										.append($('<i>').addClass('far fa-folder folder-align'))
-														.click({k: key, v: val}, function (event) {
-														if (event.data.v['type'] == 'd') {
-																var lslice = currentDirData['path'].slice();
-																lslice.push(event.data.k);
-																requestFileData(lslice);
-														} else {
-																showProperties(event.data.k, event.data.v);
-														}
-												})
+                .append($('<div>').addClass('row dir-bar').attr("id", key)
+                    .click({k: key, v: val}, function (event) {
+					    if (event.data.v['type'] == 'd') {
+							var lslice = currentDirData['path'].slice();
+							lslice.push(event.data.k);
+							requestFileData(lslice);
+						} else {
+							showProperties(event.data.k, event.data.v);
+						}
+					})
+					.append($('<i>').addClass(iconclass))
                     // left column
-										.append($('<div>').addClass('col lead my-align')
-												.text(key)
-												.click({k: key, v: val}, function (event) {
-														if (event.data.v['type'] == 'd') {
-																var lslice = currentDirData['path'].slice();
-																lslice.push(event.data.k);
-																requestFileData(lslice);
-														} else {
-																showProperties(event.data.k, event.data.v);
-														}
-												})
-										)
-										// right column
-										.append($('<div>').addClass('col text-right')
-												.append($('<button>').addClass('btn btn-align rename-align btn-secondary')
-														.text('rename')
-														.click({k: key, v: val}, function (event) {
-																var p = currentDirData.path.slice();
-																p.push(event.data.k);
-																alert('rename ' + JSON.stringify(p));
-														})
-												)
-												.append($('<button>').addClass('btn btn-align btn-warning')
-														.text('delete')
-														.click({k: key, v: val}, function (event) {
-																var p = currentDirData.path.slice();
-																p.push(event.data.k);
-																alert('delete ' + JSON.stringify(p));
-														})
-												)
-										)
+					.append($('<div>').addClass('col lead my-align showEditForm')
+                        .text(key)
+					)
+					// right column
+					.append($('<div>').addClass('col text-right')
+						.append($('<button>').addClass('btn btn-align rename-align btn-secondary')
+							.text('rename')
+							.click({k: key, v: val}, function (event) {
+                                event.stopPropagation();
+                                var d = $("#"+key).find("div.showEditForm");
+                                d.empty();
+                                var i = $("<input>").addClass("form-control")
+                                    .attr({"type":"text", "value":event.data.k})
+                                    .click(function(event){ event.stopPropagation(); })
+                                    .on("keydown", function(e){
+                                        if(e.which == 13) {
+                                            e.preventDefault();
+                                            sendRenameFile(currentDirData['path'], key, this.value);
+                                            return;
+                                        } else if(e.which == 27) {
+                                            e.preventDefault();
+                                            requestFileData(currentDirData['path']);
+                                        }
+                                    })
+                                ;
+                                d.append(i);
+                                i.focus().select();
+                            })
+						)
+						.append($('<button>').addClass('btn btn-align btn-warning')
+							.text('delete')
+							.click({k: key, v: val}, function (event) {
+                                event.stopPropagation();
+                                sendDeleteFile(currentDirData['path'], event.data.k);
+							})
+						)
+					)
                 )
             )
             // right vertical
             .append($('<div>').addClass('col-lg-4'));
-				} else {
-            return $('<div>').addClass('row dir-bar')
-            .append($('<div>').addClass('my-border dir-bar')
-                .append($('<div>').addClass('row dir-bar')
-											.append($('<i>').addClass('far fa-file file-align'))
-															.click({k: key, v: val}, function (event) {
-														if (event.data.v['type'] == 'd') {
-																var lslice = currentDirData['path'].slice();
-																lslice.push(event.data.k);
-																requestFileData(lslice);
-														} else {
-																showProperties(event.data.k, event.data.v);
-														}
-												})
-                    // left column
-										.append($('<div>').addClass('col lead my-align')
-												.text(key)
-												.click({k: key, v: val}, function (event) {
-														if (event.data.v['type'] == 'd') {
-																var lslice = currentDirData['path'].slice();
-																lslice.push(event.data.k);
-																requestFileData(lslice);
-														} else {
-																showProperties(event.data.k, event.data.v);
-														}
-												})
-										)
-										// right column
-										.append($('<div>').addClass('col text-right')
-												.append($('<button>').addClass('btn btn-align rename-align btn-secondary')
-														.text('rename')
-														.click({k: key, v: val}, function (event) {
-																var p = currentDirData.path.slice();
-																p.push(event.data.k);
-																alert('rename ' + JSON.stringify(p));
-														})
-												)
-												.append($('<button>').addClass('btn btn-align btn-warning')
-														.text('delete')
-														.click({k: key, v: val}, function (event) {
-																var p = currentDirData.path.slice();
-																p.push(event.data.k);
-																alert('delete ' + JSON.stringify(p));
-														})
-												)
-										)
-                )
-            )
-            // right vertical
-            .append($('<div>').addClass('col-lg-4'));
-				}
-        // border box
-
-
     }
 
     function generateFileContent(content, mode) {
         $('#dircontent').empty();
-        //var t = $('<div>')
-        //    .addClass('row');
         $.each(content, function (key, value) {
-            if(value['type'] == 'd') { $('#dircontent').append(generateRowItem(key, value)); }
+            if(value['type'] == 'd') {
+                $('#dircontent').append(generateRowItem(key, value));
+            }
             // tady bude rozhodovani podle mode (typ zobrazeni)
         });
         $.each(content, function (key, value) {
-            if(value['type'] == 'f') { $('#dircontent').append(generateRowItem(key, value)); }
+            if(value['type'] == 'f') {
+                $('#dircontent').append(generateRowItem(key, value));
+            }
             // tady bude rozhodovani podle mode (typ zobrazeni)
         });
-
-				$('#dircontent').append(
-						$('<div>').addClass('create')
-						.append($('<button>').addClass('btn btn-primary btn-align')
-								.text('create')
-								.click(function (event) {
-										alert('create ' + JSON.stringify(currentData));
-								})
-						)
+        
+        $('#dircontent')
+            .append($('<div>').addClass('create')
+				.append($('<button>').addClass('btn btn-primary btn-align')
+					.text('create')
+					.click(function (event) {
+						alert('create ' + JSON.stringify(currentData));
+					})
 				)
-				;
-        //$('#dircontent').append(t);
+			)
+		;
     }
 
     function showProperties(key, val) {
@@ -239,8 +218,8 @@
         $('#dircontent').append($('<button>')
             .addClass('btn btn-sm btn-info')
             .text("Go back")
-            .click({content: currentData.content, mode: undefined}, function (event) {
-                generateFileContent(event.data.content, event.data.mode)
+            .click({content: currentDirData.content, mode: undefined}, function (event) {
+                generateFileContent(event.data.content, event.data.mode);
             })
         );
         var t = $('<table>');
@@ -255,22 +234,11 @@
             );
         });
         $('#dircontent').append(t);
-        //console.log('Properities: '+key)
     }
 
     $(document).ready(function () {
         requestFileData(["home"]);
     });
 
-
-    var toggler = document.getElementsByClassName("my-caret");
-    var i;
-
-    for (i = 0; i < toggler.length; i++) {
-        toggler[i].addEventListener("click", function () {
-            this.parentElement.querySelector(".nested").classList.toggle("active");
-            this.classList.toggle("my-caret-down");
-        });
-    }
 
 </script>

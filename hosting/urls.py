@@ -29,6 +29,8 @@ urlpatterns = [
     path('createpage/', views.createpage, name="createpage"),
     path('pageboard/', views.pageboard, name='pageboard'),
     path('getDirData/', views.getDirData, name='dirdata'),
+    path('renameFile/', views.renameFile, name='renamefile'),
+    path('deleteFile/', views.deleteFile, name='deletefile'),
     path('getDbData/', views.getDbData, name='dbdata'),
     path('getUserData/', views.getUserData, name='userdata')
     # here add new pages
