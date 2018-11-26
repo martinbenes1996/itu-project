@@ -11,16 +11,69 @@ $(document).ready(function () {
     });
 });
 
-/* Keep the dropdown open !! DELETE DATA-TOQQLE="DROPDOWN"
-$('li.dropdown.keep-inside-clicks-open a').on('click', function (event) {
-    $(this).parent().toggleClass('open');
+
+
+
+$(function()
+{
+    function after_form_submitted(data)
+    {
+        if(data.result == 'success')
+        {
+            $('form#reused_form').hide();
+            $('#success_message').show();
+            $('#error_message').hide();
+        }
+        else
+        {
+            $('#error_message').append('<ul></ul>');
+
+            jQuery.each(data.errors,function(key,val)
+            {
+                $('#error_message ul').append('<li>'+key+':'+val+'</li>');
+            });
+            $('#success_message').hide();
+            $('#error_message').show();
+
+            //reverse the response on the button
+            $('button[type="button"]', $form).each(function()
+            {
+                $btn = $(this);
+                label = $btn.prop('orig_label');
+                if(label)
+                {
+                    $btn.prop('type','submit' );
+                    $btn.text(label);
+                    $btn.prop('orig_label','');
+                }
+            });
+
+        }//else
+    }
+
+	$('#reused_form').submit(function(e)
+      {
+        e.preventDefault();
+
+        $form = $(this);
+        //show some response on the button
+        $('button[type="submit"]', $form).each(function()
+        {
+            $btn = $(this);
+            $btn.prop('type','button' );
+            $btn.prop('orig_label',$btn.text());
+            $btn.text('Sending ...');
+        });
+
+
+                    $.ajax({
+                type: "POST",
+                url: 'mail_sender.py',
+                data: $form.serialize(),
+                success: after_form_submitted,
+                dataType: 'json'
+            });
+
+      });
 });
 
-$('body').on('click', function (e) {
-    if (!$('li.dropdown.keep-inside-clicks-open').is(e.target)
-        && $('li.dropdown.keep-inside-clicks-open').has(e.target).length === 0
-        && $('.open').has(e.target).length === 0
-    ) {
-        $('li.dropdown.keep-inside-clicks-open').removeClass('open');
-    }
-});*/
