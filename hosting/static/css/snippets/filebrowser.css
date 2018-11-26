@@ -34,6 +34,18 @@ a.pathButton{
     padding-right: 15px;
 }
 
+.file-align{
+    margin-top: 18px;
+    margin-left: 19px;
+    margin-right: -17px;
+}
+
+.folder-align{
+    margin-top: 18px;
+    margin-left: 17px;
+    margin-right: -17px;
+}
+
 .create{
     padding-left: 15px;
 }
