@@ -36,7 +36,7 @@
 				<a class="nav-link dropdown-toggle" href="#" id="userDropdown" rule="button" data-toggle="dropdown"
 					 aria-haspopup="true" aria-expanded="false">
 					<i class="fas fa-user-circle fa-fw"></i>
-					#USER_NAME
+					{{user.first_name}}
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 					<a class="dropdown-item" href="#">Settings</a>
@@ -62,7 +62,7 @@
 
 			<!-- MENU HEADER -->
 			<div class="user">
-				<h5 class="welcome">#JMÉNO_VYBRANÉ_STRÁNKY</h5>
+				<h5 class="welcome">{{page.name}}</h5>
 			</div>
 
 			<!-- PAGE LIST -->
@@ -97,7 +97,7 @@
 
 		<div class="col-10 tab-content">
 			<div id="Dashboard" class="tab-pane fade in active">
-				{% include 'snippets/dbbrowser.html' %}
+				{% include 'snippets/dashboardbrowser.html' %}
 			</div>
 
 			<div id="Ftp" class="tab-pane fade">
@@ -105,31 +105,19 @@
 			</div>
 
 			<div id="Dns" class="tab-pane fade">
-				<h1>DNS</h1>
-				<p>
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-				</p>
+				{% include 'snippets/dnsbrowser.html' %}
 			</div>
 
 			<div id="Database" class="tab-pane fade">
-				<h1>Database</h1>
-				<p>
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-				</p>
+				{% include 'snippets/dbbrowser.html' %}
 			</div>
 
 			<div id="Email" class="tab-pane fade">
-				<h1>Email</h1>
-				<p>
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-				</p>
+				{% include 'snippets/emailbrowser.html' %}
 			</div>
 
 			<div id="Users" class="tab-pane fade">
-				<h1>Users</h1>
-				<p>
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-				</p>
+				{% include 'snippets/usersbrowser.html' %}
 			</div>
 		</div>
 
