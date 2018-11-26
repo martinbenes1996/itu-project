@@ -107,6 +107,15 @@
             .append($('<div>').addClass('my-border dir-bar')
                 .append($('<div>').addClass('row dir-bar')
 										.append($('<i>').addClass('far fa-folder folder-align'))
+														.click({k: key, v: val}, function (event) {
+														if (event.data.v['type'] == 'd') {
+																var lslice = currentData['path'].slice();
+																lslice.push(event.data.k);
+																requestData(lslice);
+														} else {
+																showProperties(event.data.k, event.data.v);
+														}
+												})
                     // left column
 										.append($('<div>').addClass('col lead my-align')
 												.text(key)
@@ -147,7 +156,16 @@
             return $('<div>').addClass('row dir-bar')
             .append($('<div>').addClass('my-border dir-bar')
                 .append($('<div>').addClass('row dir-bar')
-										.append($('<i>').addClass('far fa-file file-align'))
+											.append($('<i>').addClass('far fa-file file-align'))
+															.click({k: key, v: val}, function (event) {
+														if (event.data.v['type'] == 'd') {
+																var lslice = currentData['path'].slice();
+																lslice.push(event.data.k);
+																requestData(lslice);
+														} else {
+																showProperties(event.data.k, event.data.v);
+														}
+												})
                     // left column
 										.append($('<div>').addClass('col lead my-align')
 												.text(key)
