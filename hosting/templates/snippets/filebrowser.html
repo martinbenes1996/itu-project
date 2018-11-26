@@ -215,17 +215,12 @@
         $.each(content, function (key, value) {
             if(value['type'] == 'd') { $('#dircontent').append(generateRowItem(key, value)); }
             // tady bude rozhodovani podle mode (typ zobrazeni)
-<<<<<<< HEAD
-            $('#dircontent').append(generateRowItem(key, value));
-        })
-=======
         });
         $.each(content, function (key, value) {
             if(value['type'] == 'f') { $('#dircontent').append(generateRowItem(key, value)); }
             // tady bude rozhodovani podle mode (typ zobrazeni)
         });
 
->>>>>>> origin/master
 				$('#dircontent').append(
 						$('<div>').addClass('create')
 						.append($('<button>').addClass('btn btn-primary btn-align')
