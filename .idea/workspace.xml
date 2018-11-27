@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="090f3933-ff7b-41ec-ae29-9f23e2ed4bfa" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/hosting/static/css/snippets/base.css" afterPath="$PROJECT_DIR$/hosting/static/css/snippets/base.css" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+      <change beforePath="$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html" afterPath="$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html" />
       <change beforePath="$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html" afterPath="$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html" />
-      <change beforePath="$PROJECT_DIR$/hosting/templates/snippets/filebrowser.html" afterPath="$PROJECT_DIR$/hosting/templates/snippets/filebrowser.html" />
-      <change beforePath="$PROJECT_DIR$/hosting/templates/snippets/usersbrowser.html" afterPath="$PROJECT_DIR$/hosting/templates/snippets/usersbrowser.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,24 +32,34 @@
       <file leaf-file-name="usersbrowser.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/usersbrowser.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="113" column="66" lean-forward="false" selection-start-line="113" selection-start-column="66" selection-end-line="113" selection-end-column="66" />
+            <state relative-caret-position="255">
+              <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="emailbrowser.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="emailbrowser.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="54" column="41" lean-forward="false" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
+            <state relative-caret-position="1020">
+              <caret line="60" column="27" lean-forward="false" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dnsbrowser.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hosting/static/css/snippets/base.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="369">
@@ -63,8 +72,8 @@
       <file leaf-file-name="filebrowser.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/filebrowser.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1343">
-              <caret line="150" column="70" lean-forward="false" selection-start-line="150" selection-start-column="70" selection-end-line="150" selection-end-column="70" />
+            <state relative-caret-position="-561">
+              <caret line="196" column="30" lean-forward="false" selection-start-line="196" selection-start-column="30" selection-end-line="196" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -145,8 +154,9 @@
         <option value="$PROJECT_DIR$/hosting/templates/dashboard.html" />
         <option value="$PROJECT_DIR$/hosting/templates/snippets/filebrowser.html" />
         <option value="$PROJECT_DIR$/hosting/templates/snippets/usersbrowser.html" />
-        <option value="$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html" />
         <option value="$PROJECT_DIR$/hosting/static/css/snippets/base.css" />
+        <option value="$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html" />
+        <option value="$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html" />
       </list>
     </option>
   </component>
@@ -617,13 +627,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1717">
@@ -656,24 +659,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/filebrowser.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1343">
-          <caret line="150" column="70" lean-forward="false" selection-start-line="150" selection-start-column="70" selection-end-line="150" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/usersbrowser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="113" column="66" lean-forward="false" selection-start-line="113" selection-start-column="66" selection-end-line="113" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="54" column="41" lean-forward="false" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
+        <state relative-caret-position="-561">
+          <caret line="196" column="30" lean-forward="false" selection-start-line="196" selection-start-column="30" selection-end-line="196" selection-end-column="30" />
           <folding />
         </state>
       </provider>
@@ -682,6 +669,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="369">
           <caret line="33" column="15" lean-forward="false" selection-start-line="33" selection-start-column="15" selection-end-line="33" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/usersbrowser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="60" column="27" lean-forward="false" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
           <folding />
         </state>
       </provider>
