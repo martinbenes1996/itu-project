@@ -1,3 +1,170 @@
 .inner-body{
     max-width: 1550px;
 }
+
+.dir-bar{
+    width: 100%;
+    height: 100%;
+}
+
+.my-container{
+    max-width: 840px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.create{
+    padding-left: 15px;
+}
+
+.btn-align{
+    margin-right: 10px;
+    margin-top: 8px;
+    width: 100px;
+}
+
+.text-right{
+    padding-right: 0; !important
+}
+
+.row{
+    margin: 0; !important;
+}
+
+.my-align{
+    margin-bottom: 0px; !important: ;
+    padding-top: 8px;
+    padding-top: 9px;
+    padding-left: 13px;
+    vertical-align: center;
+}
+
+.my-border{
+    border-style: solid;
+    height: 50px;
+    border-color: #888888;
+    border-width: 1px;
+    margin-bottom: -2px;
+}
+
+.my-border:hover {
+    background-color: #e5e5e5;
+}
+
+.my-border-users:hover {
+    background-color: #e5e5e5;
+}
+
+#pathbar{
+    margin: 7em 5em 1em 13em;
+}
+
+
+#pathbar a{
+    cursor: pointer;
+}
+
+.center{
+    text-align: center;
+}
+
+a.pathButton:hover{
+    color: rgba(255,255,255,.75);
+}
+a.pathButton{
+    color: rgba(255,255,255,.5);
+}
+
+.file-align{
+    padding-top: 18px;
+    padding-left: 19px;
+}
+
+.folder-align{
+    padding-top: 18px;
+    padding-left: 17px;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.enum-top{
+    padding: 13px 15px 0px 25px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.enum{
+    padding: 15px 15px 0px 25px;
+    font-weight: bold;
+}
+
+.my-border-users{
+    border-style: solid;
+    height: 50px;
+    border-color: #888888;
+    border-width: 1px;
+    margin-bottom: -1px;
+}
+
+.email-huge{
+    font-size: 30pt;
+    font-weight: bold;
+    text-shadow: 0 0 5px #a9a9a9;
+}
+
+.my-container-email{
+
+    max-width: 1180px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.top{
+    background-color: #636363;
+    color: white;
+}
+
+.from-top{
+    padding: 13px 15px 0px 25px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.subject-top{
+    padding: 13px 15px 0px 28px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.arrow-top{
+    padding: 16px 15px 0px 193px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.from{
+    padding: 15px 15px 0px 75px;
+    /* font-size: large; */
+    font-weight: bold;
+    position: absolute;
+}
+
+.subject{
+    padding: 15px 15px 0px 389px;
+    /* font-size: large; */
+    /* font-weight: bold; */
+    position: absolute;
+}
+
+.arrow{
+    padding: 18px 15px 0px 330px;
+    /* font-size: large; */
+    /* font-weight: bold; */
+    position: absolute;
+}

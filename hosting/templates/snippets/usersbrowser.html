@@ -1,21 +1,91 @@
-<div class="inner-body">
-    <h1>Users</h1>
-    
-    <div class="container lead center">
-        <p>
-            Check the list of all users registered to your page.
-            Manage their access, or add, modify or delete them.
-        </p>
-    </div>
-    
-    <div class="my-container dir-bar">
-        <div class="container-fluid" id="userlist"></div>
-    </div>
+{% load static %}
 
+<head>
+	<link rel="stylesheet" href="{% static 'css/snippets/base.css' %}">
+</head>
+
+<div class="inner-body">
+	<h1 class="center">Users</h1>
+
+	<div class="container lead center">
+		<p>
+			Check the list of all users registered to your page.
+			Manage their access, or add, modify or delete them.
+		</p>
+	</div>
+
+	<div id="pathbar"></div>
+
+	<div class="my-container dir-bar">
+		<div class="container-fluid" id="userlist">
+			<div class="row dir-bar my-border-users ">
+
+				<div class="row dir-bar">
+					<span class="enum pointer">#1</span>
+					<div class="col lead my-align pointer">
+						martin.benes666
+					</div>
+					<div class="col text-right">
+						<button class="btn btn-align rename-align btn-secondary">modify</button>
+						<button class="btn btn-align btn-warning">delete</button>
+					</div>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<div class="row dir-bar my-border-users ">
+				<div class="row dir-bar">
+					<span class="enum pointer">#2</span>
+					<div class="col lead my-align pointer">
+						ondrej.polansky555
+					</div>
+					<div class="col text-right">
+						<button class="btn btn-align rename-align btn-secondary">modify</button>
+						<button class="btn btn-align btn-warning">delete</button>
+					</div>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<div class="row dir-bar my-border-users ">
+				<div class="row dir-bar">
+					<span class="enum pointer">#3</span>
+					<div class="col lead my-align pointer">
+						jan.bartosek444
+					</div>
+					<div class="col text-right">
+						<button class="btn btn-align rename-align btn-secondary">modify</button>
+						<button class="btn btn-align btn-warning">delete</button>
+					</div>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<div class="row dir-bar my-border-users ">
+				<div class="row dir-bar">
+					<span class="enum pointer">#4</span>
+					<div class="col lead my-align pointer">
+						random.user333
+					</div>
+					<div class="col text-right">
+						<button class="btn btn-align rename-align btn-secondary">modify</button>
+						<button class="btn btn-align btn-warning">delete</button>
+					</div>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<div class="create">
+				<button class="btn btn-primary btn-align">add</button>
+			</div>
+		</div>
+	</div>
 </div>
+
 
 <script>
     var currentData;
+
     function refreshUsersData() {
         generateUsers(currentData);
     }
@@ -51,7 +121,7 @@
 
     function generateUsers() {
         $("#userlist").empty();
-        $.each(currentData, function(u) {
+        $.each(currentData, function (u) {
             $("#userlist").append(generateUser(u));
         });
     }
