@@ -240,7 +240,7 @@ def createDir(request):
         projname = request.POST['projname']
         path = json.loads( request.POST['requestpath'] )
         name = request.POST['name']
-        XML.AddToFiletree(projname, path, name, 'd', request.COOKIES.get('user'))
+        XML.AddToFiletree(projname, path, name, 'd')
         return getDirData(request)
 
 @csrf_exempt
@@ -250,7 +250,7 @@ def createFile(request):
         path = json.loads( request.POST['requestpath'] )
         name = request.POST['name']
         size = request.POST['size']
-        XML.AddToFiletree(projname, path, name, 'f', request.COOKIES.get('user'), size)
+        XML.AddToFiletree(projname, path, name, 'f', "unknown", size)
         return getDirData(request)
 
 
