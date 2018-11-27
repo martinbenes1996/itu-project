@@ -196,3 +196,19 @@ a.pathButton {
     overflow-y: auto;
     overflow-x: auto;
 }
+
+.no-indent{
+    list-style-type: none;
+}
+
+.minus-left{
+    padding-left: 0px;
+}
+
+.minus-bottom{
+    margin-bottom: 5px !important;
+}
+
+.plus-bottom{
+    margin-bottom: 20px;
+}
