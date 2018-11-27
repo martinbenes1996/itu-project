@@ -150,21 +150,34 @@ a.pathButton{
 
 .from{
     padding: 15px 15px 0px 75px;
-    /* font-size: large; */
     font-weight: bold;
     position: absolute;
 }
 
 .subject{
     padding: 15px 15px 0px 389px;
-    /* font-size: large; */
-    /* font-weight: bold; */
     position: absolute;
 }
 
 .arrow{
     padding: 18px 15px 0px 330px;
-    /* font-size: large; */
-    /* font-weight: bold; */
     position: absolute;
+}
+
+.two-columns{
+
+    display: inline-flex;
+    width: 100%;
+}
+
+.justify{
+    text-align: justify;
+}
+
+.my-list{
+    text-align: left;
+}
+
+.indent{
+    text-indent: 2em;
 }
