@@ -210,11 +210,9 @@ def getDirData(request):
         d['message'] = 'Unknown user.'
     if request.method == 'POST':
         path = json.loads( request.POST['requestpath'] )
-        project = request.POST['project']
+        project = request.POST['projname']
         print(project, path)
         jsonresponse = json.dumps(XML.GetInfoFromFiletree(project, path))
-        #jsonresponse = json.dumps(generateHierarchy(path))
-        #jsonresponse = json.dumps(generateSampleDir())
         return HttpResponse(jsonresponse, content_type='application/json')
 
 @csrf_exempt
@@ -230,17 +228,35 @@ def renameFile(request):
 @csrf_exempt
 def deleteFile(request):
     if request.method == 'POST':
+        projname = request.POST['projname']
         path = json.loads( request.POST['requestpath'] )
         name = request.POST['name']
-        print(path, ":", name)
-        #tady nastavit v xml
+        XML.DeleteFromFiletree(projname, path, name)
+        return getDirData(request)
+
+@csrf_exempt
+def createDir(request):
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        path = json.loads( request.POST['requestpath'] )
+        name = request.POST['name']
+        XML.AddToFiletree(projname, path, name, 'd', request.COOKIES.get('user'))
+        return getDirData(request)
+
+@csrf_exempt
+def createFile(request):
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        path = json.loads( request.POST['requestpath'] )
+        name = request.POST['name']
+        size = request.POST['size']
+        XML.AddToFiletree(projname, path, name, 'f', request.COOKIES.get('user'), size)
         return getDirData(request)
 
 
 @csrf_exempt
 def getDbData(request):
     if request.method == 'POST':
-        #jsonresponse = json.dumps(XML.GetDatabase("dat007"))
         jsonresponse = json.dumps(generateDatabase())
         return HttpResponse(jsonresponse, content_type='application/json')
 
@@ -248,10 +264,25 @@ def getDbData(request):
 def getUserData(request):
     if request.method == 'POST':
         projname = request.POST['projname']
-        print(projname)
-        projname = "MaxipesFanpage"
         jsonresponse = json.dumps(XML.GetUser(projname))
+        print(jsonresponse)
         return HttpResponse(jsonresponse, content_type='application/json')
+
+@csrf_exempt
+def addUser(request):
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        username = request.POST['username']
+        XML.AddUser(projname, username)
+        return getUserData(request)
+
+@csrf_exempt
+def deleteUser(request):
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        username = request.POST['username']
+        XML.DeleteUser(projname, username)
+        return getUserData(request)
 
 
 # add function with the name matching from urls.py

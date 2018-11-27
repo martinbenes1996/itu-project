@@ -29,9 +29,13 @@ urlpatterns = [
     path('createpage/', views.createpage, name="createpage"),
     path('pageboard/', views.pageboard, name='pageboard'),
     path('getDirData/', views.getDirData, name='dirdata'),
+    path('createDir/', views.createDir, name='createdir'),
+    path('createFile/', views.createFile, name='createfile'),
     path('renameFile/', views.renameFile, name='renamefile'),
     path('deleteFile/', views.deleteFile, name='deletefile'),
     path('getDbData/', views.getDbData, name='dbdata'),
+    path('addUser/', views.addUser, name='adduser'),
+    path('deleteUser/', views.deleteUser, name='deleteuser'),
     path('getUserData/', views.getUserData, name='userdata')
     # here add new pages
     # path(keyword, views.function)

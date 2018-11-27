@@ -14,117 +14,138 @@
 		</p>
 	</div>
 
-	<div id="pathbar"></div>
-
 	<div class="my-container dir-bar">
-		<div class="container-fluid" id="userlist">
-			<div class="row dir-bar my-border-users ">
+		<div id="userslist" class="container-fluid">
 
-				<div class="row dir-bar">
-					<span class="enum pointer">#1</span>
-					<div class="col lead my-align pointer">
-						martin.benes666
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary">modify</button>
-						<button class="btn btn-align btn-warning">delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="row dir-bar my-border-users ">
-				<div class="row dir-bar">
-					<span class="enum pointer">#2</span>
-					<div class="col lead my-align pointer">
-						ondrej.polansky555
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary">modify</button>
-						<button class="btn btn-align btn-warning">delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="row dir-bar my-border-users ">
-				<div class="row dir-bar">
-					<span class="enum pointer">#3</span>
-					<div class="col lead my-align pointer">
-						jan.bartosek444
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary">modify</button>
-						<button class="btn btn-align btn-warning">delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="row dir-bar my-border-users ">
-				<div class="row dir-bar">
-					<span class="enum pointer">#4</span>
-					<div class="col lead my-align pointer">
-						random.user333
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary">modify</button>
-						<button class="btn btn-align btn-warning">delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="create">
-				<button class="btn btn-primary btn-align">add</button>
-			</div>
 		</div>
 	</div>
 </div>
 
 
 <script>
-    var currentData;
+    var currentUsersData;
 
     function refreshUsersData() {
-        generateUsers(currentData);
+        generateUsers();
     }
 
     function requestUsersData() {
         $.post("{% url 'userdata' %}",
-            {'projname': "{{page.name}}" },
+            {'projname': "{{page.name}}"},
             function (data) {
-                currentData = data;
-                refreshUsersData();
+                currentUsersData = data;
+				refreshUsersData();
             }
         );
-    }
+	}
+	
+	function sendNewUser(username) {
+		$.post("{% url 'adduser' %}",
+			{'projname': "{{page.name}}", 'username':username},
+			function(data) {
+				currentUsersData = data;
+				refreshUsersData();
+			}
+		);
+	}
 
-    function generateUser(user) {
-        return $("<div>").addClass("row dir-bar")
-            .append($("<div>").addClass("my-border dir-bar")
-                .append($("<div>").addClass("row dir-bar")
-                    .append($("<div>").addClass("col lead my-align")
-                        .text(user)
-                    )
-                    .append($("<div>").addClass("col text-right")
-                        .append($("button").addClass("btn btn-align rename-align btn-secondary")
-                            .text("Edit")
-                        )
-                        .append($("button").addClass("btn btn-align btn-warning")
-                            .text("Delete")
-                        )
+	function sendDeleteUser(username) {
+		$.post("{% url 'deleteuser' %}",
+			{'projname': "{{page.name}}", 'username': username},
+			function(data) {
+				currentUsersData = data;
+				refreshUsersData();
+			}
+		);
+	}
+
+    function generateUser(user, id) {
+        return $("<div>").addClass("row dir-bar my-border-users")
+            .append($("<div>").addClass("row dir-bar")
+                .append($("<span>").addClass("enum pointer")
+					.text("#"+id)
+				)
+                .append($("<div>").addClass("col lead my-align pointer")
+                    .text(user)
+                )
+                .append($("<div>").addClass("col text-right")
+					.append($("<button>").addClass("btn btn-align rename-align btn-secondary")
+						.text("Modify")
+					)
+                    .append($("<button>").addClass("btn btn-align btn-warning")
+						.text("Delete")
+						.click(user, function(event) {
+							sendDeleteUser(event.data);
+						})
                     )
                 )
-            );
+			)
+			.append($("<div>").addClass("col-lg-4"))
+		;
     }
 
     function generateUsers() {
-        $("#userlist").empty();
-        $.each(currentData, function (u) {
-            $("#userlist").append(generateUser(u));
-        });
-    }
+		$("#userslist").empty();
+        $.each(currentUsersData, function (u) {
+			$("#userslist").append( generateUser(currentUsersData[u], u) );
+		});
+		
+		$("#userslist").append($("<div>")
+			.attr("id", "useradder")
+			.append($("<button>").addClass("btn btn-primary btn-align")
+				.text("Add user")
+				.click(newUserLine)
+			)
+		);
+	}
+
+	function newUserLine() {
+		$("#useradder").empty();
+		var userinput = $("<input>").addClass("form-control")
+			.attr({"type":"text", "value":"new file"})
+			.on("keydown", function(e){
+				if(e.which == 13) {
+					e.preventDefault();
+					sendNewUser(this.value);
+					return;
+				} else if(e.which == 27) {
+					e.preventDefault();
+					requestUsersData();
+				}
+			})
+		;
+		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
+			.text("Add user")
+			.click(userinput, function(event){
+					alert(event.data.value)
+					sendNewUser(event.data.value);
+			})
+		;
+
+		$("#useradder").append($("<div>").addClass("row dir-bar my-border-users")
+			.append($("<div>").addClass("row dir-bar")
+				.append($("<span>").addClass("enum pointer")
+					.text("#"+currentUsersData.length)
+				)
+				.append($("<div>").addClass("col lead my-align pointer")
+					.append(userinput)
+				)
+				.append($("<button>").addClass("btn")
+					.text("Add user")
+					.click(userinput, function() {
+						var e = jQuery.Event("keydown");
+						e.which = 13;
+						userinput.trigger(e);
+					})
+				)
+				.append($("<div>").addClass("col text-right"))
+			)
+			.append($("<div>").addClass("col-lg-4"))
+		);
+		userinput.focus().select();
+
+	}
+
 
     $(document).ready(function () {
         requestUsersData();
