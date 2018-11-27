@@ -1,3 +1,9 @@
+<div class="test">ANIDBNAVOUSzxcvxzcondgiuengiuadjskfbngasueyrhjkdgbfnsdjfhgmkbknsdfjhxgbnasdfjhgfkabhdr sughjkasdb
+	ghjvasdbmn gsyuidfhkjxmnvbga sfduoyhjdbfgnadf z\socxilhjvbaerg<br>dhfzsncxuibagjnfd cxnipuobvhjknzdfcxuykhjvblhns
+	dzhuicxjkbvzn fduocxjhlkvbzn dficxujkb mnzfgihvcjklm ,bmn afdikujghnvauoierfdjkgbhnv aoerisdukgjhnvmadfuiokjgvnf
+	ůoiasfdlxkgnmva nsuidjkgnvfa hidR
+</div>
+
 
 <script>
     var currentData;
@@ -9,7 +15,7 @@
 
     function requestDbData() {
         $.post("{% url 'dbdata' %}",
-            function(data) {
+            function (data) {
                 currentData = JSON.parse(JSON.stringify(data));
                 refreshDbData();
             }
@@ -18,40 +24,45 @@
 
     function generateOrientationButton(name, f) {
         var x = $('<div>')
-            .append( $('<a>', {id: name})
+            .append($('<a>', {id: name})
                 .css({'color': 'blue'})
                 .addClass('pathButton')
                 .text(name)
-                .click({'name':name, 'f':f}, function(event) {
+                .click({'name': name, 'f': f}, function (event) {
                     event.data.f(event.data.name);
                 })
                 .hover(
-                    function() {
-                        $(this).css({'text-decoration':'underline', 'color':'red'});
-                    }, function() {
-                        $(this).css({'text-decoration':'none', 'color':'blue'});
+                    function () {
+                        $(this).css({'text-decoration': 'underline', 'color': 'red'});
+                    }, function () {
+                        $(this).css({'text-decoration': 'none', 'color': 'blue'});
                     }
                 )
             )
         ;
         return x;
     }
+
     function generateOrientation(table='') {
         $('#orientationbar').empty();
         $('#orientationbar')
             .append(
                 generateOrientationButton(
                     currentData.name,
-                    function(name){ generateDbContent(); }
+                    function (name) {
+                        generateDbContent();
+                    }
                 )
             )
         ;
-        if(table != "") {
+        if (table != "") {
             $('#orientationbar')
                 .append(
                     generateOrientationButton(
                         table,
-                        function(name){ generateTableContent(name); }
+                        function (name) {
+                            generateTableContent(name);
+                        }
                     )
                 )
             ;
@@ -61,9 +72,9 @@
     function generateDbContent() {
         $('#dbcontent').empty();
         var t = $('<table>');
-        $.each(currentData.tables, function(key, value) {
+        $.each(currentData.tables, function (key, value) {
             t.append($('<tr>').append($('<td>').text(key)
-                .click(key, function(event) {
+                .click(key, function (event) {
                     generateTableContent(event.data);
                 })
             ));
@@ -78,27 +89,27 @@
         console.debug(currentData);
         console.debug(tablename);
         console.debug(currentData.tables[tablename]);
-        $.each(currentData.tables[tablename].columns, function(colname, col_dtype){
+        $.each(currentData.tables[tablename].columns, function (colname, col_dtype) {
             h.append($('<td>').text(colname));
             // use col_dtype
         });
-        $.each(currentData.tables[tablename].data, function(col, val){
+        $.each(currentData.tables[tablename].data, function (col, val) {
             var dr = $('<tr>');
-            $.each(currentData.tables[tablename].columns, function(colname ,col_dtype){
+            $.each(currentData.tables[tablename].columns, function (colname, col_dtype) {
                 dr.append($('td').text(val[colname]));
             });
             t.append(dr);
         });
-            
+
     }
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         requestDbData();
     });
 </script>
 
 <div class="container-fluid" style="margin: 50px">
-    <div id="orientationbar" class="row" style="margin-bottom: 30px"></div>
-    <div class="container-fluid" id="dbcontent"></div>
+	<div id="orientationbar" class="row" style="margin-bottom: 30px"></div>
+	<div class="container-fluid" id="dbcontent"></div>
 </div>
