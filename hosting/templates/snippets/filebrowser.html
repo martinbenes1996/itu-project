@@ -38,7 +38,7 @@
         var path = JSON.stringify(datapath);
         //console.log(path)
         $.post("{% url 'dirdata' %}",
-            {'requestpath': path},
+            {'project': "{{page.name}}",'requestpath': path},
             function (data) {
                 currentDirData = data;
                 refreshFileData();

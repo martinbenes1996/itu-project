@@ -170,12 +170,12 @@ def pageboard(request):
     d = dict()
     try:
         d['user'] = User.objects.get(email=email)
-        pageid = request.GET['id']
-        d['page'] = models.Webpage.objects.get(id=pageid)
     except:
         d['message'] = 'Unknown user.'
     else:
         pass
+    pageid = request.GET['id']
+    d['page'] = models.Webpage.objects.get(id=pageid)
 
     return render(request, "pageboard.html", d)
 
@@ -189,6 +189,7 @@ def createpage(request):
     else:
         if request.method == 'POST':
             d['name'] = request.POST['name']
+            XML.CreateProject(d['name'])
             w = models.Webpage(name=d['name'], user=d['user'])
             w.save()
 
@@ -201,9 +202,17 @@ def logout(request):
 
 @csrf_exempt
 def getDirData(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
     if request.method == 'POST':
         path = json.loads( request.POST['requestpath'] )
-        jsonresponse = json.dumps(XML.GetInfoFromFiletree("id101", path))
+        project = request.POST['project']
+        print(project, path)
+        jsonresponse = json.dumps(XML.GetInfoFromFiletree(project, path))
         #jsonresponse = json.dumps(generateHierarchy(path))
         #jsonresponse = json.dumps(generateSampleDir())
         return HttpResponse(jsonresponse, content_type='application/json')
@@ -239,8 +248,9 @@ def getDbData(request):
 def getUserData(request):
     if request.method == 'POST':
         projname = request.POST['projname']
+        print(projname)
+        projname = "MaxipesFanpage"
         jsonresponse = json.dumps(XML.GetUser(projname))
-        print(XML.GetUser(projname))
         return HttpResponse(jsonresponse, content_type='application/json')
 
 
