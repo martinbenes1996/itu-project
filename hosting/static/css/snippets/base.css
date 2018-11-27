@@ -219,3 +219,8 @@ a.pathButton {
     font-weight: bold;
     font-family: "Comic Sans MS", cursive, sans-serif;
 }
+
+.btn-huge{
+    width: 200px;
+    height: 50px;
+}
