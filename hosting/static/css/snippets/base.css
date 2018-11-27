@@ -212,3 +212,10 @@ a.pathButton {
 .plus-bottom{
     margin-bottom: 20px;
 }
+
+.btn-text{
+    text-transform: uppercase;
+    font-size: small;
+    font-weight: bold;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
