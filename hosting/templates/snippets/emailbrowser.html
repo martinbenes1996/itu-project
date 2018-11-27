@@ -1,0 +1,78 @@
+{% load static %}
+
+<head>
+	<link rel="stylesheet" href="{% static 'css/snippets/base.css' %}">
+</head>
+
+<div class="inner-body">
+	<h1 class="center">Email</h1>
+
+	<div class="container lead center">
+		<p>
+			Manage all your emails on one place. Our ultimate email manager will help you with everything you need.
+		</p>
+	</div>
+
+	<div id="pathbar"></div>
+
+	<p class="center">You Are Using ...</p>
+	<p class="center email-huge">martin.benes@sušit.mia</p>
+
+	<div class="my-container-email dir-bar">
+		<div class="container-fluid" id="userlist">
+			<div class="row dir-bar my-border-users ">
+
+				<div class="row dir-bar top">
+					<span class="enum-top">#</span>
+					<span class="from-top">From</span>
+					<i class="fas fa-arrow-right arrow-top"></i>
+					<span class="subject-top">Subject</span>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<div class="row dir-bar my-border-users ">
+				<div class="row dir-bar">
+					<span class="enum">#1</span>
+					<span class="from">xbarto92@fit.vutbr.cz</span>
+					<i class="fas fa-arrow-right arrow"></i>
+					<span class="subject">Ich brauche einen Apfel!</span>
+					<div class="col text-right">
+						<button class="btn btn-align btn-warning">delete</button>
+					</div>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<div class="row dir-bar my-border-users ">
+				<div class="row dir-bar">
+					<span class="enum">#2</span>
+					<span class="from">xbenesXX@fit.vutbr.cz</span>
+					<i class="fas fa-arrow-right arrow"></i>
+					<span class="subject">Plz Napište Mi Motivační Dopis!</span>
+					<div class="col text-right">
+						<button class="btn btn-align btn-warning">delete</button>
+					</div>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<div class="row dir-bar my-border-users ">
+				<div class="row dir-bar">
+					<span class="enum">#3</span>
+					<span class="from">xpolanXX@fit.vutbr.cz</span>
+					<i class="fas fa-arrow-right arrow"></i>
+					<span class="subject">Gimme 'A' and s***k my lamp!</span>
+					<div class="col text-right">
+						<button class="btn btn-align btn-warning">delete</button>
+					</div>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<div class="create">
+				<button class="btn btn-primary btn-align">write</button>
+			</div>
+		</div>
+	</div>
+</div>
