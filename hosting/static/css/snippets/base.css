@@ -26,15 +26,16 @@
 }
 
 .text-right{
-    padding-right: 0; !important
+    padding-right: 0 !important
 }
 
-.row{
-    margin: 0; !important;
+.no-margin{
+    margin-right: 0 !important;
+    margin-left: 0 !important;
 }
 
 .my-align{
-    margin-bottom: 0px; !important: ;
+    margin-bottom: 0px !important;
     padding-top: 8px;
     padding-top: 9px;
     padding-left: 13px;
@@ -150,21 +151,34 @@ a.pathButton{
 
 .from{
     padding: 15px 15px 0px 75px;
-    /* font-size: large; */
     font-weight: bold;
     position: absolute;
 }
 
 .subject{
     padding: 15px 15px 0px 389px;
-    /* font-size: large; */
-    /* font-weight: bold; */
     position: absolute;
 }
 
 .arrow{
     padding: 18px 15px 0px 330px;
-    /* font-size: large; */
-    /* font-weight: bold; */
     position: absolute;
+}
+
+.two-columns{
+
+    display: inline-flex;
+    width: 100%;
+}
+
+.justify{
+    text-align: justify;
+}
+
+.my-list{
+    text-align: left;
+}
+
+.indent{
+    text-indent: 2em;
 }
