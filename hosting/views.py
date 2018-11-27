@@ -170,12 +170,12 @@ def pageboard(request):
     d = dict()
     try:
         d['user'] = User.objects.get(email=email)
-        pageid = request.GET['id']
-        d['page'] = models.Webpage.objects.get(id=pageid)
     except:
         d['message'] = 'Unknown user.'
     else:
         pass
+    pageid = request.GET['id']
+    d['page'] = models.Webpage.objects.get(id=pageid)
 
     return render(request, "pageboard.html", d)
 
@@ -189,6 +189,7 @@ def createpage(request):
     else:
         if request.method == 'POST':
             d['name'] = request.POST['name']
+            XML.CreateProject(d['name'])
             w = models.Webpage(name=d['name'], user=d['user'])
             w.save()
 
@@ -201,18 +202,61 @@ def logout(request):
 
 @csrf_exempt
 def getDirData(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
     if request.method == 'POST':
         path = json.loads( request.POST['requestpath'] )
-        print(path)
-        jsonresponse = json.dumps(XML.GetInfoFromFiletree("id101", path))
-        #jsonresponse = json.dumps(generateHierarchy(path))
-        #jsonresponse = json.dumps(generateSampleDir())
+        project = request.POST['projname']
+        print(project, path)
+        jsonresponse = json.dumps(XML.GetInfoFromFiletree(project, path))
         return HttpResponse(jsonresponse, content_type='application/json')
+
+@csrf_exempt
+def renameFile(request):
+    if request.method == 'POST':
+        path = json.loads( request.POST['requestpath'] )
+        oldname = request.POST['origname']
+        newname = request.POST['newname']
+        print(path, ':', oldname, '->', newname)
+        #tady nastavit v XML
+        return getDirData(request)
+
+@csrf_exempt
+def deleteFile(request):
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        path = json.loads( request.POST['requestpath'] )
+        name = request.POST['name']
+        XML.DeleteFromFiletree(projname, path, name)
+        return getDirData(request)
+
+@csrf_exempt
+def createDir(request):
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        path = json.loads( request.POST['requestpath'] )
+        name = request.POST['name']
+        XML.AddToFiletree(projname, path, name, 'd', request.COOKIES.get('user'))
+        return getDirData(request)
+
+@csrf_exempt
+def createFile(request):
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        path = json.loads( request.POST['requestpath'] )
+        name = request.POST['name']
+        size = request.POST['size']
+        XML.AddToFiletree(projname, path, name, 'f', request.COOKIES.get('user'), size)
+        return getDirData(request)
+
 
 @csrf_exempt
 def getDbData(request):
     if request.method == 'POST':
-        #jsonresponse = json.dumps(XML.GetDatabase("dat007"))
         jsonresponse = json.dumps(generateDatabase())
         return HttpResponse(jsonresponse, content_type='application/json')
 
@@ -221,8 +265,24 @@ def getUserData(request):
     if request.method == 'POST':
         projname = request.POST['projname']
         jsonresponse = json.dumps(XML.GetUser(projname))
-        print(XML.GetUser(projname))
+        print(jsonresponse)
         return HttpResponse(jsonresponse, content_type='application/json')
+
+@csrf_exempt
+def addUser(request):
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        username = request.POST['username']
+        XML.AddUser(projname, username)
+        return getUserData(request)
+
+@csrf_exempt
+def deleteUser(request):
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        username = request.POST['username']
+        XML.DeleteUser(projname, username)
+        return getUserData(request)
 
 
 # add function with the name matching from urls.py
