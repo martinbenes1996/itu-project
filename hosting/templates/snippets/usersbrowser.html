@@ -12,9 +12,9 @@
 
 	<div class="my-container dir-bar">
 		<div class="container-fluid" id="userlist">
-			<div class="row dir-bar my-border-users ">
+			<div class="row dir-bar my-border-users no-margin">
 
-				<div class="row dir-bar">
+				<div class="row dir-bar no-margin">
 					<span class="enum pointer">#1</span>
 					<div class="col lead my-align pointer">
 						martin.benes666
@@ -27,8 +27,8 @@
 				<div class="col-lg-4"></div>
 			</div>
 
-			<div class="row dir-bar my-border-users ">
-				<div class="row dir-bar">
+			<div class="row dir-bar my-border-users no-margin ">
+				<div class="row dir-bar no-margin">
 					<span class="enum pointer">#2</span>
 					<div class="col lead my-align pointer">
 						ondrej.polansky555
@@ -41,8 +41,8 @@
 				<div class="col-lg-4"></div>
 			</div>
 
-			<div class="row dir-bar my-border-users ">
-				<div class="row dir-bar">
+			<div class="row dir-bar my-border-users no-margin ">
+				<div class="row dir-bar no-margin">
 					<span class="enum pointer">#3</span>
 					<div class="col lead my-align pointer">
 						jan.bartosek444
@@ -55,8 +55,8 @@
 				<div class="col-lg-4"></div>
 			</div>
 
-			<div class="row dir-bar my-border-users ">
-				<div class="row dir-bar">
+			<div class="row dir-bar my-border-users no-margin ">
+				<div class="row dir-bar no-margin">
 					<span class="enum pointer">#4</span>
 					<div class="col lead my-align pointer">
 						random.user333
@@ -109,9 +109,9 @@
     }
 
     function generateUser(user) {
-        return $("<div>").addClass("row dir-bar")
+        return $("<div>").addClass("row dir-bar no-margin")
             .append($("<div>").addClass("my-border dir-bar")
-                .append($("<div>").addClass("row dir-bar")
+                .append($("<div>").addClass("row dir-bar no-margin")
                     .append($("<div>").addClass("col lead my-align")
                         .text(user)
                     )

@@ -96,9 +96,9 @@
 
     function generateRowItem(key, val) {
         if (val['type'] == 'd') {
-            return $('<div>').addClass('row dir-bar')
+            return $('<div>').addClass('row dir-bar no-margin')
                 .append($('<div>').addClass('my-border dir-bar')
-                    .append($('<div>').addClass('row dir-bar')
+                    .append($('<div>').addClass('row dir-bar no-margin')
                         .append($('<i>').addClass('far fa-folder folder-align pointer'))
                         .click({k: key, v: val}, function (event) {
                             if (event.data.v['type'] == 'd') {
@@ -146,9 +146,9 @@
                 // right vertical
                 .append($('<div>').addClass('col-lg-4'));
         } else {
-            return $('<div>').addClass('row dir-bar')
+            return $('<div>').addClass('row dir-bar no-margin')
                 .append($('<div>').addClass('my-border dir-bar')
-                    .append($('<div>').addClass('row dir-bar')
+                    .append($('<div>').addClass('row dir-bar no-margin')
                         .append($('<i>').addClass('far fa-file file-align pointer'))
                         .click({k: key, v: val}, function (event) {
                             if (event.data.v['type'] == 'd') {
