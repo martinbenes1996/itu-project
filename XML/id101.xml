@@ -1,8 +1,1 @@
-<id101><FTP><home date="2018-11-22" owner="Ondrej" size="0" type="d">
-<mydir date="2018-11-22" owner="Ondra" size="0" type="d">
-<myfile2 date="2018-11-22" owner="Ondra" size="0" type="f" />
-<kocicky date="2018-11-22" owner="Ondra" size="0" type="d">
-<micka date="2018-11-22" owner="Ondra" size="0" type="f" />
-</kocicky><pejsanci date="2018-11-22" owner="Ondra" size="0" type="d" />
-</mydir><myfile1 date="2018-11-22" owner="Ondra" size="0" type="f" /></home>
-</FTP><DNS /><database /><emails /><users /></id101>
+<project name="id101"><FTP><home date="2018-11-28" owner="Ondrej" size="0" type="d"><mydir date="2018-11-28" owner="&amp;Ond ra_" size="0" type="d"><myfile2 date="2018-11-28" owner="Ondra" size="0" type="f" /><kocicky date="2018-11-28" owner="Ondra" size="0" type="d"><micka date="2018-11-28" owner="Ondra" size="0" type="f" /></kocicky><pejsanci date="2018-11-28" owner="Ondra" size="0" type="d" /></mydir><my_file1 date="2018-11-28" owner="Ondra" size="0" type="f" /></home></FTP><DNS /><database /><emails /><users /></project>

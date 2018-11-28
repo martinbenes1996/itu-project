@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import os
 import datetime
+import re
 
 # ------------------------------------------------------------------------
 #         MODULE FOR STORING INFORMATION (XML) FOR ITU PROJECT
@@ -10,11 +11,12 @@ import datetime
 
     Functions mostly do not return value.
     Exceptions can be raised:
-        AlreadyExistsError       -> user or entity already exists
-        DoesNotExistError        -> user or entity does not exist
-        WrongTypeError           -> trying to put files into another file, incompatible file/directory types
-        IncompatibleRowDataError -> definition of a table incompatible with provided data
-        TableNotFoundError       -> table was not found, nothing happened
+        AlreadyExistsError         -> user or entity already exists
+        DoesNotExistError          -> user or entity does not exist
+        WrongTypeError             -> trying to put files into another file, incompatible file/directory types
+        IncompatibleRowDataError   -> definition of a table incompatible with provided data
+        TableNotFoundError         -> table was not found, nothing happened
+        NameContainsWrongCharError -> name of files/directories must contain only [a-zA-Z0-9_] and maybe some other characters
 
     Other exceptions might occur too! (strings...)
 '''
@@ -30,6 +32,8 @@ class IncompatibleRowDataError(Exception):
     pass
 class TableNotFoundError(Exception):
     pass
+class NameContainsWrongCharError(Exception):
+    pass
 
 def CreateProject(name, owner="unknown"):
     ''' Register a new project.
@@ -39,7 +43,7 @@ def CreateProject(name, owner="unknown"):
     if os.path.exists("XML/"+name+".xml"):
         raise AlreadyExistsError
 
-    root = ET.Element(str(name))
+    root = ET.Element("project", name=str(name))
 
     ftp = ET.SubElement(root, "FTP")
     ET.SubElement(ftp, "home", type='d', size='0', date=str(datetime.datetime.now().date()), owner=str(owner))
@@ -78,6 +82,10 @@ def AddToFiletree(projName, path, objName, type, owner="unknown", size=0):
         owner    -> which user owns it (default value is "unknown")
         size     -> size (default is 0)
     '''
+    m = re.match(r'^[a-zA-Z0-9_]+$', objName)       # names of files/directories have limited set of characters
+    if m == None:
+        raise NameContainsWrongCharError
+
     try:
         tree = ET.parse("XML/"+str(projName)+".xml")
         root = tree.getroot()
@@ -627,8 +635,8 @@ print(GetDatabase("dat007"))
 CreateProject("id101", "Ondrej")
 CreateProject("xxx666", "Ondrej")
 DeleteProject("xxx666")
-AddToFiletree("id101", ["home"],"mydir","d", "Ondra")
-AddToFiletree("id101", ["home"],"myfile1","f", "Ondra")
+AddToFiletree("id101", ["home"],"mydir","d", "&Ond ra_")
+AddToFiletree("id101", ["home"],"my_file1","f", "Ondra")
 AddToFiletree("id101", ["home","mydir"],"myfile2","f", "Ondra")
 AddToFiletree("id101", ["home","mydir"],"kocicky","d", "Ondra")
 AddToFiletree("id101", ["home","mydir"],"pejsanci","d", "Ondra")
