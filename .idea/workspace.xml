@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="090f3933-ff7b-41ec-ae29-9f23e2ed4bfa" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/hosting/templates/snippets/settingsbrowser.html" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/hosting/static/css/snippets/base.css" afterPath="$PROJECT_DIR$/hosting/static/css/snippets/base.css" />
-      <change beforePath="$PROJECT_DIR$/hosting/templates/pageboard.html" afterPath="$PROJECT_DIR$/hosting/templates/pageboard.html" />
+      <change beforePath="$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html" afterPath="$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html" />
+      <change beforePath="$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html" afterPath="$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html" />
+      <change beforePath="$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html" afterPath="$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html" />
+      <change beforePath="$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html" afterPath="$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -48,11 +50,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="usersbrowser.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/usersbrowser.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="pageboard.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hosting/templates/pageboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
-              <caret line="124" column="0" lean-forward="true" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+            <state relative-caret-position="442">
+              <caret line="58" column="69" lean-forward="false" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="69" />
               <folding>
                 <element signature="e#1557#1563#0#HTML" expanded="true" />
                 <element signature="e#1563#1569#0#HTML" expanded="true" />
@@ -91,9 +103,60 @@
       <file leaf-file-name="base.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hosting/static/css/snippets/base.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="777">
-              <caret line="222" column="10" lean-forward="false" selection-start-line="222" selection-start-column="10" selection-end-line="222" selection-end-column="10" />
+            <state relative-caret-position="413">
+              <caret line="121" column="30" lean-forward="false" selection-start-line="121" selection-start-column="30" selection-end-line="121" selection-end-column="30" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dbbrowser.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="41" column="36" lean-forward="true" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
+              <folding>
+                <element signature="e#2037#2043#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#2;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#3;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#4;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#5;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#6;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#2;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#3;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#4;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#5;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#6;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#2;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#3;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#4;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#5;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#6;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#2;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#3;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#4;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#5;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#6;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#6279#6285#0#HTML" expanded="true" />
+                <element signature="e#6411#6417#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#2;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#3;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#div#0;n#div#1;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#2;n#div#0;n#div#1;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#3;n#div#0;n#div#1;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#div#0;n#div#2;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#2;n#div#0;n#div#2;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#3;n#div#0;n#div#2;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#8756#8762#0#HTML" expanded="true" />
+                <element signature="e#8888#8894#0#HTML" expanded="true" />
+                <marker date="1543368893419" expanded="false" signature="12420:12432" ph="..." />
+                <marker date="1543368893419" expanded="false" signature="12480:12499" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -101,9 +164,14 @@
       <file leaf-file-name="dashboardbrowser.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="21" lean-forward="false" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
-              <folding />
+            <state relative-caret-position="391">
+              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+              <folding>
+                <element signature="e#374#380#0#HTML" expanded="true" />
+                <element signature="e#380#386#0#HTML" expanded="true" />
+                <element signature="e#720#726#0#HTML" expanded="true" />
+                <element signature="e#726#732#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -111,18 +179,18 @@
       <file leaf-file-name="dnsbrowser.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="658">
-              <caret line="70" column="26" lean-forward="true" selection-start-line="70" selection-start-column="26" selection-end-line="71" selection-end-column="111" />
+            <state relative-caret-position="578">
+              <caret line="34" column="38" lean-forward="true" selection-start-line="34" selection-start-column="38" selection-end-line="36" selection-end-column="119" />
               <folding>
-                <element signature="e#648#654#0#HTML" expanded="true" />
-                <element signature="e#762#768#0#HTML" expanded="true" />
-                <element signature="e#1189#1195#0#HTML" expanded="true" />
-                <element signature="e#1303#1309#0#HTML" expanded="true" />
-                <element signature="e#1730#1736#0#HTML" expanded="true" />
-                <element signature="e#1844#1850#0#HTML" expanded="true" />
-                <element signature="e#2274#2280#0#HTML" expanded="true" />
-                <element signature="e#2388#2394#0#HTML" expanded="true" />
-                <element signature="e#2590#2596#0#HTML" expanded="true" />
+                <element signature="e#667#673#0#HTML" expanded="true" />
+                <element signature="e#781#787#0#HTML" expanded="true" />
+                <element signature="e#1227#1233#0#HTML" expanded="true" />
+                <element signature="e#1341#1347#0#HTML" expanded="true" />
+                <element signature="e#1787#1793#0#HTML" expanded="true" />
+                <element signature="e#1901#1907#0#HTML" expanded="true" />
+                <element signature="e#2350#2356#0#HTML" expanded="true" />
+                <element signature="e#2464#2470#0#HTML" expanded="true" />
+                <element signature="e#2666#2672#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -131,19 +199,29 @@
       <file leaf-file-name="emailbrowser.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1122">
-              <caret line="66" column="14" lean-forward="true" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="14" />
+            <state relative-caret-position="425">
+              <caret line="57" column="41" lean-forward="false" selection-start-line="57" selection-start-column="41" selection-end-line="57" selection-end-column="41" />
               <folding>
-                <element signature="e#658#664#0#HTML" expanded="true" />
-                <element signature="e#772#778#0#HTML" expanded="true" />
-                <element signature="e#1201#1207#0#HTML" expanded="true" />
-                <element signature="e#1315#1321#0#HTML" expanded="true" />
-                <element signature="e#1744#1750#0#HTML" expanded="true" />
-                <element signature="e#1858#1864#0#HTML" expanded="true" />
-                <element signature="e#2287#2293#0#HTML" expanded="true" />
-                <element signature="e#2401#2407#0#HTML" expanded="true" />
-                <element signature="e#2603#2609#0#HTML" expanded="true" />
+                <element signature="e#677#683#0#HTML" expanded="true" />
+                <element signature="e#791#797#0#HTML" expanded="true" />
+                <element signature="e#1239#1245#0#HTML" expanded="true" />
+                <element signature="e#1353#1359#0#HTML" expanded="true" />
+                <element signature="e#1801#1807#0#HTML" expanded="true" />
+                <element signature="e#1915#1921#0#HTML" expanded="true" />
+                <element signature="e#2363#2369#0#HTML" expanded="true" />
+                <element signature="e#2477#2483#0#HTML" expanded="true" />
+                <element signature="e#2679#2685#0#HTML" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="filebrowser.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/filebrowser.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3332">
+              <caret line="196" column="30" lean-forward="false" selection-start-line="196" selection-start-column="30" selection-end-line="196" selection-end-column="30" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -161,26 +239,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>delete</find>
-      <find>/</find>
-      <find>span</find>
-      <find>text-align: center;</find>
-      <find>border</find>
-      <find>.border</find>
-      <find>bor</find>
-      <find>generateRowItem</find>
-      <find>-2</find>
-      <find>create</find>
-      <find>fold</find>
-      <find>my-border</find>
-      <find>my-cont</find>
-      <find>my</find>
       <find>folder</find>
       <find>file</find>
       <find>curso</find>
       <find>my-ali</find>
-      <find>enum</find>
-      <find>row</find>
       <find>card</find>
       <find>mb-</find>
       <find>card-hea</find>
@@ -191,6 +253,22 @@
       <find>card-fo</find>
       <find>Chart</find>
       <find>padding-left: -</find>
+      <find>marg</find>
+      <find>-top</find>
+      <find>user</find>
+      <find>emai</find>
+      <find>my-container</find>
+      <find>column-</find>
+      <find>row</find>
+      <find>enum</find>
+      <find>column{</find>
+      <find>my-border-user</find>
+      <find>my-border-users</find>
+      <find>column-top</find>
+      <find>enum-d</find>
+      <find>btn-tabl</find>
+      <find>columns</find>
+      <find>btn-table-</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -219,15 +297,15 @@
         <option value="$PROJECT_DIR$/hosting/static/css/snippets/email.css" />
         <option value="$PROJECT_DIR$/hosting/templates/snippets/filebrowser.html" />
         <option value="$PROJECT_DIR$/hosting/templates/snippets/usersbrowser.html" />
-        <option value="$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html" />
         <option value="$PROJECT_DIR$/hosting/static/js/my_js.js" />
         <option value="$PROJECT_DIR$/hosting/templates/base.html" />
-        <option value="$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html" />
         <option value="$PROJECT_DIR$/hosting/templates/dashboard.html" />
-        <option value="$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html" />
-        <option value="$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html" />
         <option value="$PROJECT_DIR$/hosting/templates/pageboard.html" />
         <option value="$PROJECT_DIR$/hosting/templates/snippets/settingsbrowser.html" />
+        <option value="$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html" />
+        <option value="$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html" />
+        <option value="$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html" />
+        <option value="$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html" />
         <option value="$PROJECT_DIR$/hosting/static/css/snippets/base.css" />
       </list>
     </option>
@@ -632,30 +710,6 @@
     <entry file="file://$PROJECT_DIR$/hosting/static/css/snippets/email.css" />
     <entry file="file://$PROJECT_DIR$/hosting/static/css/snippets/filebrowser.css" />
     <entry file="file://$PROJECT_DIR$/hosting/static/css/snippets/users.css" />
-    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/usersbrowser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/filebrowser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3332">
-          <caret line="196" column="30" lean-forward="false" selection-start-line="196" selection-start-column="30" selection-end-line="196" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="68" lean-forward="false" selection-start-line="1" selection-start-column="68" selection-end-line="1" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../startbootstrap-sb-admin-gh-pages/css/sb-admin.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -720,50 +774,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="21" lean-forward="false" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="658">
-          <caret line="70" column="26" lean-forward="true" selection-start-line="70" selection-start-column="26" selection-end-line="71" selection-end-column="111" />
-          <folding>
-            <element signature="e#648#654#0#HTML" expanded="true" />
-            <element signature="e#762#768#0#HTML" expanded="true" />
-            <element signature="e#1189#1195#0#HTML" expanded="true" />
-            <element signature="e#1303#1309#0#HTML" expanded="true" />
-            <element signature="e#1730#1736#0#HTML" expanded="true" />
-            <element signature="e#1844#1850#0#HTML" expanded="true" />
-            <element signature="e#2274#2280#0#HTML" expanded="true" />
-            <element signature="e#2388#2394#0#HTML" expanded="true" />
-            <element signature="e#2590#2596#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1122">
-          <caret line="66" column="14" lean-forward="true" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="14" />
-          <folding>
-            <element signature="e#658#664#0#HTML" expanded="true" />
-            <element signature="e#772#778#0#HTML" expanded="true" />
-            <element signature="e#1201#1207#0#HTML" expanded="true" />
-            <element signature="e#1315#1321#0#HTML" expanded="true" />
-            <element signature="e#1744#1750#0#HTML" expanded="true" />
-            <element signature="e#1858#1864#0#HTML" expanded="true" />
-            <element signature="e#2287#2293#0#HTML" expanded="true" />
-            <element signature="e#2401#2407#0#HTML" expanded="true" />
-            <element signature="e#2603#2609#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hosting/templates/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -791,10 +801,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="57" column="41" lean-forward="false" selection-start-line="57" selection-start-column="41" selection-end-line="57" selection-end-column="41" />
+          <folding>
+            <element signature="e#677#683#0#HTML" expanded="true" />
+            <element signature="e#791#797#0#HTML" expanded="true" />
+            <element signature="e#1239#1245#0#HTML" expanded="true" />
+            <element signature="e#1353#1359#0#HTML" expanded="true" />
+            <element signature="e#1801#1807#0#HTML" expanded="true" />
+            <element signature="e#1915#1921#0#HTML" expanded="true" />
+            <element signature="e#2363#2369#0#HTML" expanded="true" />
+            <element signature="e#2477#2483#0#HTML" expanded="true" />
+            <element signature="e#2679#2685#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/filebrowser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3332">
+          <caret line="196" column="30" lean-forward="false" selection-start-line="196" selection-start-column="30" selection-end-line="196" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/settingsbrowser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="74" lean-forward="false" selection-start-line="12" selection-start-column="74" selection-end-line="12" selection-end-column="74" />
+          <folding>
+            <element signature="e#360#366#0#HTML" expanded="true" />
+            <element signature="e#366#372#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/usersbrowser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <element signature="e#374#380#0#HTML" expanded="true" />
+            <element signature="e#380#386#0#HTML" expanded="true" />
+            <element signature="e#720#726#0#HTML" expanded="true" />
+            <element signature="e#726#732#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/hosting/templates/pageboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="124" column="0" lean-forward="true" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+        <state relative-caret-position="442">
+          <caret line="58" column="69" lean-forward="false" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="69" />
           <folding>
             <element signature="e#1557#1563#0#HTML" expanded="true" />
             <element signature="e#1563#1569#0#HTML" expanded="true" />
@@ -816,21 +884,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/settingsbrowser.html">
+    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="74" lean-forward="false" selection-start-line="12" selection-start-column="74" selection-end-line="12" selection-end-column="74" />
+        <state relative-caret-position="578">
+          <caret line="34" column="38" lean-forward="true" selection-start-line="34" selection-start-column="38" selection-end-line="36" selection-end-column="119" />
           <folding>
-            <element signature="e#360#366#0#HTML" expanded="true" />
-            <element signature="e#366#372#0#HTML" expanded="true" />
+            <element signature="e#667#673#0#HTML" expanded="true" />
+            <element signature="e#781#787#0#HTML" expanded="true" />
+            <element signature="e#1227#1233#0#HTML" expanded="true" />
+            <element signature="e#1341#1347#0#HTML" expanded="true" />
+            <element signature="e#1787#1793#0#HTML" expanded="true" />
+            <element signature="e#1901#1907#0#HTML" expanded="true" />
+            <element signature="e#2350#2356#0#HTML" expanded="true" />
+            <element signature="e#2464#2470#0#HTML" expanded="true" />
+            <element signature="e#2666#2672#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="41" column="36" lean-forward="true" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
+          <folding>
+            <element signature="e#2037#2043#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#3;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#4;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#5;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#6;n#div#0;n#div#0;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#3;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#4;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#5;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#6;n#div#0;n#div#1;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#3;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#4;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#5;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#6;n#div#0;n#div#2;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#3;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#4;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#5;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#6;n#div#0;n#div#3;n#div#0;n#div#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#6279#6285#0#HTML" expanded="true" />
+            <element signature="e#6411#6417#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#3;n#div#0;n#div#0;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#1;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#0;n#div#1;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#3;n#div#0;n#div#1;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#2;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#0;n#div#2;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#3;n#div#0;n#div#2;n#div#0;n#div#4;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#8756#8762#0#HTML" expanded="true" />
+            <element signature="e#8888#8894#0#HTML" expanded="true" />
+            <marker date="1543368893419" expanded="false" signature="12420:12432" ph="..." />
+            <marker date="1543368893419" expanded="false" signature="12480:12499" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hosting/static/css/snippets/base.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="222" column="10" lean-forward="false" selection-start-line="222" selection-start-column="10" selection-end-line="222" selection-end-column="10" />
+        <state relative-caret-position="413">
+          <caret line="121" column="30" lean-forward="false" selection-start-line="121" selection-start-column="30" selection-end-line="121" selection-end-column="30" />
           <folding />
         </state>
       </provider>
