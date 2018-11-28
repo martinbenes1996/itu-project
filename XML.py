@@ -17,7 +17,7 @@ import re
         WrongTypeError             -> trying to put files into another file, incompatible file/directory types
         IncompatibleRowDataError   -> definition of a table incompatible with provided data
         TableNotFoundError         -> table was not found, nothing happened
-        NameContainsWrongCharError -> name of files/directories must contain only [a-zA-Z0-9_] and maybe some other characters
+        NameContainsWrongCharError -> name of files/directories must contain only [a-zA-Z0-9_.]+, empty strings are not allowed
 
     Other exceptions might occur too! (strings...)
 '''
@@ -42,7 +42,7 @@ def CreateProject(name, owner="unknown"):
         name  -> name of the project
         owner -> user who created it (to set the 'owner' attribute), default value is "unknown"
     '''
-    if os.path.exists("XML/"+name+".xml"):
+    if os.path.exists("XML/"+str(name)+".xml"):
         raise AlreadyExistsError
 
     root = ET.Element("project", name=str(name))
@@ -55,15 +55,30 @@ def CreateProject(name, owner="unknown"):
     ET.SubElement(root, "users")
 
     tree = ET.ElementTree(root)
-    tree.write("XML/"+name+".xml")
-
+    tree.write("XML/"+str(name)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def DeleteProject(name):
     ''' Delete project.
         name -> name of the project
     '''
-    if os.path.exists("XML/"+name+".xml"):
-        os.remove("XML/"+name+".xml")
+    if os.path.exists("XML/"+str(name)+".xml"):
+        os.remove("XML/"+str(name)+".xml")
+
+def RenameProject(projName, newName):
+    ''' Register a new project.
+        projName   -> name of the project
+        newName    -> new name of the project
+    '''
+    try:
+        tree = ET.parse("XML/"+str(projName)+".xml")
+        root = tree.getroot()
+    except:
+        raise DoesNotExistError
+
+    root.attrib['name'] = str(newName)
+
+    tree.write("XML/"+str(newName)+".xml", encoding='UTF-8', xml_declaration=True)
+    DeleteProject(str(projName))
 
 # --------------------------- FTP ------------------------------------------------
 def FindInXML(root, path, what="FTP"):
@@ -84,7 +99,7 @@ def AddToFiletree(projName, path, objName, type, owner="unknown", size=0):
         owner    -> which user owns it (default value is "unknown")
         size     -> size (default is 0)
     '''
-    m = re.match(r'^[a-zA-Z0-9_]+$', objName)       # names of files/directories have limited set of characters
+    m = re.match(r'^[a-zA-Z0-9_.]+$', str(objName))       # names of files/directories have limited set of characters
     if m == None:
         raise NameContainsWrongCharError
 
@@ -106,7 +121,7 @@ def AddToFiletree(projName, path, objName, type, owner="unknown", size=0):
             raise AlreadyExistsError
 
     ET.SubElement(elem, objName, type=str(type), size=str(size), date=str(datetime.datetime.now().date()), owner=str(owner))
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def DeleteFromFiletree(projName, path, objName):
     ''' Delete file or directory from filetree.
@@ -133,7 +148,36 @@ def DeleteFromFiletree(projName, path, objName):
     except:
         raise DoesNotExistError     # should not get there
 
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
+
+def RenameInFiletree(projName, path, objName, newName):
+    ''' Rename file or directory in filetree.
+        projName -> name of the modified project (string!)
+        path     -> LIST with path to target directory (without the removed file/dir) INCLUDING HOME
+            examples: ["home"], ["home", "dir1", "dir2"]
+        objName  -> name of the renamed file/dir
+        newName  -> new name of the renamed file/dir
+    '''
+    m = re.match(r'^[a-zA-Z0-9_.]+$', str(newName))       # names of files/directories have limited set of characters
+    if m == None:
+        raise NameContainsWrongCharError
+
+    try:
+        tree = ET.parse("XML/"+str(projName)+".xml")
+        root = tree.getroot()
+    except:
+        raise DoesNotExistError
+
+    elem = FindInXML(root, path, "FTP")
+    if elem == None:                # path does not exist
+        raise DoesNotExistError
+
+    victim = elem.find(str(objName))
+    if victim == None:
+        raise DoesNotExistError
+    victim.tag = str(newName)       # rename element tag
+
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def GetInfoFromFiletree(projName, path):
     ''' Get informations about the content of a single directory from filetree.
@@ -182,7 +226,7 @@ def AddDNS(projName, objName):
             raise AlreadyExistsError
 
     ET.SubElement(elem, "dns").text = str(objName)
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def DeleteDNS(projName, objName):
     ''' Delete DNS from a project. If it does not find an object to delete, it does nothing.
@@ -208,7 +252,7 @@ def DeleteDNS(projName, objName):
                 raise DoesNotExistError     # should not get there
             break
 
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def GetDNS(projName):
     ''' Get DNS from a project.
@@ -252,7 +296,7 @@ def AddEmail(projName, objName):
             raise AlreadyExistsError
 
     ET.SubElement(elem, "email").text = str(objName)
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def DeleteEmail(projName, objName):
     ''' Delete email from a project. If it does not find an object to delete, it does nothing.
@@ -278,7 +322,7 @@ def DeleteEmail(projName, objName):
                 raise DoesNotExistError     # should not get there
             break
 
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def GetEmail(projName):
     ''' Get email from a project.
@@ -322,7 +366,7 @@ def AddUser(projName, objName):
             raise AlreadyExistsError
 
     ET.SubElement(elem, "user").text = str(objName)
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def DeleteUser(projName, objName):
     ''' Delete user from a project. If it does not find an object to delete, it does nothing.
@@ -348,7 +392,7 @@ def DeleteUser(projName, objName):
                 raise DoesNotExistError     # should not get there
             break
 
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def GetUser(projName):
     ''' Get user from a project.
@@ -404,7 +448,7 @@ def CreateTable(projName, tableName, definition):
         ET.SubElement(defin, "def", datatype=str(d[1])).text = str(d[0])
     ET.SubElement(table, "rows")
 
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def DeleteTable(projName, tableName):
     ''' Delete table from a database. If it does not find an object to delete, it does nothing.
@@ -430,7 +474,7 @@ def DeleteTable(projName, tableName):
                 raise DoesNotExistError     # should not get there
             break
 
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def AddRow(projName, tableName, rowData):
     ''' Add a new row into a table.
@@ -459,7 +503,7 @@ def AddRow(projName, tableName, rowData):
             r = ET.SubElement(rows, "row")                      # add a subelement row
             for col in rowData:                                 # for each piece of data add a record
                 ET.SubElement(r, "record").text = str(col)
-            tree.write("XML/"+str(projName)+".xml")
+            tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
             return
 
     raise TableNotFoundError    # if it gets here, something is wrong
@@ -489,7 +533,7 @@ def DeleteRow(projName, tableName, rowid):
             for r in row:                                       # find a row that has requested id
                 if r.find("record").text == rowid:
                     rows.remove(r)                              # remove it
-            tree.write("XML/"+str(projName)+".xml")
+            tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
             return
 
 def GetDatabase(projName):
@@ -565,7 +609,7 @@ def AddColumn(projName, tableName, column, defaultValue="NULL"):
             for row in rowlist:                     # add a default value to the new column
                 ET.SubElement(row, "record").text = str(defaultValue)
 
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def DeleteColumn(projName, tableName, column):
     ''' Delete column from a table.
@@ -604,11 +648,11 @@ def DeleteColumn(projName, tableName, column):
                 recordlist = row.findall("record")              # find records
                 row.remove(recordlist[counter])                 # and remove the record on the right position
 
-    tree.write("XML/"+str(projName)+".xml")
+    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 # ----------------------------- database end ------------------------------------------------
 
-
+# print(ET.VERSION)
 # tests
 '''
 CreateProject("dat007", "Ondrej")
@@ -633,18 +677,22 @@ print(GetDatabase("dat007"))
 #DeleteRow("dat007", "jabka", "10")
 '''
 '''
-
+#CreateProject("aaa")
+#RenameProject("aaa", "renamed")
 CreateProject("id101", "Ondrej")
 CreateProject("xxx666", "Ondrej")
 DeleteProject("xxx666")
 AddToFiletree("id101", ["home"],"mydir","d", "&Ond ra_")
-AddToFiletree("id101", ["home"],"my_file1","f", "Ondra")
+AddToFiletree("id101", ["home"],"my_file1.html","f", "Ondra")
 AddToFiletree("id101", ["home","mydir"],"myfile2","f", "Ondra")
 AddToFiletree("id101", ["home","mydir"],"kocicky","d", "Ondra")
 AddToFiletree("id101", ["home","mydir"],"pejsanci","d", "Ondra")
 AddToFiletree("id101", ["home","mydir","kocicky"],"micka","f", "Ondra")
 #AddToFiletree("id101", ["home","mydir"],"myfile2","f", "Ondra")
 #AddToFiletree("id101", ["home","myfile1"],"myfile2","f", "Ondra")
+
+RenameInFiletree("id101",["home","mydir"],"myfile2","renamed_file.txt")
+#RenameInFiletree("id101",["home"],"mydir","mymymyd")
 
 x = GetInfoFromFiletree("id101", ["home"])
 print(x)
