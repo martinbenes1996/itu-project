@@ -1,12 +1,6 @@
-{% load static %}
-
-<head>
-	<link rel="stylesheet" href="{% static 'css/snippets/base.css' %}">
-	<link rel="stylesheet" href="{% static 'css/snippets/filebrowser.css' %}">
-</head>
 <div class="inner-body">
 
-	<h1>FTP</h1>
+	<h1 class="center">FTP</h1>
 
 	<div class="container lead center">
 		<p>This is the right place, where you can manage your directories and files. Easily start by opening your root
@@ -15,9 +9,8 @@
 
 	<div id="pathbar" class="row"></div>
 	<div class="my-container dir-bar">
-		<div class="container-fluid" id="dircontent"></div>
+        <div class="container-fluid" id="dircontent"></div>
 	</div>
-
 </div>
 
 
@@ -38,7 +31,7 @@
         var path = JSON.stringify(datapath);
         //console.log(path)
         $.post("{% url 'dirdata' %}",
-            {'requestpath': path},
+            {'projname': "{{page.name}}",'requestpath': path},
             function (data) {
                 currentDirData = data;
                 refreshFileData();
@@ -49,7 +42,8 @@
     function sendRenameFile(datapath, origname, newname) {
         var path = JSON.stringify(datapath);
         $.post("{% url 'renamefile' %}",
-                {'requestpath': path, 'origname': origname, 'newname': newname},
+                {'projname': "{{page.name}}",
+                'requestpath': path, 'origname': origname, 'newname': newname},
                 function(data) {
                     currentDirData = data;
                     refreshFileData();
@@ -60,12 +54,37 @@
     function sendDeleteFile(datapath, name) {
         var path = JSON.stringify(datapath);
         $.post("{% url 'deletefile' %}",
-                {'requestpath': path, 'name': name},
+                {'projname': "{{page.name}}",
+                'requestpath': path, 'name': name},
                 function(data) {
                     currentDirData = data;
                     refreshFileData();
                 }
 
+        );
+    }
+
+    function sendCreateFolder(datapath, name) {
+        var path = JSON.stringify(datapath);
+        $.post("{% url 'createdir' %}",
+            {'projname': "{{page.name}}",
+            'requestpath': path, 'name': name},
+            function(data) {
+                currentDirData = data;
+                refreshFileData();
+            }
+        );
+    }
+
+    function sendCreateFile(datapath, name, size) {
+        var path = JSON.stringify(datapath);
+        $.post("{% url 'createfile' %}",
+            {'projname': "{{page.name}}",
+            'requestpath': path, 'name': name, 'size': size},
+            function(data) {
+                currentDirData = data;
+                refreshFileData();
+            }
         );
     }
 
@@ -167,6 +186,11 @@
                                             requestFileData(currentDirData['path']);
                                         }
                                     })
+                                    .focusout(function(e){
+                                        e.preventDefault();
+                                        sendRenameFile(currentDirData['path'], key, $(this).val());
+                                        return;
+                                    })
                                 ;
                                 d.append(i);
                                 i.focus().select();
@@ -201,16 +225,58 @@
             // tady bude rozhodovani podle mode (typ zobrazeni)
         });
         
+        var i = $('<input>').addClass('form-control')
+            .attr({"type":"text"})
+            .on("keydown", this, function(e){
+				if(e.which == 13) {
+                    alert("enter");
+                    e.preventDefault();
+                    sendCreateFolder(currentDirData.path, $(this).val());
+					return;
+				} else if(e.which == 27) {
+                    e.preventDefault();
+                    //$(this).val('');
+                    $(this).blur();
+				}
+			})
+        ;
+        
+        var filereader = $('<input>')
+            .attr({'type':'file', 'name':'input-file', 'id':'input-file'})
+            .bind('change', function() {
+                var f = this.files[0];
+                sendCreateFile(currentDirData.path, f.name, f.size);
+            })
+        ;
+        
+
         $('#dircontent')
-            .append($('<div>').addClass('create')
-				.append($('<button>').addClass('btn btn-primary btn-align')
-					.text('create')
-					.click(function (event) {
-						alert('create ' + JSON.stringify(currentData));
-					})
-				)
+            .append($('<div>').addClass('create row')
+
+                .append($('<div>').addClass('col text-left')
+                    .append(filereader)
+                )
+
+                .append($('<div>').addClass('col text-right')   
+                    .append($('<div>').addClass('row')
+                        .append($('<div>').addClass('col text-right')
+                            .append(i)
+                        )
+                        .append($('<div>').addClass('col text-left')
+				            .append($('<button>').addClass('btn btn-primary')
+                                .attr({'id':'folderadder'})
+                                .text('New Folder')
+					            .click(i, function (event) {
+                                    sendCreateFolder(currentDirData.path, i.val());
+                                })
+                            )
+                        )
+                    )    
+                )
+                
 			)
-		;
+        ;
+
     }
 
     function showProperties(key, val) {

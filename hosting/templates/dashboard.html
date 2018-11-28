@@ -35,7 +35,7 @@
 				<a class="nav-link dropdown-toggle" href="#" id="userDropdown" rule="button" data-toggle="dropdown"
 					 aria-haspopup="true" aria-expanded="false">
 					<i class="fas fa-user-circle fa-fw"></i>
-					{{user.first_name}}
+					{{ user.first_name }}
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 					<a class="dropdown-item" href="#">Settings</a>
@@ -79,66 +79,103 @@
 		</div>
 
 		<div class="col-10">
-			<h1>#Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Et harum quidem rerum facilis est et expedita
-				distinctio. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam ante.
-				Mauris tincidunt sem sed arcu. Curabitur vitae diam non enim vestibulum interdum. Aenean id metus id velit
-				ullamcorper pulvinar. In enim a arcu imperdiet malesuada. Morbi leo mi, nonummy eget tristique non, rhoncus non
-				leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Aliquam id
-				dolor. Nullam feugiat, turpis at pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus sit
-				amet ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer
-				malesuada. Integer in sapien. Vestibulum fermentum tortor id mi. Etiam egestas wisi a erat. Cras pede libero,
-				dapibus nec, pretium sit amet, tempor quis. Et harum quidem rerum facilis est et expedita distinctio. Etiam
-				ligula pede, sagittis quis, interdum ultricies, scelerisque eu. Maecenas aliquet accumsan leo. Etiam sapien
-				elit, consequat eget, tristique non, venenatis quis, ante. Phasellus enim erat, vestibulum vel, aliquam a,
-				posuere eu, velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos.
-				Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Curabitur
-				vitae diam non enim vestibulum interdum. Praesent id justo in neque elementum ultrices. Etiam egestas wisi a
-				erat. Maecenas ipsum velit, consectetuer eu lobortis ut, dictum at dui. Aliquam erat volutpat. Proin pede metus,
-				vulputate nec, fermentum fringilla, vehicula vitae, justo. Maecenas libero. Sed elit dui, pellentesque a,
-				faucibus vel, interdum nec, diam. Phasellus enim erat, vestibulum vel, aliquam a, posuere eu, velit. Itaque
-				earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut
-				perferendis doloribus asperiores repellat.</h1>
-		</div>
+			<div class="inner-body">
+				<h1 class="center">Welcome to the Dashboard</h1>
 
-
-		<!-- CONTACT FORM -->
-		<div id="myModal" class="modal fade" role="dialog">
-			<div class="modal-dialog" id="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title" id="modal-title">Contact Us</h4>
-						<button type="button" class="close" id="modal-close-button" data-dismiss="modal"><i
-										class="far fa-window-close"></i></button>
+				<div class="container lead center">
+					<p>
+						. . . where you can manage everything and even more.
+					</p>
+				</div>
+				<div id="pathbar"></div>
+				<div class="two-columns">
+					<div class="col-1"></div>
+					<div class="col-5 center">
+						<p class="lead justify">First time with us? Read our short help.</p>
+						<ul class="my-list minus-left">
+							<li class="lead no-indent minus-bottom"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Creating a New Page</li>
+							<p class="indent plus-bottom">To create a new page fill the form on the left panel and click on the button 'Create
+								Page'. New website will appear in the left panel and you can choose it by a single click on its
+								name.</p>
+							<li class="lead no-indent minus-bottom"><i class="fas fa-user-circle fa-fw"></i>&nbsp;&nbsp;Account Manager</li>
+							<p class="indent plus-bottom">On the right top you can see the user icon with your name. By clicking on it some
+								multiple options will come out. You can change your settings there or log out.</p>
+							<li class="lead no-indent minus-bottom"><i class="fas fa-envelope"></i>&nbsp;&nbsp;Contact Us</li>
+							<p class="indent plus-bottom">Do you have any problem with using the system? Would you appreciate a little help with
+								setting the things up? There is not an easier way to get some help then sending us an email through the
+								'Help' icon placed just next to the user icon on the top bar. Fill the form with your Name and a correct
+								email and send your message. We will answer you as soon as possible.</p>
+						</ul>
 					</div>
-					<div class="modal-body">
-						<form role="form" method="post" id="reused_form">
-							<p> We will answer your message as soon as possible. </p>
-							<div class="form-group">
-								<label for="name"> Name:</label>
-								<input type="text" class="form-control" id="name" name="name" required maxlength="50">
+
+					<div class="col-5 center">
+						<p class="lead justify">After selecting a created page. New options will come out. </p>
+						<ul class="my-list minus-left">
+							<li class="lead no-indent minus-bottom"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;Dashboard</li>
+							<p class="indent plus-bottom">In the first tab you can see your statistics.</p>
+							<li class="lead no-indent minus-bottom"><i class="fas fa-file-alt"></i>&nbsp;&nbsp;FTP</li>
+							<p class="indent plus-bottom">FTP or File Transfer Protocol allows you to control your repositories. You can browse
+								you directories, view your files info or rename and delete them. You can create a new folder or a file
+								too.</p>
+							<li class="lead no-indent minus-bottom"><i class="fas fa-file-signature"></i>&nbsp;&nbsp;DNS</li>
+							<p class="indent plus-bottom">Domain Name System is there to help you manage your web addresses. There you can find
+								settings as what domains can your website use and more.</p>
+							<li class="lead no-indent minus-bottom"><i class="fas fa-database"></i>&nbsp;&nbsp;Database</li>
+							<p class="indent plus-bottom">The whole database on one place. Browse your tabs and look up for any record in your
+								database. Creating, editing and deleting tabs and rows has never been easier.</p>
+							<li class="lead no-indent minus-bottom"><i class="fas fa-at"></i>&nbsp;&nbsp;Email</li>
+							<p class="indent plus-bottom">Check your emails with our system. You can read the incoming email and send a new
+								ones.</p>
+							<li class="lead no-indent minus-bottom"><i class="fas fa-users"></i>&nbsp;&nbsp;Users</li>
+							<p class="indent plus-bottom">Watch all the registered users on your website. You can delete their accounts or change
+								their credentials.</p>
+						</ul>
+					</div>
+
+				</div>
+
+
+			</div>
+
+
+			<!-- CONTACT FORM -->
+			<div id="myModal" class="modal fade" role="dialog">
+				<div class="modal-dialog" id="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="modal-title">Contact Us</h4>
+							<button type="button" class="close" id="modal-close-button" data-dismiss="modal"><i
+											class="far fa-window-close"></i></button>
+						</div>
+						<div class="modal-body">
+							<form role="form" method="post" id="reused_form">
+								<p> We will answer your message as soon as possible. </p>
+								<div class="form-group">
+									<label for="name"> Name:</label>
+									<input type="text" class="form-control" id="name" name="name" required maxlength="50">
+								</div>
+								<div class="form-group">
+									<label for="email"> Email:</label>
+									<input type="email" class="form-control" id="email" name="email" required maxlength="50">
+								</div>
+								<div class="form-group">
+									<label for="name"> Message:</label>
+									<textarea class="form-control" type="textarea" name="message" id="message"
+														placeholder="Your Message Here" maxlength="6000" rows="7"></textarea>
+								</div>
+								<button type="submit" class="btn btn-lg btn-success btn-block" id="btnContactUs">Send</button>
+							</form>
+							<div id="success_message" style="width:100%; height:100%; display:none; "><h3>Sent your message
+								successfully!</h3></div>
+							<div id="error_message" style="width:100%; height:100%; display:none; "><h3>Error</h3> Sorry there was an
+								error sending your form.
 							</div>
-							<div class="form-group">
-								<label for="email"> Email:</label>
-								<input type="email" class="form-control" id="email" name="email" required maxlength="50">
-							</div>
-							<div class="form-group">
-								<label for="name"> Message:</label>
-								<textarea class="form-control" type="textarea" name="message" id="message"
-													placeholder="Your Message Here" maxlength="6000" rows="7"></textarea>
-							</div>
-							<button type="submit" class="btn btn-lg btn-success btn-block" id="btnContactUs">Send</button>
-						</form>
-						<div id="success_message" style="width:100%; height:100%; display:none; "><h3>Sent your message
-							successfully!</h3></div>
-						<div id="error_message" style="width:100%; height:100%; display:none; "><h3>Error</h3> Sorry there was an
-							error sending your form.
 						</div>
 					</div>
 				</div>
 			</div>
+
+
 		</div>
-
-
-	</div>
 
 {% endblock %}
