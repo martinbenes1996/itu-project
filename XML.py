@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+#from lxml import etree as ET
 import os
 import datetime
 import re
@@ -21,6 +22,7 @@ import re
     Other exceptions might occur too! (strings...)
 '''
 # FTP, DNS, email, database, user
+# , pretty_print=True
 
 class AlreadyExistsError(Exception):
     pass
@@ -630,8 +632,8 @@ print(GetDatabase("dat007"))
 #DeleteRow("dat007", "jabka", "1")
 #DeleteRow("dat007", "jabka", "10")
 '''
-
 '''
+
 CreateProject("id101", "Ondrej")
 CreateProject("xxx666", "Ondrej")
 DeleteProject("xxx666")
