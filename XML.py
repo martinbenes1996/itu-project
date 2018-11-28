@@ -69,6 +69,9 @@ def RenameProject(projName, newName):
         projName   -> name of the project
         newName    -> new name of the project
     '''
+    if os.path.exists("XML/"+str(newName)+".xml"):
+        raise AlreadyExistsError
+
     try:
         tree = ET.parse("XML/"+str(projName)+".xml")
         root = tree.getroot()

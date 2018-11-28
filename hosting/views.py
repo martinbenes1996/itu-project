@@ -179,6 +179,10 @@ def pageboard(request):
 
     return render(request, "pageboard.html", d)
 
+def enc(userPk, projName):
+    ''' encode project name '''
+    return str(userPk)+"_"+str(projName)
+
 def createpage(request):
     email = request.COOKIES.get('user')
     d = dict()
@@ -189,7 +193,12 @@ def createpage(request):
     else:
         if request.method == 'POST':
             d['name'] = request.POST['name']
-            XML.CreateProject(d['name'])
+            # second argument is owner, default=unknown
+            try:
+                XML.CreateProject( enc(d['user'].pk,d['name']) )
+            except:
+                # project already exists !!! Send error message !!!
+                return redirect('dashboard')
             w = models.Webpage(name=d['name'], user=d['user'])
             w.save()
 
@@ -199,6 +208,49 @@ def logout(request):
     response = redirect('')
     response.delete_cookie('user')
     return response
+
+def deletepage(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    else:
+        if request.method == 'POST':
+            project = request.POST['projname']
+            XML.DeleteProject( enc(d['user'].pk,project) )
+            # nejsem si jistý nasledujicima dvema radkama !!!
+            w = models.Webpage.objects.get(name=project, user=d['user'].pk)
+            w.remove()
+
+    return redirect('dashboard')
+
+def renamepage(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    else:
+        if request.method == 'POST':
+            oldproject = request.POST['projname']
+            newproject = request.POST['newprojname']
+            try:
+                XML.RenameProject( enc(d['user'].pk,oldproject), enc(d['user'].pk,newproject) )
+            except AlreadyExistsError:
+                # newproject already exists !!! Send error message !!!
+                return redirect('dashboard')
+            except AlreadyExistsError:
+                # oldproject does not exist !!! Send error message !!!
+                return redirect('dashboard')
+            # nejsem si jistý nasledujicima dvema radkama !!!
+            w = models.Webpage.objects.get(name=oldproject, user=d['user'].pk)
+            w.name = str(newproject)
+            w.save()
+
+    return redirect('dashboard')
 
 @csrf_exempt
 def getDirData(request):
@@ -212,77 +264,264 @@ def getDirData(request):
         path = json.loads( request.POST['requestpath'] )
         project = request.POST['projname']
         print(project, path)
-        jsonresponse = json.dumps(XML.GetInfoFromFiletree(project, path))
+        jsonresponse = json.dumps(XML.GetInfoFromFiletree(enc(d['user'].pk,project), path))
         return HttpResponse(jsonresponse, content_type='application/json')
 
 @csrf_exempt
-def renameFile(request):
-    if request.method == 'POST':
-        path = json.loads( request.POST['requestpath'] )
-        oldname = request.POST['origname']
-        newname = request.POST['newname']
-        print(path, ':', oldname, '->', newname)
-        #tady nastavit v XML
-        return getDirData(request)
-
-@csrf_exempt
-def deleteFile(request):
-    if request.method == 'POST':
-        projname = request.POST['projname']
-        path = json.loads( request.POST['requestpath'] )
-        name = request.POST['name']
-        XML.DeleteFromFiletree(projname, path, name)
-        return getDirData(request)
-
-@csrf_exempt
 def createDir(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
     if request.method == 'POST':
         projname = request.POST['projname']
         path = json.loads( request.POST['requestpath'] )
         name = request.POST['name']
-        XML.AddToFiletree(projname, path, name, 'd')
+        XML.AddToFiletree(enc(d['user'].pk,projname), path, name, 'd')
         return getDirData(request)
 
 @csrf_exempt
 def createFile(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
     if request.method == 'POST':
         projname = request.POST['projname']
         path = json.loads( request.POST['requestpath'] )
         name = request.POST['name']
         size = request.POST['size']
-        XML.AddToFiletree(projname, path, name, 'f', "unknown", size)
+        XML.AddToFiletree(enc(d['user'].pk,projname), path, name, 'f', "unknown", size)
         return getDirData(request)
 
+@csrf_exempt
+def renameFile(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        path = json.loads( request.POST['requestpath'] )
+        oldname = request.POST['origname']
+        newname = request.POST['newname']
+        print(path, ':', oldname, '->', newname)
+        XML.RenameInFiletree(enc(d['user'].pk,projname), path, oldname, newname)
+        return getDirData(request)
 
 @csrf_exempt
+def deleteFile(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        path = json.loads( request.POST['requestpath'] )
+        name = request.POST['name']
+        XML.DeleteFromFiletree(enc(d['user'].pk,projname), path, name)
+        return getDirData(request)
+
+# -------------- DATABASE --------------
+@csrf_exempt
 def getDbData(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
     if request.method == 'POST':
         jsonresponse = json.dumps(generateDatabase())
         return HttpResponse(jsonresponse, content_type='application/json')
 
+
+
+
+
+# dns, user, email funkce maji stejne argumenty a operace, lisi se jen nazvem
 @csrf_exempt
 def getUserData(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
     if request.method == 'POST':
         projname = request.POST['projname']
-        jsonresponse = json.dumps(XML.GetUser(projname))
+        jsonresponse = json.dumps(XML.GetUser(enc(d['user'].pk,projname)))
         print(jsonresponse)
         return HttpResponse(jsonresponse, content_type='application/json')
 
 @csrf_exempt
 def addUser(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
     if request.method == 'POST':
         projname = request.POST['projname']
         username = request.POST['username']
-        XML.AddUser(projname, username)
+        XML.AddUser(enc(d['user'].pk,projname), username)
         return getUserData(request)
 
 @csrf_exempt
 def deleteUser(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
     if request.method == 'POST':
         projname = request.POST['projname']
         username = request.POST['username']
-        XML.DeleteUser(projname, username)
+        XML.DeleteUser(enc(d['user'].pk,projname), username)
         return getUserData(request)
+
+@csrf_exempt
+def renameUser(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        newusername = request.POST['newusername']
+        oldusername = request.POST['oldusername']
+        XML.DeleteUser(enc(d['user'].pk,projname), oldusername)     # might be changed in the future
+        XML.AddUser(enc(d['user'].pk,projname), newusername)
+        return getUserData(request)
+
+@csrf_exempt
+def getDnsData(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        jsonresponse = json.dumps(XML.GetDNS(enc(d['user'].pk,projname)))
+        print(jsonresponse)
+        return HttpResponse(jsonresponse, content_type='application/json')
+
+@csrf_exempt
+def addDns(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        dnsname = request.POST['dnsname']
+        XML.AddDNS(enc(d['user'].pk,projname), dnsname)
+        return getDnsData(request)
+
+@csrf_exempt
+def deleteDns(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        dnsname = request.POST['dnsname']
+        XML.DeleteDNS(enc(d['user'].pk,projname), dnsname)
+        return getDnsData(request)
+
+@csrf_exempt
+def renameDns(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        newdnsname = request.POST['newdnsname']
+        olddnsname = request.POST['olddnsname']
+        XML.DeleteDNS(enc(d['user'].pk,projname), olddnsname)     # might be changed in the future
+        XML.AddDNS(enc(d['user'].pk,projname), newdnsname)
+        return getDnsData(request)
+
+@csrf_exempt
+def getEmailData(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        jsonresponse = json.dumps(XML.GetEmail(enc(d['user'].pk,projname)))
+        print(jsonresponse)
+        return HttpResponse(jsonresponse, content_type='application/json')
+
+@csrf_exempt
+def addEmail(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        emailname = request.POST['emailname']
+        XML.AddEmail(enc(d['user'].pk,projname), emailname)
+        return getEmailData(request)
+
+@csrf_exempt
+def deleteEmail(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        emailname = request.POST['emailname']
+        XML.DeleteEmail(enc(d['user'].pk,projname), emailname)
+        return getEmailData(request)
+
+@csrf_exempt
+def renameEmail(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        newemailname = request.POST['newemailname']
+        oldemailname = request.POST['oldemailname']
+        XML.DeleteEmail(enc(d['user'].pk,projname), oldemailname)     # might be changed in the future
+        XML.AddEmail(enc(d['user'].pk,projname), newemailname)
+        return getEmailData(request)
+
 
 
 # add function with the name matching from urls.py

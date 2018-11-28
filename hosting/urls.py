@@ -27,6 +27,8 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('info/', views.info, name='info'),
     path('createpage/', views.createpage, name="createpage"),
+    path('deletepage/', views.deletepage, name="deletepage"),
+    path('renamepage/', views.renamepage, name="renamepage"),
     path('pageboard/', views.pageboard, name='pageboard'),
     path('getDirData/', views.getDirData, name='dirdata'),
     path('createDir/', views.createDir, name='createdir'),
@@ -36,7 +38,16 @@ urlpatterns = [
     path('getDbData/', views.getDbData, name='dbdata'),
     path('addUser/', views.addUser, name='adduser'),
     path('deleteUser/', views.deleteUser, name='deleteuser'),
-    path('getUserData/', views.getUserData, name='userdata')
+    path('renameUser/', views.renameUser, name='renameuser'),
+    path('getUserData/', views.getUserData, name='userdata'),
+    path('addDns/', views.addDns, name='adddns'),
+    path('deleteDns/', views.deleteDns, name='deletedns'),
+    path('renameDns/', views.renameDns, name='renamedns'),
+    path('getDnsData/', views.getDnsData, name='dnsdata'),
+    path('addEmail/', views.addEmail, name='addemail'),
+    path('deleteEmail/', views.deleteEmail, name='deleteemail'),
+    path('renameEmail/', views.renameEmail, name='renameemail'),
+    path('getEmailData/', views.getEmailData, name='emaildata')
     # here add new pages
     # path(keyword, views.function)
 ]
