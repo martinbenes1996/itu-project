@@ -7,70 +7,153 @@
 		</p>
 	</div>
 
-	<div id="pathbar"></div>
-
 	<div class="my-container dir-bar">
-		<div class="container-fluid" id="userlist">
-			<div class="row dir-bar my-border-users no-margin">
-
-				<div class="row dir-bar no-margin">
-					<span class="enum pointer">#1</span>
-					<div class="col lead my-align pointer">
-						mywebpagesiteuchoch.cz
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary btn-text"><i class="fas fa-edit"></i>&nbsp;modify</button>
-						<button class="btn btn-align btn-warning btn-text"><i class="fas fa-minus-circle"></i>&nbsp;delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="row dir-bar my-border-users no-margin">
-				<div class="row dir-bar no-margin">
-					<span class="enum pointer">#2</span>
-					<div class="col lead my-align pointer">
-						mywebpagesiteuchoch.com
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary btn-text"><i class="fas fa-edit"></i>&nbsp;modify</button>
-						<button class="btn btn-align btn-warning btn-text"><i class="fas fa-minus-circle"></i>&nbsp;delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="row dir-bar my-border-users no-margin">
-				<div class="row dir-bar no-margin">
-					<span class="enum pointer">#3</span>
-					<div class="col lead my-align pointer">
-						mywebpagesiteuchoch.net
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary btn-text"><i class="fas fa-edit"></i>&nbsp;modify</button>
-						<button class="btn btn-align btn-warning btn-text"><i class="fas fa-minus-circle"></i>&nbsp;delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="row dir-bar my-border-users no-margin">
-				<div class="row dir-bar no-margin">
-					<span class="enum pointer">#4</span>
-					<div class="col lead my-align pointer">
-						mywebpagesiteuchoch.martin
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary btn-text"><i class="fas fa-edit"></i>&nbsp;modify</button>
-						<button class="btn btn-align btn-warning btn-text"><i class="fas fa-minus-circle"></i>&nbsp;delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="create">
-				<button class="btn btn-primary btn-align btn-text"><i class="fas fa-plus-circle"></i>&nbsp;add</button>
-			</div>
-		</div>
+		<div class="container-fluid" id="dnslist"></div>
 	</div>
  </div>
+
+<script>
+	var currentDnsData;
+
+	function refreshDnsData() {
+        generateDns();
+    }
+
+    function requestDnsData() {
+        $.post("{% url 'dnsdata' %}",
+            {'projname': "{{page.name}}"},
+            function (data) {
+                currentDnsData = data;
+				refreshDnsData();
+            }
+        );
+	}
+
+	function sendAddDns(name) {
+		$.post("{% url 'adddns' %}",
+			{'projname': "{{page.name}}", 'dnsname':name},
+			function(data) {
+				currentDnsData = data;
+				refreshDnsData();
+			}
+		);
+	} 
+
+	function sendDeleteDns(name) {
+		$.post("{% url 'deletedns' %}",
+			{'projname': "{{page.name}}", 'dnsname':name},
+			function(data) {
+				currentDnsData = data;
+				refreshDnsData();
+			}
+		);
+	}
+
+	function generateDnsRow(dns, i) {
+		return $("<div>").addClass("row dir-bar my-border-users no-margin")
+			.append($("<div>").addClass("row dir-bar no-margin")
+				.append($("<span>").addClass("enum pointer")
+					.text("#"+i)
+				)
+				.append($("<div>").addClass("col lead my-align pointer")
+					.text(dns)
+				)
+				.append($("<div>").addClass("col text-right")
+					.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text")
+						.append($("<i>").addClass("fas fa-edit"))
+						.html("&nbsp;modify")
+					)
+					.append($("<button>").addClass("btn btn-align btn-warning btn-text")
+						.append($("<i>").addClass("fas fa-minus-circle"))
+						.html("&nbsp;delete")
+						.click(dns, function(event){ 
+							event.stopPropagation();
+							sendDeleteDns(event.data);
+						})
+					)
+				)
+			)
+			.append($("<div>").addClass("col-lg-4"))
+		;
+	}
+
+	function generateDns() {
+		$("#dnslist").empty();
+        $.each(currentDnsData, function (u) {
+			$("#dnslist").append( generateDnsRow(currentDnsData[u], u) );
+		});
+		
+		$("#dnslist").append($("<div>").addClass("create")
+			.attr("id", "dnsadder")
+			.append($("<button>").addClass("btn btn-primary btn-align btn-text")
+				.append($("<i>").addClass("fas fa-plus-circle"))
+				.html("&nbsp;add")
+				.click(newDnsLine)
+			)
+		);
+	}
+
+	function newDnsLine() {
+		alert("Add DNS");
+	}
+
+	function newDnsLine() {
+		$("#dnsadder").empty();
+		var dnsinput = $("<input>").addClass("form-control")
+			.attr({"type":"text", "value":"DNS.cz"})
+			.on("keydown", function(e){
+				if(e.which == 13) {
+					alert("Here");
+					e.stopPropagation();
+					sendAddDns(this.value);
+					return;
+				} else if(e.which == 27) {
+					e.stopPropagation();
+					requestDnsData();
+				}
+			})
+			.focusout(function(e){
+				e.stopPropagation();
+				sendAddDns(this.value);
+				//requestDnsData();
+				return;
+			})
+		;
+		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
+			.text("Add DNS")
+			.click(dnsinput, function(event){
+				e.stopPropagation();
+				alert(event.data.value);
+				sendAddDns(event.data.value);
+			})
+		;
+
+		$("#dnsadder").append($("<div>").addClass("row dir-bar my-border-users")
+			.append($("<div>").addClass("row dir-bar")
+				.append($("<span>").addClass("enum pointer")
+					.text("#"+currentDnsData.length)
+				)
+				.append($("<div>").addClass("col lead my-align pointer")
+					.append(dnsinput)
+				)
+				.append($("<button>").addClass("btn")
+					.text("Add DNS")
+					.click(dnsinput, function() {
+						var e = jQuery.Event("keydown");
+						e.which = 13;
+						dnsinput.trigger(e);
+					})
+				)
+				.append($("<div>").addClass("col text-right"))
+			)
+			.append($("<div>").addClass("col-lg-4"))
+		);
+		dnsinput.focus().select();
+	}
+
+
+	$(document).ready(function () {
+        requestDnsData();
+    });
+
+</script>
