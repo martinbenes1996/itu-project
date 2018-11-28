@@ -7,70 +7,149 @@
 		</p>
 	</div>
 
-	<div id="pathbar"></div>
-
 	<div class="my-container dir-bar">
-		<div class="container-fluid" id="userlist">
-			<div class="row dir-bar my-border-users no-margin">
-
-				<div class="row dir-bar no-margin">
-					<span class="enum pointer">#1</span>
-					<div class="col lead my-align pointer">
-						martin.bolshak@ojojoj.tx
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary btn-text"><i class="fas fa-edit"></i>&nbsp;modify</button>
-						<button class="btn btn-align btn-warning btn-text"><i class="fas fa-minus-circle"></i>&nbsp;delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="row dir-bar my-border-users no-margin">
-				<div class="row dir-bar no-margin">
-					<span class="enum pointer">#2</span>
-					<div class="col lead my-align pointer">
-						martin.uremović@ojojoj.tx
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary btn-text"><i class="fas fa-edit"></i>&nbsp;modify</button>
-						<button class="btn btn-align btn-warning btn-text"><i class="fas fa-minus-circle"></i>&nbsp;delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="row dir-bar my-border-users no-margin">
-				<div class="row dir-bar no-margin">
-					<span class="enum pointer">#3</span>
-					<div class="col lead my-align pointer">
-						martin.shapoval@ojojoj.tx
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary btn-text"><i class="fas fa-edit"></i>&nbsp;modify</button>
-						<button class="btn btn-align btn-warning btn-text"><i class="fas fa-minus-circle"></i>&nbsp;delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="row dir-bar my-border-users no-margin">
-				<div class="row dir-bar no-margin">
-					<span class="enum pointer">#4</span>
-					<div class="col lead my-align pointer">
-						martin.chovanec@ojojoj.tx
-					</div>
-					<div class="col text-right">
-						<button class="btn btn-align rename-align btn-secondary btn-text"><i class="fas fa-edit"></i>&nbsp;modify</button>
-						<button class="btn btn-align btn-warning btn-text"><i class="fas fa-minus-circle"></i>&nbsp;delete</button>
-					</div>
-				</div>
-				<div class="col-lg-4"></div>
-			</div>
-
-			<div class="create">
-				<button class="btn btn-primary btn-align btn-text"><i class="fas fa-plus-circle"></i>&nbsp;add</button>
-			</div>
+		<div class="container-fluid" id="emailslist">
 		</div>
 	</div>
  </div>
+
+<script>
+	var currentEmailsData;
+	function refreshEmailsData() {
+        generateEmails();
+	}
+	
+	function requestEmailsData() {
+        $.post("{% url 'emaildata' %}",
+            {'projname': "{{page.name}}"},
+            function (data) {
+                currentEmailsData = data;
+				refreshEmailsData();
+            }
+        );
+	}
+
+	function sendNewEmail(name) {
+		$.post("{% url 'addemail' %}",
+			{'projname': "{{page.name}}", "emailname": name },
+			function (data) {
+				currentEmailsData = data;
+				refreshEmailsData();
+			}
+		);
+	}
+
+	function sendDeleteEmail(name) {
+		$.post("{% url 'deleteemail' %}",
+			{'projname': "{{page.name}}", "emailname": name},
+			function (data) {
+				currentEmailsData = data;
+				refreshEmailsData();
+			}
+		);
+	}
+
+	function generateEmailRow(mail, i) {
+		return $("<div>").addClass("row dir-bar my-border-users no-margin")
+			.append($("<div>").addClass("row dir-bar no-margin")
+				.append($("<span>").addClass("enum pointer")
+					.text("#"+i)
+				)
+				.append($("<div>").addClass("col lead my-align pointer")
+					.text(mail)
+				)
+				.append($("<div>").addClass("col text-right")
+					.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text")
+						.append($("<i>").addClass("fas fa-edit"))
+						.html("&nbsp;modify")
+					)
+					.append($("<button>").addClass("btn btn-align btn-warning btn-text")
+						.append($("<i>").addClass("fas fa-minus-circle"))
+						.html("&nbsp;delete")
+						.click(mail, function(event){ sendDeleteEmail(event.data); })
+					)
+				)
+			)
+			.append($("<div>").addClass("col-lg-4"))
+		;
+	}
+
+	function newEmailLine() {
+		alert("Add email!");
+	}
+
+	function generateEmails() {
+		$("#emailslist").empty();
+		$.each(currentEmailsData, function(e) {
+			$("#emailslist").append( generateEmailRow(currentEmailsData[e], e) );
+		});
+
+		$("#emailslist").append($("<div>").addClass("create")
+			.attr("id", "emailadder")
+			.append($("<button>").addClass("btn btn-primary btn-align btn-text")
+				.append($("<i>").addClass("fas fa-plus-circle"))
+				.html("&nbsp;add")
+				.click(newEmailLine)
+			)
+		);
+	}
+
+	$(document).ready(function () {
+        requestEmailsData();
+	});
+	
+
+	function newEmailLine() {
+		$("#emailadder").empty();
+		var emailinput = $("<input>").addClass("form-control")
+			.attr({"type":"text", "value":"new email"})
+			.on("keydown", function(e){
+				if(e.which == 13) {
+					e.preventDefault();
+					sendNewEmail(this.value);
+					return;
+				} else if(e.which == 27) {
+					e.preventDefault();
+					requestEmailsData();
+				}
+			})
+			.focusout(function(e){
+				e.preventDefault();
+				//sendNewEmail(this.value);
+				requestEmailsData();
+				return;
+			})
+		;
+		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
+			.text("Add user")
+			.click(emailinput, function(event){
+					alert(event.data.value)
+					sendNewEmail(event.data.value);
+			})
+		;
+
+		$("#emailadder").append($("<div>").addClass("row dir-bar my-border-users")
+			.append($("<div>").addClass("row dir-bar")
+				.append($("<span>").addClass("enum pointer")
+					.text("#"+currentEmailsData.length)
+				)
+				.append($("<div>").addClass("col lead my-align pointer")
+					.append(emailinput)
+				)
+				.append($("<button>").addClass("btn")
+					.text("Add user")
+					.click(emailinput, function() {
+						var e = jQuery.Event("keydown");
+						e.which = 13;
+						emailinput.trigger(e);
+					})
+				)
+				.append($("<div>").addClass("col text-right"))
+			)
+			.append($("<div>").addClass("col-lg-4"))
+		);
+		emailinput.focus().select();
+	}
+
+	
+</script>
