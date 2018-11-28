@@ -105,16 +105,16 @@
 			.attr({"type":"text", "value":"new email"})
 			.on("keydown", function(e){
 				if(e.which == 13) {
-					e.preventDefault();
+					e.stopPropagation();
 					sendNewEmail(this.value);
 					return;
 				} else if(e.which == 27) {
-					e.preventDefault();
+					e.stopPropagation();
 					requestEmailsData();
 				}
 			})
 			.focusout(function(e){
-				e.preventDefault();
+				e.stopPropagation();
 				//sendNewEmail(this.value);
 				requestEmailsData();
 				return;

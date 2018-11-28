@@ -178,16 +178,16 @@
                                     .click(function(event){ event.stopPropagation(); })
                                     .on("keydown", function(e){
                                         if(e.which == 13) {
-                                            e.preventDefault();
+                                            e.stopPropagation();
                                             sendRenameFile(currentDirData['path'], key, this.value);
                                             return;
                                         } else if(e.which == 27) {
-                                            e.preventDefault();
+                                            e.stopPropagation();
                                             requestFileData(currentDirData['path']);
                                         }
                                     })
                                     .focusout(function(e){
-                                        e.preventDefault();
+                                        e.stopPropagation();
                                         sendRenameFile(currentDirData['path'], key, $(this).val());
                                         return;
                                     })
@@ -230,11 +230,11 @@
             .on("keydown", this, function(e){
 				if(e.which == 13) {
                     alert("enter");
-                    e.preventDefault();
+                    e.stopPropagation();
                     sendCreateFolder(currentDirData.path, $(this).val());
 					return;
 				} else if(e.which == 27) {
-                    e.preventDefault();
+                    e.stopPropagation();
                     //$(this).val('');
                     $(this).blur();
 				}

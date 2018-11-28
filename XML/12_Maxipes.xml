@@ -1,2 +1,2 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<project name="12_Maxipes"><FTP><home date="2018-11-28" owner="unknown" size="0" type="d" /></FTP><DNS /><database /><emails /><users /></project>
+<project name="12_Maxipes"><FTP><home date="2018-11-28" owner="unknown" size="0" type="d" /></FTP><DNS><dns>DNS.cz</dns><dns>blablabla</dns></DNS><database /><emails><email>email</email></emails><users /></project>

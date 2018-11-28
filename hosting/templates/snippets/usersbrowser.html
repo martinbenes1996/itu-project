@@ -90,13 +90,15 @@
 			$("#userslist").append( generateUser(currentUsersData[u], u) );
 		});
 		
-		$("#userslist").append($("<div>")
+		$("#userslist").append($("<div>").addClass("create")
 			.attr("id", "useradder")
-			.append($("<button>").addClass("btn btn-primary btn-align")
-				.text("Add user")
+			.append($("<button>").addClass("btn btn-primary btn-align btn-text")
+				.append($("<i>").addClass("fas fa-plus-circle"))
+				.html("&nbsp;add")
 				.click(newUserLine)
 			)
 		);
+
 	}
 
 	function newUserLine() {
@@ -105,13 +107,19 @@
 			.attr({"type":"text", "value":"new file"})
 			.on("keydown", function(e){
 				if(e.which == 13) {
-					e.preventDefault();
+					e.stopPropagation();
 					sendNewUser(this.value);
 					return;
 				} else if(e.which == 27) {
-					e.preventDefault();
+					e.stopPropagation();
 					requestUsersData();
 				}
+			})
+			.focusout(function(e){
+				e.stopPropagation();
+				//sendNewUser(this.value);
+				requestUsersData();
+				return;
 			})
 		;
 		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
