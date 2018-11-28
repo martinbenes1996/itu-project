@@ -587,10 +587,11 @@ def GetDatabase(projName):
 
 def AddColumn(projName, tableName, column, defaultValue="NULL"):
     ''' Add column to a table. Adds column to the end of a column list.
-        projName   -> name of the project (string!)
-        tableName  -> name of the table (string!)
-        column     -> name of the new column and its data type (string!)
+        projName     -> name of the project (string!)
+        tableName    -> name of the table (string!)
+        column       -> name of the new column and its data type (string!)
             example: ["name","s"]
+        defaultValue -> default value of new column in existing rows (string!)
     '''
     try:
         tree = ET.parse("XML/"+str(projName)+".xml")

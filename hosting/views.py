@@ -41,16 +41,16 @@ def generateDatabase():
                 [{tablename,row_data,definition_of_rows},{...},...]
                     - row_data = [['polozky','dle','definice','radku'],[...],...]
                     - definition_of_rows = [["rowname","rowdatatype"],[...],...]
-
-                [
+    '''
+    return [
                  {'name': 'hrusky',
                   'rows': [],
                   'definition': [['id','i'],['jmeno','s'],['odruda','s']]},
 
                  {'name': 'jabka',
-                  'rows': [['0', 'Granny Smith', 'green'], ['1', 'Granny Smith', 'green'],['2', 'Granny Smith', 'green']],
+                  'rows': [['0', 'Granny Smith', 'green'], ['1', 'Moje jabko', 'red'],['2', 'Taiwanska namka', 'orange']],
                   'definition': [['id','i'],['jmeno','s'],['barva','s']]}
-                ]
+            ]
     '''
     return {
         'name': 'databaze1',
@@ -81,6 +81,7 @@ def generateDatabase():
             }
         }
     }
+    '''
 
 
 def index(request):
@@ -340,8 +341,119 @@ def getDbData(request):
     except:
         d['message'] = 'Unknown user.'
     if request.method == 'POST':
+        projname = request.POST['projname']
         jsonresponse = json.dumps(generateDatabase())
+        #jsonresponse = json.dumps(XML.GetDatabase( enc(d['user'].pk,projname) ))
         return HttpResponse(jsonresponse, content_type='application/json')
+
+'''
+            [
+                 {'name': 'hrusky',
+                  'rows': [],
+                  'definition': [['id','i'],['jmeno','s'],['odruda','s']]},
+
+                 {'name': 'jabka',
+                  'rows': [['0', 'Granny Smith', 'green'], ['1', 'Moje jabko', 'red'],['2', 'Taiwanska namka', 'orange']],
+                  'definition': [['id','i'],['jmeno','s'],['barva','s']]}
+            ]
+'''
+@csrf_exempt
+def createTable(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        tablename = request.POST['tablename']
+        # definition is a list of lists like this: [["nazev sloupce","datovy typ"],...]
+        # je treba to tu nejak poskladat, musi to byt seznamy kvuli poradi zaznamu...
+        definition = [["id","i"],["name","s"]]      # temporary definition
+        #definition = json.loads( request.POST['definition'] )
+        XML.CreateTable(enc(d['user'].pk,projname), tablename, definition)
+        return getDbData(request)
+
+@csrf_exempt
+def deleteTable(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        tablename = request.POST['tablename']
+        XML.DeleteTable(enc(d['user'].pk,projname), tablename)
+        return getDbData(request)
+
+@csrf_exempt
+def addRow(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        tablename = request.POST['tablename']
+        # rowdata is a list of data: ["prvni sloupec","druhy sloupec",...]
+        # je treba to tu nejak poskladat, musi to byt seznam kvuli poradi zaznamu...
+        rowdata = ["0","pepa"]      # temporary data
+        #rowdata = json.loads( request.POST['rowdata'] )
+        XML.AddRow(enc(d['user'].pk,projname), tablename, rowdata)
+        return getDbData(request)
+
+@csrf_exempt
+def deleteRow(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        tablename = request.POST['tablename']
+        rowid = request.POST['rowid']
+        # id of the row (hodnota primarniho klice, vzdy je v prvnim sloupci, muze to byt cokoli - cislo/string)
+        XML.DeleteRow(enc(d['user'].pk,projname), tablename, rowid)
+        return getDbData(request)
+
+@csrf_exempt
+def addColumn(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        tablename = request.POST['tablename']
+        column = request.POST['column']
+        # priklad: ["name","s"] - nazev sloupce + datovy typ
+        defaultvalue = request.POST['defaultvalue']
+        XML.AddColumn(enc(d['user'].pk,projname), tablename, column, defaultvalue)
+        return getDbData(request)
+
+@csrf_exempt
+def deleteColumn(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        tablename = request.POST['tablename']
+        columnname = request.POST['columnname']     # name of the deleted column
+        XML.DeleteColumn(enc(d['user'].pk,projname), tablename, columnname)
+        return getDbData(request)
 
 
 
