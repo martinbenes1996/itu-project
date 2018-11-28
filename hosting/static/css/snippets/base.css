@@ -1,13 +1,13 @@
-.inner-body{
+.inner-body {
     max-width: 1550px;
 }
 
-.dir-bar{
+.dir-bar {
     width: 100%;
     height: 100%;
 }
 
-.my-container{
+.my-container {
     max-width: 840px;
     margin-right: auto;
     margin-left: auto;
@@ -15,26 +15,26 @@
     padding-right: 15px;
 }
 
-.create{
+.create {
     padding: 15px;
 }
 
-.btn-align{
+.btn-align {
     margin-right: 10px;
     margin-top: 8px;
     width: 100px;
 }
 
-.text-right{
+.text-right {
     padding-right: 0 !important
 }
 
-.no-margin{
+.no-margin {
     margin-right: 0 !important;
     margin-left: 0 !important;
 }
 
-.my-align{
+.my-align {
     margin-bottom: 0px !important;
     padding-top: 8px;
     padding-top: 9px;
@@ -42,7 +42,7 @@
     vertical-align: center;
 }
 
-.my-border{
+.my-border {
     border-style: solid;
     height: 50px;
     border-color: #888888;
@@ -57,53 +57,96 @@
 .my-border-users:hover {
     background-color: #e5e5e5;
 }
+.my-border-db:hover {
+    background-color: #e5e5e5;
+}
 
-#pathbar{
+#pathbar {
     margin: 7em 5em 1em 13em;
 }
 
-
-#pathbar a{
+#pathbar a {
     cursor: pointer;
 }
 
-.center{
+.center {
     text-align: center;
 }
 
-a.pathButton:hover{
-    color: rgba(255,255,255,.75);
-}
-a.pathButton{
-    color: rgba(255,255,255,.5);
+a.pathButton:hover {
+    color: rgba(255, 255, 255, .75);
 }
 
-.file-align{
+a.pathButton {
+    color: rgba(255, 255, 255, .5);
+}
+
+.file-align {
     padding-top: 18px;
     padding-left: 19px;
 }
 
-.folder-align{
+.folder-align {
     padding-top: 18px;
     padding-left: 17px;
 }
 
-.pointer{
+.pointer {
     cursor: pointer;
 }
 
-.enum-top{
+.enum-top {
     padding: 13px 15px 0px 25px;
     font-size: large;
     font-weight: bold;
 }
 
-.enum{
+.enum-top-db {
+    padding: 13px 15px 0px 25px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.enum-db {
+    padding: 20px 15px 0px 25px;
+    font-weight: bold;
+}
+.btn-table-edit{
+    position: absolute;
+    margin: 12px 0px 12px 980px;
+    width: 50px;
+}
+
+.btn-table-edit-main{
+    position: absolute;
+    margin: 8px 0px 0px 640px;
+    width: 50px;
+}
+
+.btn-table-del{
+    position: absolute;
+    width: 50px;
+    margin: 12px 0px 12px 1040px;
+}
+
+
+.btn-table-del-main{
+    position: absolute;
+    margin: 8px 0px 0px 700px;
+    width: 50px;
+}
+
+.table-cell{
+    white-space: nowrap;
+    font-size: 9pt;
+}
+
+.enum {
     padding: 15px 15px 0px 25px;
     font-weight: bold;
 }
 
-.my-border-users{
+.my-border-users {
     border-style: solid;
     height: 50px;
     border-color: #888888;
@@ -111,13 +154,22 @@ a.pathButton{
     margin-bottom: -1px;
 }
 
-.email-huge{
+.my-border-db {
+    border-style: solid;
+    height: 60px;
+    border-color: #888888;
+    border-width: 1px;
+    margin-bottom: -1px;
+}
+
+
+.email-huge {
     font-size: 30pt;
     font-weight: bold;
     text-shadow: 0 0 5px #a9a9a9;
 }
 
-.my-container-email{
+.my-container-email {
 
     max-width: 1180px;
     margin-right: auto;
@@ -126,59 +178,122 @@ a.pathButton{
     padding-right: 15px;
 }
 
-.top{
+.top {
     background-color: #636363;
     color: white;
 }
 
-.from-top{
+.name-top {
     padding: 13px 15px 0px 25px;
     font-size: large;
     font-weight: bold;
 }
 
-.subject-top{
-    padding: 13px 15px 0px 28px;
+.columns-top {
+    padding: 13px 15px 0px 200px;
     font-size: large;
     font-weight: bold;
 }
 
-.arrow-top{
-    padding: 16px 15px 0px 193px;
+.rows-top {
+    padding: 13px 15px 0px 75px;
     font-size: large;
     font-weight: bold;
 }
 
-.from{
+.name {
     padding: 15px 15px 0px 75px;
-    font-weight: bold;
     position: absolute;
 }
 
-.subject{
-    padding: 15px 15px 0px 389px;
+.columns {
+    padding: 15px 15px 0px 378px;
     position: absolute;
 }
 
-.arrow{
-    padding: 18px 15px 0px 330px;
+.rows {
+    padding: 15px 15px 0px 530px;
     position: absolute;
 }
 
-.two-columns{
+.two-columns {
 
     display: inline-flex;
     width: 100%;
 }
 
-.justify{
+.justify {
     text-align: justify;
 }
 
-.my-list{
+.my-list {
     text-align: left;
 }
 
-.indent{
+.indent {
     text-indent: 2em;
+}
+
+.test {
+    width: 100px;
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.log {
+    width: 400px;
+    height: 500px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.no-indent{
+    list-style-type: none;
+}
+
+.minus-left{
+    padding-left: 0px;
+}
+
+.minus-bottom{
+    margin-bottom: 5px !important;
+}
+
+.plus-bottom{
+    margin-bottom: 20px;
+}
+
+.btn-text{
+    text-transform: uppercase;
+    font-size: small;
+    font-weight: bold;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.btn-huge{
+    width: 200px;
+    height: 50px;
+}
+
+#current-table1,
+#current-table2,
+#current-table3{
+    display: none;
+}
+
+.column-top{
+    padding-top: 13px;
+    font-size: large;
+    font-weight: bold;
+    min-width: 10% !important;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.column{
+    padding-top: 20px;
+    min-width: 10% !important;
+    overflow-y: auto;
+    overflow-x: auto;
 }

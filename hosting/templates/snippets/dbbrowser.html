@@ -1,5 +1,218 @@
+<div class="inner-body">
+	<h1 class="center">Database</h1>
+
+	<div class="container lead center">
+		<p>
+			Click on your table or create a new one. After selecting a table you can edit the rows and columns.
+		</p>
+	</div>
+
+	<div id="pathbar"></div>
+
+	<div class="my-container dir-bar" id="table-list">
+		<div class="container-fluid">
+
+			<!-- TADY JE 1. ŘÁDEK TABULKY -->
+
+			<div class="row dir-bar my-border-users no-margin">
+				<div id="1" class="row dir-bar top no-margin">
+					<span class="enum-top">#</span>
+					<span class="name-top">Name</span>
+					<span class="columns-top">Columns</span>
+					<span class="rows-top">Rows</span>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+
+			<!-- TADY ZAČÍNÁ SEZNAM TABULEK -->
+
+
+			<!-- TABULKA 1 -->
+			<div class="row dir-bar my-border-users no-margin" onclick="tableShow(1)">
+				<div class="row dir-bar no-margin">
+					<span class="enum">#1</span>
+					<span class="name">products</span>
+					<span class="columns">6</span>
+					<span class="rows">3</span>
+					<button class="btn btn-align rename-align btn-secondary btn-text btn-table-edit-main"><i class="fas fa-edit"></i>
+					</button>
+					<button class="btn btn-align btn-warning btn-text btn-table-del-main"><i class="fas fa-minus-circle"></i></button>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+
+			<!-- TABULKA 2 -->
+			<div class="row dir-bar my-border-users no-margin" onclick="tableShow(2)">
+				<div class="row dir-bar no-margin">
+					<span class="enum">#2</span>
+					<span class="name">employees</span>
+					<span class="columns">3</span>
+					<span class="rows">2</span>
+					<button class="btn btn-align rename-align btn-secondary btn-text btn-table-edit-main"><i class="fas fa-edit"></i>
+					</button>
+					<button class="btn btn-align btn-warning btn-text btn-table-del-main"><i class="fas fa-minus-circle"></i></button>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<div class="create">
+				<button class="btn btn-primary btn-align btn-text"><i class="fas fa-plus-circle"></i>&nbsp;add</button>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- DETAILY TABULKY 1 -->
+	<div class="my-container-email dir-bar" id="current-table1">
+		<div class="container-fluid table-cell" id="table">
+
+
+			<div class="row dir-bar my-border-users no-margin">
+				<div id="1" class="row dir-bar top no-margin center">
+					<span class="enum-top-db">#</span>
+					<span class="column-top" style="width: 13.29%">Name</span> <!-- 93/(column count + 1) -->
+					<span class="column-top" style="width: 13.29%">Description</span> <!-- 93/(column count + 1) -->
+					<span class="column-top" style="width: 13.29%">Text</span> <!-- 93/(column count + 1) -->
+					<span class="column-top" style="width: 13.29%">Review</span> <!-- 93/(column count + 1) -->
+					<span class="column-top" style="width: 13.29%">Price</span> <!-- 93/(column count + 1) -->
+					<span class="column-top" style="width: 13.29%">Usage</span> <!-- 93/(column count + 1) -->
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+
+			<!-- 1. ZÁZNAM -->
+			<div class="row dir-bar my-border-db no-margin">
+				<div class="row dir-bar no-margin center">
+					<span class="enum-db">#1</span>
+					<span class="column" style="width: 13.29%">Hrnec</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">Pěkný</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">Na vaření</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">4.3</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">512,-</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">NULL</span> <!-- 93/(column count + 1) -->
+					<button class="btn btn-align rename-align btn-secondary btn-text btn-table-edit"><i class="fas fa-edit"></i>
+					</button>
+					<button class="btn btn-align btn-warning btn-text btn-table-del"><i class="fas fa-minus-circle"></i></button>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<!-- 2. ZÁZNAM -->
+			<div class="row dir-bar my-border-db no-margin">
+				<div class="row dir-bar no-margin center">
+					<span class="enum-db">#2</span>
+					<span class="column" style="width: 13.29%">Kastról</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">Starý šmejd</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">Tak toto je teda nějaký delší popis, který přesahuje všechny myslitelné rozměry a kazí tak kompozici tabulky.</span>
+					<!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">1.5</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">125,-</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">Vaření</span> <!-- 93/(column count + 1) -->
+					<button class="btn btn-align rename-align btn-secondary btn-text btn-table-edit"><i class="fas fa-edit"></i>
+					</button>
+					<button class="btn btn-align btn-warning btn-text btn-table-del"><i class="fas fa-minus-circle"></i></button>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<!-- 3. ZÁZNAM -->
+			<div class="row dir-bar my-border-db no-margin">
+				<div class="row dir-bar no-margin center">
+					<span class="enum-db">#3</span>
+					<span class="column" style="width: 13.29%">Pánev</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">Kulatá</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">Velká</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">4.8</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">846,-</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 13.29%">Smažení</span> <!-- 93/(column count + 1) -->
+					<button class="btn btn-align rename-align btn-secondary btn-text btn-table-edit"><i class="fas fa-edit"></i>
+					</button>
+					<button class="btn btn-align btn-warning btn-text btn-table-del"><i class="fas fa-minus-circle"></i></button>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<div class="create">
+				<button class="btn btn-primary btn-align btn-text"><i class="fas fa-plus-circle"></i>&nbsp;Add</button>
+				<button class="btn btn-primary btn-align btn-text" onclick="tableUnshow(1)"><i class="fas fa-arrow-left"></i>&nbsp;Back
+				</button>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- DETAILY TABULKY 2 -->
+	<div class="my-container-email dir-bar" id="current-table2">
+		<div class="container-fluid table-cell" id="table">
+
+
+			<div class="row dir-bar my-border-users no-margin">
+				<div id="1" class="row dir-bar top no-margin center">
+					<span class="enum-top-db">#</span>
+					<span class="column-top" style="width: 23.25%">Name</span> <!-- 93/(column count + 1) -->
+					<span class="column-top" style="width: 23.25%">E-mail</span> <!-- 93/(column count + 1) -->
+					<span class="column-top" style="width: 23.25%">Salary</span> <!-- 93/(column count + 1) -->
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+
+			<!-- 1. ZÁZNAM -->
+			<div class="row dir-bar my-border-db no-margin">
+				<div class="row dir-bar no-margin center">
+					<span class="enum-db">#1</span>
+					<span class="column" style="width: 23.25%">Martin Beneš</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 23.25%">xbenesXX@fit.vutbr.cz</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 23.25%">$12.351.560.151</span> <!-- 93/(column count + 1) -->
+					<button class="btn btn-align rename-align btn-secondary btn-text btn-table-edit"><i class="fas fa-edit"></i>
+					</button>
+					<button class="btn btn-align btn-warning btn-text btn-table-del"><i class="fas fa-minus-circle"></i></button>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<!-- 2. ZÁZNAM -->
+			<div class="row dir-bar my-border-db no-margin">
+				<div class="row dir-bar no-margin center">
+					<span class="enum-db">#2</span>
+					<span class="column" style="width: 23.25%">Ondřej Polanský</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 23.25%">xpolanXX@fit.vutbr.cz</span> <!-- 93/(column count + 1) -->
+					<span class="column" style="width: 23.25%">$12.351.560.151</span><!-- 93/(column count + 1) -->
+					<button class="btn btn-align rename-align btn-secondary btn-text btn-table-edit"><i class="fas fa-edit"></i>
+					</button>
+					<button class="btn btn-align btn-warning btn-text btn-table-del"><i class="fas fa-minus-circle"></i></button>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+
+			<div class="create">
+				<button class="btn btn-primary btn-align btn-text"><i class="fas fa-plus-circle"></i>&nbsp;Add</button>
+				<button class="btn btn-primary btn-align btn-text" onclick="tableUnshow(2)"><i class="fas fa-arrow-left"></i>&nbsp;Back
+				</button>
+			</div>
+		</div>
+	</div>
+
+</div>
+
 
 <script>
+    function tableShow(id_value) {
+
+        document.getElementById("table-list").style.display = "none";
+        document.getElementById("current-table" + id_value).style.display = "block";
+    }
+
+    function tableUnshow(id_value) {
+
+        document.getElementById("table-list").style.display = "block";
+        document.getElementById("current-table" + id_value).style.display = "none";
+    }
+
+
     var currentData;
 
     function refreshDbData() {
@@ -8,50 +221,57 @@
     }
 
     function requestDbData() {
+		/*
         $.post("{% url 'dbdata' %}",
-            function(data) {
+            function (data) {
                 currentData = JSON.parse(JSON.stringify(data));
                 refreshDbData();
             }
-        );
+		);
+		*/
     }
 
     function generateOrientationButton(name, f) {
         var x = $('<div>')
-            .append( $('<a>', {id: name})
+            .append($('<a>', {id: name})
                 .css({'color': 'blue'})
                 .addClass('pathButton')
                 .text(name)
-                .click({'name':name, 'f':f}, function(event) {
+                .click({'name': name, 'f': f}, function (event) {
                     event.data.f(event.data.name);
                 })
                 .hover(
-                    function() {
-                        $(this).css({'text-decoration':'underline', 'color':'red'});
-                    }, function() {
-                        $(this).css({'text-decoration':'none', 'color':'blue'});
+                    function () {
+                        $(this).css({'text-decoration': 'underline', 'color': 'red'});
+                    }, function () {
+                        $(this).css({'text-decoration': 'none', 'color': 'blue'});
                     }
                 )
             )
         ;
         return x;
     }
+
     function generateOrientation(table='') {
         $('#orientationbar').empty();
         $('#orientationbar')
             .append(
                 generateOrientationButton(
                     currentData.name,
-                    function(name){ generateDbContent(); }
+                    function (name) {
+                        generateDbContent();
+                    }
                 )
             )
         ;
-        if(table != "") {
+        if (table != "") {
             $('#orientationbar')
                 .append(
                     generateOrientationButton(
                         table,
-                        function(name){ generateTableContent(name); }
+                        function (name) {
+                            generateTableContent(name);
+                        }
                     )
                 )
             ;
@@ -61,9 +281,9 @@
     function generateDbContent() {
         $('#dbcontent').empty();
         var t = $('<table>');
-        $.each(currentData.tables, function(key, value) {
+        $.each(currentData.tables, function (key, value) {
             t.append($('<tr>').append($('<td>').text(key)
-                .click(key, function(event) {
+                .click(key, function (event) {
                     generateTableContent(event.data);
                 })
             ));
@@ -78,27 +298,27 @@
         console.debug(currentData);
         console.debug(tablename);
         console.debug(currentData.tables[tablename]);
-        $.each(currentData.tables[tablename].columns, function(colname, col_dtype){
+        $.each(currentData.tables[tablename].columns, function (colname, col_dtype) {
             h.append($('<td>').text(colname));
             // use col_dtype
         });
-        $.each(currentData.tables[tablename].data, function(col, val){
+        $.each(currentData.tables[tablename].data, function (col, val) {
             var dr = $('<tr>');
-            $.each(currentData.tables[tablename].columns, function(colname ,col_dtype){
+            $.each(currentData.tables[tablename].columns, function (colname, col_dtype) {
                 dr.append($('td').text(val[colname]));
             });
             t.append(dr);
         });
-            
+
     }
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         requestDbData();
     });
 </script>
-
+<!--
 <div class="container-fluid" style="margin: 50px">
-    <div id="orientationbar" class="row" style="margin-bottom: 30px"></div>
-    <div class="container-fluid" id="dbcontent"></div>
-</div>
+	<div id="orientationbar" class="row" style="margin-bottom: 30px"></div>
+	<div class="container-fluid" id="dbcontent"></div>
+</div>-->
