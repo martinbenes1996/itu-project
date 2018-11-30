@@ -384,6 +384,7 @@ def getDbData(request):
         testfile = open("testhtml.html","w")                # save into a file (temporary)
         testfile.write(str(result))
         testfile.close()
+        print(XML.GetTableNames("dat007"))
 
 
         jsonresponse = json.dumps(generateDatabase())

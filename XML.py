@@ -587,6 +587,34 @@ def GetDatabase(projName):
         counter = counter + 1
     return result
 
+def GetTableNames(projName):
+    ''' Get the whole database in just one list!!!
+        projName   -> name of the project (string!)
+        Returns:   -> list: [{'tablename':"name",'columncount':"NumberAsString",'rowcount':"NumberAsString"},...]
+    '''
+    try:
+        tree = ET.parse("XML/"+str(projName)+".xml")
+        root = tree.getroot()
+    except:
+        raise DoesNotExistError
+
+    elem = FindInXML(root, [], "database")
+    if elem == None:                                    # path does not exist - should not happen
+        raise DoesNotExistError
+
+    result = []
+    counter = 0
+    test = elem.findall("*")                                                    # find children
+    for x in test:
+        result.append({"name":x.attrib['tablename']})                           # get name of the table
+        definition = x.find("definition")
+        result[counter]['columncount'] = definition.attrib['length']
+        rows = x.find("rows")
+        result[counter]['rowcount'] = len(rows.findall("row"))                  # find all rows of a table
+        counter = counter + 1
+
+    return result
+
 def AddColumn(projName, tableName, column, defaultValue="NULL"):
     ''' Add column to a table. Adds column to the end of a column list.
         projName     -> name of the project (string!)
