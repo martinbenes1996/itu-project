@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 import XML
+#import xml.etree.ElementTree as ET
+from lxml import etree as ET
 
 try:
     from django.utils import simplejson as json
@@ -371,6 +373,19 @@ def getDbData(request):
         d['message'] = 'Unknown user.'
     if request.method == 'POST':
         projname = request.POST['projname']
+        p = XML.GetDatabase( "dat007" )   # get database as a xml string        enc(d['user'].pk,projname)
+        print(p)
+
+        xml = ET.fromstring(p)                              # load raw xml
+        xsl = ET.parse("trnsfrm.xsl")                       # load raw xsl
+        transform = ET.XSLT(xsl)                            # create transform formula from xsl
+        result = transform(xml)                             # transform xml
+        print("transformed xml:\n"+str(result))
+        testfile = open("testhtml.html","w")                # save into a file (temporary)
+        testfile.write(str(result))
+        testfile.close()
+
+
         jsonresponse = json.dumps(generateDatabase())
         '''
         try:

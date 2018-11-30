@@ -221,14 +221,15 @@
     }
 
     function requestDbData() {
-		/*
+		
         $.post("{% url 'dbdata' %}",
+	    {'projname': "{{page.name}}"},
             function (data) {
                 currentData = JSON.parse(JSON.stringify(data));
                 refreshDbData();
             }
 		);
-		*/
+		
     }
 
     function generateOrientationButton(name, f) {

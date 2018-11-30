@@ -441,11 +441,11 @@ def CreateTable(projName, tableName, definition):
 
     test = elem.findall("*")                # looks for tables with same name
     for x in test:
-        if x.text == tableName:
+        if str(tableName) == x.attrib['tablename']:
             raise AlreadyExistsError
 
-    table = ET.SubElement(elem, "table")
-    table.text = str(tableName)
+    table = ET.SubElement(elem, "table", tablename=str(tableName))
+    #table.text = str(tableName)
     defin = ET.SubElement(table, "definition", length=str(len(definition)))
     for d in definition:
         ET.SubElement(defin, "def", datatype=str(d[1])).text = str(d[0])
@@ -470,7 +470,7 @@ def DeleteTable(projName, tableName):
 
     test = elem.findall("*")                # find children
     for x in test:
-        if x.text == tableName:
+        if x.attrib['tablename'] == str(tableName):
             try:
                 elem.remove(x)
             except:
@@ -498,7 +498,7 @@ def AddRow(projName, tableName, rowData):
 
     test = elem.findall("*")                # find children
     for x in test:
-        if x.text == tableName:                                 # find the requested table
+        if x.attrib['tablename'] == str(tableName):                                 # find the requested table
             columns = x.find("definition").attrib['length']     # get the number of columns
             if int(columns) != len(rowData):                    # check if there is enough data provided
                 raise IncompatibleRowDataError
@@ -530,7 +530,7 @@ def DeleteRow(projName, tableName, rowid):
 
     test = elem.findall("*")                # find children
     for x in test:
-        if x.text == tableName:                                 # find the requested table
+        if x.attrib['tablename'] == str(tableName):                                 # find the requested table
             rows = x.find("rows")                               # get rows element
             row = rows.findall("row")                           # find all rows
             for r in row:                                       # find a row that has requested id
@@ -561,11 +561,13 @@ def GetDatabase(projName):
     if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
 
+    return ET.tostring(elem, "UTF-8")       # trying new things
+
     result = []
     counter = 0
     test = elem.findall("*")                                    # find children
     for x in test:
-        result.append({"name":x.text})                          # get name of the table
+        result.append({"name":x.attrib['tablename']})                          # get name of the table
         definition = x.find("definition")
         defin = definition.findall("*")                         # find all definitions
         result[counter]['definition'] = []
@@ -605,8 +607,9 @@ def AddColumn(projName, tableName, column, defaultValue="NULL"):
 
     test = elem.findall("*")                        # find children
     for x in test:
-        if x.text == tableName:                     # find the right table
+        if x.attrib['tablename'] == str(tableName):                     # find the right table
             definition = x.find("definition")       # add column name and type to definition
+            definition.attrib['length'] = str(int(definition.attrib['length'])+1)
             ET.SubElement(definition, "def", datatype=str(column[1])).text = str(column[0])
             rows = x.find("rows")
             rowlist = rows.findall("row")
@@ -634,13 +637,14 @@ def DeleteColumn(projName, tableName, column):
 
     test = elem.findall("*")                                    # find children
     for x in test:
-        if x.text == tableName:                                 # find the right table
+        if x.attrib['tablename'] == str(tableName):                                 # find the right table
             definition = x.find("definition")
             deflist = definition.findall("def")                 # find all defs
             counter = 0                                         # count the position of a column in a list
             for d in deflist:
                 if d.text == column:                            # remove the right column
                     definition.remove(d)
+                    definition.attrib['length'] = str(int(definition.attrib['length'])-1)
                     break
                 counter = counter + 1
             if counter == len(deflist):                         # if the column was not found, nothing happens
@@ -666,8 +670,8 @@ CreateTable("dat007", "balon", [["neco","s"]])
 DeleteTable("dat007", "balon")
 
 AddRow("dat007", "jabka", ["0","Granny Smith","green"])
-AddRow("dat007", "jabka", ["1","Granny Smith","green"])
-AddRow("dat007", "jabka", ["2","Granny Smith","green"])
+AddRow("dat007", "jabka", ["1","Moje jabko","red"])
+AddRow("dat007", "jabka", ["2","Taiwanska namka","orange"])
 AddColumn("dat007", "jabka", ["kyselost","i"], "0")
 AddColumn("dat007", "jabka", ["vune","s"])
 DeleteColumn("dat007", "jabka", "vune")
