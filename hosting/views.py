@@ -374,7 +374,7 @@ def getTableNames(request):
     if request.method == 'POST':
         projname = request.POST['projname']
         try:
-            jsonresponse = json.dumps(XML.GetTableNames(enc(d['user'].pk,projname)))
+            jsonresponse = json.dumps(XML.GetTableNames("dat007"))#enc(d['user'].pk,projname)))
         except DoesNotExistError:
             d['message'] = 'XML error, users do not exist.'
         print(jsonresponse)
