@@ -364,6 +364,23 @@ def deleteFile(request):
 
 # -------------- DATABASE --------------
 @csrf_exempt
+def getTableNames(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        try:
+            jsonresponse = json.dumps(XML.GetTableNames(enc(d['user'].pk,projname)))
+        except DoesNotExistError:
+            d['message'] = 'XML error, users do not exist.'
+        print(jsonresponse)
+        return HttpResponse(jsonresponse, content_type='application/json')
+
+@csrf_exempt
 def getDbData(request):
     email = request.COOKIES.get('user')
     d = dict()
