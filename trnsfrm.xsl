@@ -3,13 +3,17 @@
                 exclude-result-prefixes="xs">
 <xsl:output method="html" indent="yes" encoding="UTF-8"/>
 
-<xsl:variable name="lf">
+<xsl:variable name="lf">    <!-- print newline -->
 <xsl:text>
 </xsl:text>
 </xsl:variable>
 
+<xsl:variable name="ampersand"><![CDATA[&]]></xsl:variable> <!-- print ampersand -->
+
 <xsl:template match="table">
-    <!-- DETAILY TABULKY 1 -->
+    <!-- TABLE DETAILS -->
+    <xsl:comment> DETAIL OF TABLE <xsl:value-of select="@tableid"/> </xsl:comment>
+    <xsl:value-of select="$lf"/>    <!-- newline -->
     <div>
         <xsl:attribute name="class">my-container-email dir-bar</xsl:attribute>
         <xsl:attribute name="id">current-table<xsl:value-of select="@tableid"/></xsl:attribute>
@@ -21,6 +25,14 @@
             <xsl:value-of select="$lf"/>    <!-- newline -->
             <xsl:apply-templates select="definition"/>
             <xsl:apply-templates select="rows/row"/>
+            <div class="create">
+				<button class="btn btn-primary btn-align btn-text"><i class="fas fa-plus-circle"></i><xsl:value-of select="$ampersand" disable-output-escaping="yes"/>nbsp;Add</button>
+				<xsl:value-of select="$lf"/>    <!-- newline -->
+				<button>
+                    <xsl:attribute name="class">btn btn-primary btn-align btn-text</xsl:attribute>
+                    <xsl:attribute name="onclick">tableUnshow(<xsl:value-of select="@tableid"/>)</xsl:attribute>
+                    <i class="fas fa-arrow-left"></i><xsl:value-of select="$ampersand" disable-output-escaping="yes"/>nbsp;Back</button>
+			</div>
         </div>
     </div>
 </xsl:template>
@@ -62,6 +74,8 @@
 
 <!-- Rows -->
 <xsl:template match="rows/row">
+    <xsl:comment> <xsl:value-of select="position()"/>. RECORD </xsl:comment>
+    <xsl:value-of select="$lf"/>    <!-- newline -->
     <div class="row dir-bar my-border-db no-margin">
         <xsl:value-of select="$lf"/>    <!-- newline -->
         <div class="row dir-bar no-margin center">

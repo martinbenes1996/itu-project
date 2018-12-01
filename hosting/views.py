@@ -373,7 +373,8 @@ def getDbData(request):
         d['message'] = 'Unknown user.'
     if request.method == 'POST':
         projname = request.POST['projname']
-        p = XML.GetTableContent( "dat007", "jabka" )   # get database as a xml string        enc(d['user'].pk,projname)
+        #tablename = request.POST['tablename']
+        p = XML.GetTableContent( "dat007", "jabka" )   # get table as a xml string        enc(d['user'].pk,projname),tablename
         print(p)
 
         xml = ET.fromstring(p)                              # load raw xml
@@ -386,8 +387,13 @@ def getDbData(request):
         testfile.close()
         print(XML.GetTableNames("dat007"))
 
+        jsonresponse = str(result)                          # send via json as string
+        ''' Tady ti davam html obsah mezi <!-- DETAILY TABULKY X --> az <!-- DETAILY TABULKY X+1 -->
+            Muzes se podivat do souboru testhtml.html jak to vypada.
+            Mozna je spatne napsana predavka jsonovi, str(result) je retezec s html obsahem.
+        '''
 
-        jsonresponse = json.dumps(generateDatabase())
+        #jsonresponse = json.dumps(generateDatabase())
         '''
         try:
             #jsonresponse = json.dumps(XML.GetDatabase( enc(d['user'].pk,projname) ))
@@ -396,17 +402,6 @@ def getDbData(request):
         '''
         return HttpResponse(jsonresponse, content_type='application/json')
 
-'''
-            [
-                 {'name': 'hrusky',
-                  'rows': [],
-                  'definition': [['id','i'],['jmeno','s'],['odruda','s']]},
-
-                 {'name': 'jabka',
-                  'rows': [['0', 'Granny Smith', 'green'], ['1', 'Moje jabko', 'red'],['2', 'Taiwanska namka', 'orange']],
-                  'definition': [['id','i'],['jmeno','s'],['barva','s']]}
-            ]
-'''
 @csrf_exempt
 def createTable(request):
     email = request.COOKIES.get('user')

@@ -570,7 +570,7 @@ def GetTableContent(projName, tableName):
 
 
 
-
+    '''
 
     return ET.tostring(elem, "UTF-8")       # trying new things
 
@@ -597,6 +597,7 @@ def GetTableContent(projName, tableName):
 
         counter = counter + 1
     return result
+    '''
 
 def GetTableNames(projName):
     ''' Get the whole database in just one list!!!
