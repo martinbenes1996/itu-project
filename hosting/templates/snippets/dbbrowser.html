@@ -22,16 +22,16 @@
 
 	function refreshTableHtml() {
         $('#dbcontent').empty();
-		$('#dbcontent').html(data);
+		$('#dbcontent').removeClass('my-container').addClass('my-container-email');
+		$('#dbcontent').html(currentDbData);
 	}
 
     function requestTableHtml(tablename) {
         $.post("{% url 'dbdata' %}",
 	    {'projname': "{{page.name}}", 'tablename': tablename},
             function (data) {
-				$('#dbcontent').empty();
-				$('#dbcontent').removeClass('my-container').addClass('my-container-email');
-				$('#dbcontent').html(data.html);
+				currentDbData = data.html;
+				refreshTableHtml();
             }
 		);
 	}
@@ -42,6 +42,16 @@
 			function (data) {
 				currentDbData = data;
 				refreshDbData();
+			}
+		);
+	}
+
+	function sendDeleteRow(tablename, rowid) {
+		$.post("{% url 'deleterow' %}",
+			{'projname': "{{page.name}}", 'tablename': tablename, 'rowid': rowid},
+			function(data) {
+				currentDbData = data.html;
+				refreshTableHtml();
 			}
 		);
 	}

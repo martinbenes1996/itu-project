@@ -28,7 +28,6 @@ def generateSampleDir():
     }
 
 def generateHierarchy(l):
-    #print(l)
     return {
         'path': l,
         'content': {
@@ -266,7 +265,6 @@ def getDirData(request):
     if request.method == 'POST':
         path = json.loads( request.POST['requestpath'] )
         project = request.POST['projname']
-        print(project, path)
         try:
             jsonresponse = json.dumps(XML.GetInfoFromFiletree(enc(d['user'].pk,project), path))
         except DoesNotExistError:
@@ -335,7 +333,6 @@ def renameFile(request):
         path = json.loads( request.POST['requestpath'] )
         oldname = request.POST['origname']
         newname = request.POST['newname']
-        print(path, ':', oldname, '->', newname)
         try:
             XML.RenameInFiletree(enc(d['user'].pk,projname), path, oldname, newname)
         except NameContainsWrongCharError:
@@ -377,7 +374,6 @@ def getTableNames(request):
             jsonresponse = json.dumps(XML.GetTableNames("dat007"))#enc(d['user'].pk,projname)))
         except DoesNotExistError:
             d['message'] = 'XML error, users do not exist.'
-        print(jsonresponse)
         return HttpResponse(jsonresponse, content_type='application/json')
 
 @csrf_exempt
@@ -392,19 +388,17 @@ def getDbData(request):
         projname = request.POST['projname']
         #tablename = request.POST['tablename']
         p = XML.GetTableContent( "dat007", "jabka" )   # get table as a xml string        enc(d['user'].pk,projname),tablename
-        print(p)
 
         xml = ET.fromstring(p)                              # load raw xml
         xsl = ET.parse("trnsfrm.xsl")                       # load raw xsl
         transform = ET.XSLT(xsl)                            # create transform formula from xsl
         result = transform(xml)                             # transform xml
-        #print("transformed xml:\n"+str(result))
+
         testfile = open("testhtml.html","w")                # save into a file (temporary)
         testfile.write(str(result))
         testfile.close()
-        #print(XML.GetTableNames("dat007"))
 
-        print("Result: ", result)
+
         jsonresponse = json.dumps({'html': str(result)})                          # send via json as string
         ''' Tady ti davam html obsah mezi <!-- DETAILY TABULKY X --> az <!-- DETAILY TABULKY X+1 -->
             Muzes se podivat do souboru testhtml.html jak to vypada.
@@ -561,7 +555,6 @@ def getUserData(request):
             jsonresponse = json.dumps(XML.GetUser(enc(d['user'].pk,projname)))
         except DoesNotExistError:
             d['message'] = 'XML error, users do not exist.'
-        print(jsonresponse)
         return HttpResponse(jsonresponse, content_type='application/json')
 
 @csrf_exempt
@@ -635,7 +628,6 @@ def getDnsData(request):
             jsonresponse = json.dumps(XML.GetDNS(enc(d['user'].pk,projname)))
         except DoesNotExistError:
             d['message'] = 'XML error, dnses do not exist.'
-        print(jsonresponse)
         return HttpResponse(jsonresponse, content_type='application/json')
 
 @csrf_exempt
@@ -709,7 +701,6 @@ def getEmailData(request):
             jsonresponse = json.dumps(XML.GetEmail(enc(d['user'].pk,projname)))
         except DoesNotExistError:
             d['message'] = 'XML error, emails do not exist.'
-        print(jsonresponse)
         return HttpResponse(jsonresponse, content_type='application/json')
 
 @csrf_exempt

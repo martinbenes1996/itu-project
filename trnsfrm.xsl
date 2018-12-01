@@ -30,7 +30,7 @@
 				<xsl:value-of select="$lf"/>    <!-- newline -->
 				<button>
                     <xsl:attribute name="class">btn btn-primary btn-align btn-text</xsl:attribute>
-                    <xsl:attribute name="onclick">tableUnshow(<xsl:value-of select="@tableid"/>)</xsl:attribute>
+                    <xsl:attribute name="onclick">requestTableNames()</xsl:attribute>
                     <i class="fas fa-arrow-left"></i><xsl:value-of select="$ampersand" disable-output-escaping="yes"/>nbsp;Back</button>
 			</div>
         </div>
