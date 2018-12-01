@@ -113,7 +113,7 @@ a.pathButton {
 }
 .btn-table-edit{
     position: absolute;
-    margin: 12px 0px 12px 980px;
+    margin: 12px 0px 12px 960px;
     width: 50px;
 }
 
@@ -126,7 +126,7 @@ a.pathButton {
 .btn-table-del{
     position: absolute;
     width: 50px;
-    margin: 12px 0px 12px 1040px;
+    margin: 12px 0px 12px 1020px;
 }
 
 
