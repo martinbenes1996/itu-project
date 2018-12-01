@@ -12,7 +12,7 @@
 
 <xsl:template match="table">
     <!-- TABLE DETAILS -->
-    <xsl:comment> DETAIL OF TABLE <xsl:value-of select="@tableid"/> </xsl:comment>
+    <!--<xsl:comment> DETAIL OF TABLE <xsl:value-of select="@tableid"/> </xsl:comment>-->
     <xsl:value-of select="$lf"/>    <!-- newline -->
     <div>
         <xsl:attribute name="class">my-container-email dir-bar</xsl:attribute>
@@ -74,7 +74,7 @@
 
 <!-- Rows -->
 <xsl:template match="rows/row">
-    <xsl:comment> <xsl:value-of select="position()"/>. RECORD </xsl:comment>
+    <!--<xsl:comment> <xsl:value-of select="position()"/>. RECORD </xsl:comment>-->
     <xsl:value-of select="$lf"/>    <!-- newline -->
     <div class="row dir-bar my-border-db no-margin">
         <xsl:value-of select="$lf"/>    <!-- newline -->
