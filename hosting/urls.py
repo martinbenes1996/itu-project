@@ -35,6 +35,7 @@ urlpatterns = [
     path('createFile/', views.createFile, name='createfile'),
     path('renameFile/', views.renameFile, name='renamefile'),
     path('deleteFile/', views.deleteFile, name='deletefile'),
+    path('getTableNames/', views.getTableNames, name='tablenames'),
     path('getDbData/', views.getDbData, name='dbdata'),
     path('createTable/', views.createTable, name='createtable'),
     path('deleteTable/', views.deleteTable, name='deletetable'),

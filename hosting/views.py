@@ -364,6 +364,23 @@ def deleteFile(request):
 
 # -------------- DATABASE --------------
 @csrf_exempt
+def getTableNames(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        try:
+            jsonresponse = json.dumps(XML.GetTableNames(enc(d['user'].pk,projname)))
+        except DoesNotExistError:
+            d['message'] = 'XML error, users do not exist.'
+        print(jsonresponse)
+        return HttpResponse(jsonresponse, content_type='application/json')
+
+@csrf_exempt
 def getDbData(request):
     email = request.COOKIES.get('user')
     d = dict()
@@ -373,7 +390,8 @@ def getDbData(request):
         d['message'] = 'Unknown user.'
     if request.method == 'POST':
         projname = request.POST['projname']
-        p = XML.GetDatabase( "dat007" )   # get database as a xml string        enc(d['user'].pk,projname)
+        #tablename = request.POST['tablename']
+        p = XML.GetTableContent( "dat007", "jabka" )   # get table as a xml string        enc(d['user'].pk,projname),tablename
         print(p)
 
         xml = ET.fromstring(p)                              # load raw xml
@@ -384,9 +402,15 @@ def getDbData(request):
         testfile = open("testhtml.html","w")                # save into a file (temporary)
         testfile.write(str(result))
         testfile.close()
+        print(XML.GetTableNames("dat007"))
 
+        jsonresponse = str(result)                          # send via json as string
+        ''' Tady ti davam html obsah mezi <!-- DETAILY TABULKY X --> az <!-- DETAILY TABULKY X+1 -->
+            Muzes se podivat do souboru testhtml.html jak to vypada.
+            Mozna je spatne napsana predavka jsonovi, str(result) je retezec s html obsahem.
+        '''
 
-        jsonresponse = json.dumps(generateDatabase())
+        #jsonresponse = json.dumps(generateDatabase())
         '''
         try:
             #jsonresponse = json.dumps(XML.GetDatabase( enc(d['user'].pk,projname) ))
@@ -395,17 +419,6 @@ def getDbData(request):
         '''
         return HttpResponse(jsonresponse, content_type='application/json')
 
-'''
-            [
-                 {'name': 'hrusky',
-                  'rows': [],
-                  'definition': [['id','i'],['jmeno','s'],['odruda','s']]},
-
-                 {'name': 'jabka',
-                  'rows': [['0', 'Granny Smith', 'green'], ['1', 'Moje jabko', 'red'],['2', 'Taiwanska namka', 'orange']],
-                  'definition': [['id','i'],['jmeno','s'],['barva','s']]}
-            ]
-'''
 @csrf_exempt
 def createTable(request):
     email = request.COOKIES.get('user')

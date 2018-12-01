@@ -539,8 +539,8 @@ def DeleteRow(projName, tableName, rowid):
             tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
             return
 
-def GetDatabase(projName):
-    ''' Get the whole database in just one list!!!
+def GetTableContent(projName, tableName):
+    ''' Nonsense...
         projName   -> name of the project (string!)
         Returns:
             list of dictionaries(each table)
@@ -560,6 +560,17 @@ def GetDatabase(projName):
     elem = FindInXML(root, [], "database")
     if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
+
+    for i,table in enumerate(elem.findall("*")):
+        if table.attrib['tablename'] == str(tableName):
+            table.attrib['tableid'] = str(i)
+            return ET.tostring(table, "UTF-8")       # trying new things
+
+    raise DoesNotExistError     # table not found
+
+
+
+    '''
 
     return ET.tostring(elem, "UTF-8")       # trying new things
 
@@ -585,6 +596,35 @@ def GetDatabase(projName):
             result[counter]['rows'].append(rowdata)             # append the list to a list of rows
 
         counter = counter + 1
+    return result
+    '''
+
+def GetTableNames(projName):
+    ''' Get the whole database in just one list!!!
+        projName   -> name of the project (string!)
+        Returns:   -> list: [{'tablename':"name",'columncount':"NumberAsString",'rowcount':"NumberAsString"},...]
+    '''
+    try:
+        tree = ET.parse("XML/"+str(projName)+".xml")
+        root = tree.getroot()
+    except:
+        raise DoesNotExistError
+
+    elem = FindInXML(root, [], "database")
+    if elem == None:                                    # path does not exist - should not happen
+        raise DoesNotExistError
+
+    result = []
+    counter = 0
+    test = elem.findall("*")                                                    # find children
+    for x in test:
+        result.append({"name":x.attrib['tablename']})                           # get name of the table
+        definition = x.find("definition")
+        result[counter]['columncount'] = definition.attrib['length']
+        rows = x.find("rows")
+        result[counter]['rowcount'] = len(rows.findall("row"))                  # find all rows of a table
+        counter = counter + 1
+
     return result
 
 def AddColumn(projName, tableName, column, defaultValue="NULL"):
