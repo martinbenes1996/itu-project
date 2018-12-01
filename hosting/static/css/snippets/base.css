@@ -276,12 +276,6 @@ a.pathButton {
     height: 50px;
 }
 
-#current-table1,
-#current-table2,
-#current-table3{
-    display: none;
-}
-
 .column-top{
     padding-top: 13px;
     font-size: large;
