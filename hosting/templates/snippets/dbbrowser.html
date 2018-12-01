@@ -33,21 +33,24 @@
 
 
     var currentDbData;
-
-    function refreshDbData() {
-        generateTables();
-	}
 	
-	function refreshTableData() {
-		alert("Show page");
+	function refreshDbData() {
+		generateTables();
 	}
 
-    function requestDbData() {	
+	function refreshTableHtml() {
+        $('#dbcontent').empty();
+		$('#dbcontent').html(data);
+	}
+
+    function requestTableHtml(tablename) {	
+		alert("send request");
         $.post("{% url 'dbdata' %}",
-	    {'projname': "{{page.name}}"},
+	    {'projname': "{{page.name}}", 'tablename': tablename},
             function (data) {
-                currentDbData = JSON.parse(JSON.stringify(data));
-                refreshDbData();
+				alert(data.html);
+				$('#dbcontent').empty();
+				$('#dbcontent').text(data.html);
             }
 		);
 	}
@@ -88,7 +91,7 @@
 					)
 					.click({name: tab.name}, function(e){
 						e.stopPropagation()
-						alert("show table data: table "+ e.data.name)
+						requestTableHtml(e.data.name)
 					})
 				)
 				.append($("<div>").addClass("col-lg-4"))
