@@ -7,12 +7,7 @@
 		</p>
 	</div>
 
-	<div class="my-container dir-bar" id="dbcontent">
-		<div class="container-fluid" >
-
-			
-		</div>
-	</div>
+	<div class="my-container dir-bar" id="dbcontent"></div>
 
 </div>
 
@@ -30,13 +25,12 @@
 		$('#dbcontent').html(data);
 	}
 
-    function requestTableHtml(tablename) {	
-		alert("send request");
+    function requestTableHtml(tablename) {
         $.post("{% url 'dbdata' %}",
 	    {'projname': "{{page.name}}", 'tablename': tablename},
             function (data) {
-				alert(data.html);
 				$('#dbcontent').empty();
+				$('#dbcontent').removeClass('my-container').addClass('my-container-email');
 				$('#dbcontent').html(data.html);
             }
 		);
@@ -53,7 +47,8 @@
 	}
 
     function generateTables() {
-        $('#dbcontent').empty();
+		$('#dbcontent').empty();
+		$('#dbcontent').removeClass('my-container-email').addClass('my-container');
         var t = $('<div>').addClass("row dir-bar my-border-users no-margin")
 			.append($("<div>").attr({"id": "1"}).addClass("row dir-bar top no-margin")
 				.append($("<span>").addClass("enum-top").text("#"))
