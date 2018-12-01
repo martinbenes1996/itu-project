@@ -398,13 +398,14 @@ def getDbData(request):
         xsl = ET.parse("trnsfrm.xsl")                       # load raw xsl
         transform = ET.XSLT(xsl)                            # create transform formula from xsl
         result = transform(xml)                             # transform xml
-        print("transformed xml:\n"+str(result))
+        #print("transformed xml:\n"+str(result))
         testfile = open("testhtml.html","w")                # save into a file (temporary)
         testfile.write(str(result))
         testfile.close()
-        print(XML.GetTableNames("dat007"))
+        #print(XML.GetTableNames("dat007"))
 
-        jsonresponse = str(result)                          # send via json as string
+        print("Result: ", result)
+        jsonresponse = json.dumps({'html': str(result)})                          # send via json as string
         ''' Tady ti davam html obsah mezi <!-- DETAILY TABULKY X --> az <!-- DETAILY TABULKY X+1 -->
             Muzes se podivat do souboru testhtml.html jak to vypada.
             Mozna je spatne napsana predavka jsonovi, str(result) je retezec s html obsahem.
