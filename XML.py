@@ -539,8 +539,8 @@ def DeleteRow(projName, tableName, rowid):
             tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
             return
 
-def GetDatabase(projName):
-    ''' Get the whole database in just one list!!!
+def GetTableContent(projName, tableName):
+    ''' Nonsense...
         projName   -> name of the project (string!)
         Returns:
             list of dictionaries(each table)
@@ -560,6 +560,17 @@ def GetDatabase(projName):
     elem = FindInXML(root, [], "database")
     if elem == None:                        # path does not exist - should not happen
         raise DoesNotExistError
+
+    for i,table in enumerate(elem.findall("*")):
+        if table.attrib['tablename'] == str(tableName):
+            table.attrib['tableid'] = str(i)
+            return ET.tostring(table, "UTF-8")       # trying new things
+
+    raise DoesNotExistError     # table not found
+
+
+
+
 
     return ET.tostring(elem, "UTF-8")       # trying new things
 

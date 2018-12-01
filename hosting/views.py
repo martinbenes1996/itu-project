@@ -373,7 +373,7 @@ def getDbData(request):
         d['message'] = 'Unknown user.'
     if request.method == 'POST':
         projname = request.POST['projname']
-        p = XML.GetDatabase( "dat007" )   # get database as a xml string        enc(d['user'].pk,projname)
+        p = XML.GetTableContent( "dat007", "jabka" )   # get database as a xml string        enc(d['user'].pk,projname)
         print(p)
 
         xml = ET.fromstring(p)                              # load raw xml
