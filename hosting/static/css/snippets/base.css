@@ -117,6 +117,12 @@ a.pathButton {
     width: 50px;
 }
 
+.btn-table-send{
+    position: absolute;
+    margin: 12px 0px 12px 960px;
+    width: 100px;
+}
+
 .btn-table-edit-main{
     position: absolute;
     margin: 8px 0px 0px 640px;

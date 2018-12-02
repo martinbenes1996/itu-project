@@ -371,8 +371,9 @@ def getTableNames(request):
     if request.method == 'POST':
         projname = request.POST['projname']
         try:
-            jsonresponse = json.dumps(XML.GetTableNames("dat007"))#enc(d['user'].pk,projname)))
-        except DoesNotExistError:
+            print( XML.GetTableNames(enc(d['user'].pk,projname)) )
+            jsonresponse = json.dumps(XML.GetTableNames(enc(d['user'].pk,projname)))
+        except:
             d['message'] = 'XML error, users do not exist.'
         return HttpResponse(jsonresponse, content_type='application/json')
 
@@ -386,8 +387,9 @@ def getDbData(request):
         d['message'] = 'Unknown user.'
     if request.method == 'POST':
         projname = request.POST['projname']
-        #tablename = request.POST['tablename']
-        p = XML.GetTableContent( "dat007", "jabka" )   # get table as a xml string        enc(d['user'].pk,projname),tablename
+        tablename = request.POST['tablename']
+        #p = XML.GetTableContent( "dat007", "jabka" )   # get table as a xml string        
+        p = XML.GetTableContent(enc(d['user'].pk,projname),tablename)
 
         xml = ET.fromstring(p)                              # load raw xml
         xsl = ET.parse("trnsfrm.xsl")                       # load raw xsl
@@ -426,15 +428,22 @@ def createTable(request):
         tablename = request.POST['tablename']
         # definition is a list of lists like this: [["nazev sloupce","datovy typ"],...]
         # je treba to tu nejak poskladat, musi to byt seznamy kvuli poradi zaznamu...
-        definition = [["id","i"],["name","s"]]      # temporary definition
-        #definition = json.loads( request.POST['definition'] )
+        #definition = [["id","i"],["name","s"]]      # temporary definition
+        definition = json.loads( request.POST['definition'] )
+        
+        # odstran
+        #print(tablename, definition)
+        #print(getTableNames(request))
+        #return getTableNames(request)
+        # odstran
+
         try:
             XML.CreateTable(enc(d['user'].pk,projname), tablename, definition)
         except DoesNotExistError:
             d['message'] = 'Database does not exist.'
         except AlreadyExistsError:
             d['message'] = 'Table already exists.'
-        return getDbData(request)
+        return getTableNames(request)
 
 @csrf_exempt
 def deleteTable(request):
@@ -447,11 +456,12 @@ def deleteTable(request):
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
+
         try:
             XML.DeleteTable(enc(d['user'].pk,projname), tablename)
         except DoesNotExistError:
             d['message'] = 'Database or table does not exist.'
-        return getDbData(request)
+        return getTableNames(request)
 
 @csrf_exempt
 def addRow(request):
@@ -466,16 +476,19 @@ def addRow(request):
         tablename = request.POST['tablename']
         # rowdata is a list of data: ["prvni sloupec","druhy sloupec",...]
         # je treba to tu nejak poskladat, musi to byt seznam kvuli poradi zaznamu...
-        rowdata = ["0","pepa"]      # temporary data
-        #rowdata = json.loads( request.POST['rowdata'] )
+        #rowdata = ["0","pepa"]      # temporary data
+        rowdata = json.loads( request.POST['rowdata'] )
+        print(tablename+": "+str(rowdata))
+
         try:
             XML.AddRow(enc(d['user'].pk,projname), tablename, rowdata)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'Database or table does not exist.'
-        except IncompatibleRowDataError:
+        except XML.IncompatibleRowDataError:
             d['message'] = 'Row data incompatible.'
-        except TableNotFoundError:
+        except XML.TableNotFoundError:
             d['message'] = 'Table was not found.'
+        #print(d['message'])
         return getDbData(request)
 
 @csrf_exempt
@@ -490,6 +503,9 @@ def deleteRow(request):
         projname = request.POST['projname']
         tablename = request.POST['tablename']
         rowid = request.POST['rowid']
+        print(tablename+": "+rowid)
+        return getDbData(request)
+
         # id of the row (hodnota primarniho klice, vzdy je v prvnim sloupci, muze to byt cokoli - cislo/string)
         try:
             XML.DeleteRow(enc(d['user'].pk,projname), tablename, rowid)
@@ -534,10 +550,6 @@ def deleteColumn(request):
         except DoesNotExistError:
             d['message'] = 'Database does not exist.'
         return getDbData(request)
-
-
-
-
 
 # dns, user, email funkce maji stejne argumenty a operace, lisi se jen nazvem
 @csrf_exempt

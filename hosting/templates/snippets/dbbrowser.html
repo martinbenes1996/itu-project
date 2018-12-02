@@ -14,6 +14,7 @@
 
 <script>
 
+	var currentTableName;
     var currentDbData;
 	
 	function refreshDbData() {
@@ -24,9 +25,11 @@
         $('#dbcontent').empty();
 		$('#dbcontent').removeClass('my-container').addClass('my-container-email');
 		$('#dbcontent').html(currentDbData);
+		$("<span>").addClass("appenditem").insertBefore('.create');
 	}
 
     function requestTableHtml(tablename) {
+		currentTableName = tablename;
         $.post("{% url 'dbdata' %}",
 	    {'projname': "{{page.name}}", 'tablename': tablename},
             function (data) {
@@ -46,15 +49,62 @@
 		);
 	}
 
-	function sendDeleteRow(tablename, rowid) {
+	function sendCreateTable(tablename, colcnt) {
+		var cols = [["id", "s"] ];
+		for(var it = 1; it <= colcnt; it++) {
+			cols.push( ["col"+it, "s"] );
+		}
+		//alert("project {{page.name}}: create table "+tablename+" with columns "+JSON.stringify(cols));
+		$.post("{% url 'createtable' %}",
+			{'projname': "{{page.name}}", 'tablename': tablename, 'definition': JSON.stringify(cols)},
+			function (data) {
+				currentDbData = data;
+				refreshDbData();
+			}
+		);
+	}
+
+	function sendDeleteTable(tablename) {
+		//alert("project {{page.name}}: delete table "+tablename);
+		$.post("{% url 'deletetable' %}",
+			{'projname': "{{page.name}}", 'tablename': tablename},
+			function (data) {
+				currentDbData = data;
+				refreshDbData();
+			}
+		);
+		
+	}
+
+	function sendAddRow(rowid, rowdata) {
+		var rowdataS = JSON.stringify(rowdata);
+		//alert("project {{page.name}}: tablename "+currentTableName+": set row "+rowid+" as "+rowdataS);
+		$.post("{% url 'addrow' %}",
+			{'projname': "{{page.name}}", 'tablename': currentTableName,
+			'rowid': rowid, 'rowdata': rowdataS},
+			function (data) {
+				currentDbData = data.html;
+				refreshTableHtml();
+			}
+		);
+	}
+
+	function sendDeleteRow(rowid) {
+		//alert("project {{page.name}}: tablename "+currentTableName+": delete row "+rowid);
 		$.post("{% url 'deleterow' %}",
-			{'projname': "{{page.name}}", 'tablename': tablename, 'rowid': rowid},
+			{'projname': "{{page.name}}", 'tablename': currentTableName, 'rowid': rowid},
 			function(data) {
 				currentDbData = data.html;
 				refreshTableHtml();
 			}
 		);
 	}
+
+	function sendEditRowItem(rowid, itemname, itemval) {
+		alert("table "+currentTableName+": row "+rowid+": set item "+itemname+" to "+itemval+".");
+		//$.post();
+	}
+	
 
     function generateTables() {
 		$('#dbcontent').empty();
@@ -71,15 +121,23 @@
         $.each(currentDbData, function (index, tab) {
 			t.append($("<div>").addClass("row dir-bar my-border-users no-margin")
 				.append($("<div>").addClass("row dir-bar no-margin")
-					.append($("<span>").addClass("enum").text("#"+index))
+					.append($("<span>").addClass("enum").text("#"+(index+1)))
 					.append($("<span>").addClass("name").text(tab.name))
 					.append($("<span>").addClass("columns").text(tab.columncount))
 					.append($("<span>").addClass("rows").text(tab.rowcount))
 					.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text btn-table-edit-main")
 						.append($("<i>").addClass("fas fa-edit"))
+						.click(tab, function(e) {
+							e.stopPropagation();
+							alert("Edit table "+tab.name);
+						})
 					)
 					.append($("<button>").addClass("btn btn-align btn-warning btn-text btn-table btn-table-del-main")
 						.append($("<i>").addClass("fas fa-minus-circle"))
+						.click(tab.name, function(e){
+							e.stopPropagation();
+							sendDeleteTable(e.data);
+						})
 					)
 					.click({name: tab.name}, function(e){
 						e.stopPropagation()
@@ -88,8 +146,114 @@
 				)
 				.append($("<div>").addClass("col-lg-4"))
 			);
-        });
-        $('#dbcontent').append(t)
+		});
+		t.append($("<div>").addClass("create")
+			.attr("id", "dbadder")
+			.append($("<button>").addClass("btn btn-primary btn-align btn-text")
+				.append($("<i>").addClass("fas fa-plus-circle"))
+				.html("&nbsp;add")
+				.click(newDbLine)
+			)
+		);
+		$('#dbcontent').append(t);
+	}
+
+	function newDbLine() {
+		$("#dbadder").empty();
+
+		var inputSend = $("<button>");
+
+		var nameinput = $("<input>").addClass("form-control")
+			.attr({"type":"text", "placeholder":"Table name"})
+			.on("keydown", function(e){
+				if(e.which == 13) {
+					e.stopPropagation();
+					inputSend.trigger("click");
+					return;
+				} else if(e.which == 27) {
+					e.stopPropagation();
+					requestTableNames();
+				}
+			})
+		;
+		var columninput = $("<input>").addClass("form-control")
+			.attr({"type":"text", "placeholder":"Column count"})
+			.on("keydown", function(e){
+				if(e.which == 13) {
+					e.stopPropagation();
+					inputSend.trigger("click");
+					return;
+				} else if(e.which == 27) {
+					e.stopPropagation();
+					requestTableNames();
+				}
+			})
+		;
+
+		columninput.focusout(function(e) {
+			setTimeout(function() {
+				if( !nameinput.is(":focus") ) {
+					$('div.create').prev().remove();
+					$("#dbadder").append($("<button>").addClass("btn btn-primary btn-align btn-text")
+						.append($("<i>").addClass("fas fa-plus-circle"))
+						.html("&nbsp;add")
+						.click(newDbLine)
+					);
+				}
+			}, 10);
+		});
+
+		nameinput.focusout(function(e) {
+			setTimeout(function() {
+				if( !columninput.is(":focus") ) {
+					$('div.create').prev().remove();
+					$("#dbadder").append($("<button>").addClass("btn btn-primary btn-align btn-text")
+						.append($("<i>").addClass("fas fa-plus-circle"))
+						.html("&nbsp;add")
+						.click(newDbLine)
+					);
+				}
+			}, 10);
+		});
+
+		inputSend.addClass("btn btn-success btn-sm")
+			.css({"width": "80px", "margin-right": "85px"})
+			.text("Add user")
+			.click(function(e) {
+				e.stopPropagation();
+				if(nameinput.val() == "" || parseInt(columninput.val()) == NaN) {
+					alert("Invalid input!");
+					return;
+				}
+				if(parseInt(columninput.val()) > 6) {
+					alert("Table can have maximum 6 columns.");
+					return;
+				}
+				
+				sendCreateTable(nameinput.val(), columninput.val());
+			})
+		;
+
+		$("<div>").addClass("row dir-bar my-border-users no-margin")
+			.append($("<div>").addClass("row dir-bar no-margin")
+				.append($("<span>").addClass("enum pointer")
+					.text("#"+(parseInt(currentDbData.length)+1))
+				)
+				.append($("<div>").addClass("col lead my-align pointer")
+					.append(nameinput)
+				)
+				.append($("<div>").addClass("col lead my-align pointer")
+					.append(columninput)
+				)
+				.append($("<div>").addClass("col lead my-align pointer"))
+				.append(inputSend)
+			)
+			.append($("<div>").addClass("col-lg-4"))
+		.insertBefore($("#dbadder"));
+		
+		//$("<div>").addClass("col-lg-4").insertBefore($("#dbadder"));
+		
+		nameinput.focus().select();
 	}
 
     function generateTableContent(tablename) {
@@ -110,8 +274,132 @@
             });
             t.append(dr);
         });
+	}
 
-    }
+	function generateInput(val) {
+		return $("<input>").addClass("form-control")
+			.attr({"type":"text", "value":val})
+		;
+	}
+	
+	function editRow(rowid) {
+		var oldvals = [];
+		$("#tablerow_"+rowid+" >span.rowitem_martin").each(function(it, item){
+			oldvals.push(item.innerText);
+			
+			$(item).empty();
+
+			var inp = generateInput(oldvals[it])
+				.on("keydown", function(e){
+					if(e.which == 13) {
+						e.stopPropagation();
+						$("#tablerow_"+rowid+" >span.rowitem_martin").each(function(i, itm){
+							var itemname = $("#1").children().eq(i+1).text();
+							var itemval = itm.firstElementChild.value;
+							sendEditRowItem(rowid, itemname, itemval );
+						});
+						requestTableHtml();
+						// edit row
+					} else if(e.which == 27) {
+						//e.stopPropagation();
+						requestTableHtml(currentTableName);
+					}
+				})
+			;
+				
+
+			$(item).append(inp);
+			inp.focusout(function(e) {
+				setTimeout(function() {
+					if($("#tablerow_"+rowid).find(":focus").length == 0) {
+						$("#1 > span.column_top").each(function(p,itemname){
+							sendEditRowItem(rowid, itemname, inp.this.val());
+						});
+
+						$("#tablerow_"+rowid+" >span.rowitem_martin").each(function(i,itm){
+							$(itm).empty();
+							itm.innerText = oldvals[i];
+						});
+					}
+				}, 10);
+			})
+		});
+		$($($("#tablerow_"+rowid+" >span.rowitem_martin")[0]).children()[0]).focus().select();
+	}
+
+	function generateColumnInput(rowid, colwidth, itemname, sendbutton) {
+		return $("<span>").addClass("column rowitem_martin")
+			.css({"width": toString(colwidth)+"px"})
+			.append(generateInput()
+				.attr({"placeholder":itemname})
+				.css({"width": toString(colwidth)+"px"})
+				.on("keydown", sendbutton, function(e){
+					if(e.which == 13) {
+						e.stopPropagation();
+						sendbutton.trigger("click");
+					} else if(e.which == 27) {
+						e.stopPropagation();
+						requestTableHtml(currentTableName);
+					}
+				})
+			)
+		;
+	}
+
+	function addNewRow() {
+		var lastid = $("#table").find('.appenditem').prev().children().first().prop('id').substr(9);
+		var rowid = parseInt(lastid) + 1;
+		var lasthash = $("#table").find('.appenditem').prev().find('.enum-db').text();
+		var currhash = parseInt(lasthash.substr(1))+1;
+		if(lasthash == '') { currhash = 0; }
+		var colcount = parseInt($("#table").find('.column-top').length);
+		var colwidth = 95.0 / (colcount+1);
+
+		var innerrow = $("<div>").addClass("row dir-bar no-margin center tableitem_martin")
+			.attr({"id": "tablerow_"+rowid})
+			.append($("<span>").addClass("enum-db").text("#"+currhash))
+		;
+		
+		var sendbutton = $("<button>").addClass("btn btn-align rename-align btn-success btn-text btn-table-send")
+			.text("Send")
+		;
+
+		var focused;
+		for(var iter = 1; iter <= colcount; iter++) {
+			var itemname = $("#1").children().eq(iter).text();
+			var colinput = generateColumnInput(rowid, colwidth, itemname, sendbutton);
+			if(iter == 1) { focused = colinput; }
+			innerrow.append(colinput);
+		}
+
+		sendbutton.click(function(){
+			var values = [currhash];
+			var fail = false;
+			$("#tablerow_"+rowid+" >span.rowitem_martin").each(function(i, itm){
+				var itemname = $("#1").children().eq(i+1).text();
+				var itemval = itm.firstElementChild.value;
+				if(itemval == "") {
+					fail = true;
+					$(itm.firstElementChild).addClass("");
+				}
+				values.push(itemval)
+			});	
+			if(!fail) { sendAddRow(rowid, values); }
+			else { alert("Invalid form input."); }
+		})
+		
+		$("<div>").addClass("row dir-bar my-border-db no-margin")
+			.append(innerrow
+				.append(sendbutton)
+			)
+			.append($("<div>").addClass("col-lg-4"))
+			.insertBefore( $("#table").find('.appenditem') )
+		;
+
+		$("#table").find(".create").empty();
+
+		focused.focus().select();
+	}
 
 
     $(document).ready(function () {

@@ -81,12 +81,13 @@
     <xsl:value-of select="$lf"/>    <!-- newline -->
     <div class="row dir-bar my-border-db no-margin">
         <xsl:value-of select="$lf"/>    <!-- newline -->
-        <div class="row dir-bar no-margin center">
+        <div class="row dir-bar no-margin center tableitem_martin">
+            <xsl:attribute name="id">tablerow_<xsl:value-of select="position()-1"/></xsl:attribute>
             <xsl:value-of select="$lf"/>    <!-- newline -->
             <xsl:apply-templates select="record"/>
             <button>
                 <xsl:attribute name="class">btn btn-align rename-align btn-secondary btn-text btn-table-edit</xsl:attribute>
-                <xsl:attribute name="onclick">sendEditRow(<xsl:value-of select="position()-1"/>);</xsl:attribute>
+                <xsl:attribute name="onclick">editRow(<xsl:value-of select="position()-1"/>);</xsl:attribute>
                 <i class="fas fa-edit"></i></button>
             <xsl:value-of select="$lf"/>    <!-- newline -->
             <button>
@@ -108,7 +109,7 @@
         </xsl:when>
         <xsl:otherwise>
             <span> <!-- 93/(column count + 1) -->
-                <xsl:attribute name="class">column</xsl:attribute>
+                <xsl:attribute name="class">column rowitem_martin</xsl:attribute>
                 <xsl:attribute name="style">width: <xsl:value-of select="93 div /table/definition/@length"/>%</xsl:attribute>
                 <xsl:value-of select="."/>
             </span>
