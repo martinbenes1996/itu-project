@@ -285,13 +285,13 @@ def createDir(request):
         name = request.POST['name']
         try:
             XML.AddToFiletree(enc(d['user'].pk,projname), path, name, 'd')
-        except NameContainsWrongCharError:
+        except XML.NameContainsWrongCharError:
             d['message'] = 'File/dir name contains unacceptable characters (only [a-zA-Z0-9_.]).'
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'Path or directory does not exist.'
-        except WrongTypeError:
+        except XML.WrongTypeError:
             d['message'] = 'You cannot put things into file.'
-        except AlreadyExistsError:
+        except XML.AlreadyExistsError:
             d['message'] = 'File/dir with the same name already exists.'
         return getDirData(request)
 
@@ -708,7 +708,7 @@ def getEmailData(request):
         projname = request.POST['projname']
         try:
             jsonresponse = json.dumps(XML.GetEmail(enc(d['user'].pk,projname)))
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, emails do not exist.'
         return HttpResponse(jsonresponse, content_type='application/json')
 
@@ -725,9 +725,9 @@ def addEmail(request):
         emailname = request.POST['emailname']
         try:
             XML.AddEmail(enc(d['user'].pk,projname), emailname)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, emails do not exist.'
-        except AlreadyExistsError:
+        except XML.AlreadyExistsError:
             d['message'] = 'Email already exists in this project.'
         return getEmailData(request)
 

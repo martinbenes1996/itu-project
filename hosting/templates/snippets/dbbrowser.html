@@ -17,10 +17,16 @@
 	var currentTableName;
     var currentDbData;
 	
+	/**
+	 * @brief Zobrazuje obsah databaze.
+	 */
 	function refreshDbData() {
 		generateTables();
 	}
 
+	/**
+	 * @brief Zobrazi obsah jedne tabulky. Obdrzena jako hotove HTML.
+	 */
 	function refreshTableHtml() {
         $('#dbcontent').empty();
 		$('#dbcontent').removeClass('my-container').addClass('my-container-email');
@@ -28,6 +34,10 @@
 		$("<span>").addClass("appenditem").insertBefore('.create');
 	}
 
+	/**
+	 * @brief Zada o data jedne tabulky.
+	 * @param tablename 		Nazev dane tabulky.
+	 */
     function requestTableHtml(tablename) {
 		currentTableName = tablename;
         $.post("{% url 'dbdata' %}",
@@ -39,6 +49,9 @@
 		);
 	}
 	
+	/**
+	 * @brief Zada o data databaze.
+	 */
 	function requestTableNames() {
 		$.post("{% url 'tablenames' %}",
 			{'projname': "{{page.name}}"},
@@ -49,7 +62,13 @@
 		);
 	}
 
+	/**
+	 * @brief Zaklada tabulku.
+	 * @param tablename  		Nazev nove tabulky.
+	 * @param colcnt 			Pocet sloupcu.
+	 */
 	function sendCreateTable(tablename, colcnt) {
+		// vytvareni Ondrovy struktury
 		var cols = [["id", "s"] ];
 		for(var it = 1; it <= colcnt; it++) {
 			cols.push( ["col"+it, "s"] );
@@ -64,6 +83,10 @@
 		);
 	}
 
+	/**
+	 * @brief Maze tabulku.
+	 * @param tablename 		Nazev tabulky.
+	 */
 	function sendDeleteTable(tablename) {
 		//alert("project {{page.name}}: delete table "+tablename);
 		$.post("{% url 'deletetable' %}",
@@ -76,6 +99,11 @@
 		
 	}
 
+	/**
+	 * @brief Pridava radek do tabulky.
+	 * @param rowid 		ID radku.
+	 * @param rowdata 		Data radku.
+	 */
 	function sendAddRow(rowid, rowdata) {
 		var rowdataS = JSON.stringify(rowdata);
 		//alert("project {{page.name}}: tablename "+currentTableName+": set row "+rowid+" as "+rowdataS);
@@ -89,6 +117,10 @@
 		);
 	}
 
+	/**
+	 * @brief Maze radek z tabulky.
+	 * @param rowid 		ID radku.
+	 */
 	function sendDeleteRow(rowid) {
 		//alert("project {{page.name}}: tablename "+currentTableName+": delete row "+rowid);
 		$.post("{% url 'deleterow' %}",
@@ -100,15 +132,25 @@
 		);
 	}
 
+	/**
+	 * @brief Upraveni jednoho sloupce daneho radku tabulky.
+	 * @param rowid 		ID radku.
+	 * @param itemname 		Nazev sloupce.
+	 * @param itemval 		Nova hodnota sloupce.
+	 */
 	function sendEditRowItem(rowid, itemname, itemval) {
 		alert("table "+currentTableName+": row "+rowid+": set item "+itemname+" to "+itemval+".");
 		//$.post();
 	}
 	
-
+	/**
+	 * @brief Generate database content.
+	 */
     function generateTables() {
 		$('#dbcontent').empty();
+		// nastavit Honzikovy zbesile tridy
 		$('#dbcontent').removeClass('my-container-email').addClass('my-container');
+		// zahlavi tabulky
         var t = $('<div>').addClass("row dir-bar my-border-users no-margin")
 			.append($("<div>").attr({"id": "1"}).addClass("row dir-bar top no-margin")
 				.append($("<span>").addClass("enum-top").text("#"))
@@ -118,6 +160,7 @@
 			)
 			.append($("<div>").addClass("col-lg-4"))
 		;
+		// data tabulky
         $.each(currentDbData, function (index, tab) {
 			t.append($("<div>").addClass("row dir-bar my-border-users no-margin")
 				.append($("<div>").addClass("row dir-bar no-margin")
@@ -125,6 +168,7 @@
 					.append($("<span>").addClass("name").text(tab.name))
 					.append($("<span>").addClass("columns").text(tab.columncount))
 					.append($("<span>").addClass("rows").text(tab.rowcount))
+					// editovat tabulku
 					.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text btn-table-edit-main")
 						.append($("<i>").addClass("fas fa-edit"))
 						.click(tab, function(e) {
@@ -132,6 +176,7 @@
 							alert("Edit table "+tab.name);
 						})
 					)
+					// smazat tabulku
 					.append($("<button>").addClass("btn btn-align btn-warning btn-text btn-table btn-table-del-main")
 						.append($("<i>").addClass("fas fa-minus-circle"))
 						.click(tab.name, function(e){
@@ -139,6 +184,7 @@
 							sendDeleteTable(e.data);
 						})
 					)
+					// otevrit obsah tabulky
 					.click({name: tab.name}, function(e){
 						e.stopPropagation()
 						requestTableHtml(e.data.name)
@@ -147,22 +193,30 @@
 				.append($("<div>").addClass("col-lg-4"))
 			);
 		});
+
+		// pridavani zaznamu
 		t.append($("<div>").addClass("create")
 			.attr("id", "dbadder")
+			// tlacitko na pridani zaznamu
 			.append($("<button>").addClass("btn btn-primary btn-align btn-text")
 				.append($("<i>").addClass("fas fa-plus-circle"))
 				.html("&nbsp;add")
 				.click(newDbLine)
 			)
 		);
+
 		$('#dbcontent').append(t);
 	}
 
+	/**
+	 * @brief Prida radek se vstupy do tabulky s obsahem databaze.
+	 */
 	function newDbLine() {
 		$("#dbadder").empty();
 
+		// odesilaci tlacitko
 		var inputSend = $("<button>");
-
+		// vstup pro jmeno
 		var nameinput = $("<input>").addClass("form-control")
 			.attr({"type":"text", "placeholder":"Table name"})
 			.on("keydown", function(e){
@@ -176,6 +230,7 @@
 				}
 			})
 		;
+		// vstup pro pocet sloupcu
 		var columninput = $("<input>").addClass("form-control")
 			.attr({"type":"text", "placeholder":"Column count"})
 			.on("keydown", function(e){
@@ -190,6 +245,7 @@
 			})
 		;
 
+		// reakce na odkliknuti z textoveho pole  
 		columninput.focusout(function(e) {
 			setTimeout(function() {
 				if( !nameinput.is(":focus") ) {
@@ -202,7 +258,7 @@
 				}
 			}, 10);
 		});
-
+		// reakce na odkliknuti z textoveho pole  
 		nameinput.focusout(function(e) {
 			setTimeout(function() {
 				if( !columninput.is(":focus") ) {
@@ -216,6 +272,7 @@
 			}, 10);
 		});
 
+		// vlastnosti odesilaciho tlacitka
 		inputSend.addClass("btn btn-success btn-sm")
 			.css({"width": "80px", "margin-right": "85px"})
 			.text("Add user")
@@ -233,7 +290,8 @@
 				sendCreateTable(nameinput.val(), columninput.val());
 			})
 		;
-
+		
+		// definice radku se vstupy
 		$("<div>").addClass("row dir-bar my-border-users no-margin")
 			.append($("<div>").addClass("row dir-bar no-margin")
 				.append($("<span>").addClass("enum pointer")
@@ -251,44 +309,33 @@
 			.append($("<div>").addClass("col-lg-4"))
 		.insertBefore($("#dbadder"));
 		
-		//$("<div>").addClass("col-lg-4").insertBefore($("#dbadder"));
-		
+		// nastaveni zaostreni (focus)
 		nameinput.focus().select();
 	}
 
-    function generateTableContent(tablename) {
-        $('#dbcontent').empty();
-        var t = $('table');
-        var h = t.append($('<tr>'));
-        console.debug(currentData);
-        console.debug(tablename);
-        console.debug(currentData.tables[tablename]);
-        $.each(currentData.tables[tablename].columns, function (colname, col_dtype) {
-            h.append($('<td>').text(colname));
-            // use col_dtype
-        });
-        $.each(currentData.tables[tablename].data, function (col, val) {
-            var dr = $('<tr>');
-            $.each(currentData.tables[tablename].columns, function (colname, col_dtype) {
-                dr.append($('td').text(val[colname]));
-            });
-            t.append(dr);
-        });
-	}
-
+	/**
+	 * @brief Vygeneruje textovy input
+	 * @param val 		Hodnota inputu.
+	 * @returns jQuery object.
+	 */
 	function generateInput(val) {
 		return $("<input>").addClass("form-control")
-			.attr({"type":"text", "value":val})
+			.attr({"type": "text", "value": val})
 		;
 	}
 	
+	/**
+	 * @brief Pridani radku se vstupy po kliknuti na tlacitko "pridat novy radek".
+	 * @param rowid 		ID daneho radku.
+	 */
 	function editRow(rowid) {
 		var oldvals = [];
+		// iterovani po sloupcich daneho radku
 		$("#tablerow_"+rowid+" >span.rowitem_martin").each(function(it, item){
 			oldvals.push(item.innerText);
-			
 			$(item).empty();
-
+			
+			// vytvori vstupni formular
 			var inp = generateInput(oldvals[it])
 				.on("keydown", function(e){
 					if(e.which == 13) {
@@ -299,23 +346,22 @@
 							sendEditRowItem(rowid, itemname, itemval );
 						});
 						requestTableHtml();
-						// edit row
 					} else if(e.which == 27) {
-						//e.stopPropagation();
 						requestTableHtml(currentTableName);
 					}
 				})
 			;
-				
-
 			$(item).append(inp);
+			
+			// udalost pri odebrani zaostreni z formulare
 			inp.focusout(function(e) {
 				setTimeout(function() {
 					if($("#tablerow_"+rowid).find(":focus").length == 0) {
+						// pro kazdy sloupec odesli ajaxem zmenu
 						$("#1 > span.column_top").each(function(p,itemname){
 							sendEditRowItem(rowid, itemname, inp.this.val());
 						});
-
+						// nahrad kazdy sloupec puvodni hodnotou
 						$("#tablerow_"+rowid+" >span.rowitem_martin").each(function(i,itm){
 							$(itm).empty();
 							itm.innerText = oldvals[i];
@@ -327,16 +373,28 @@
 		$($($("#tablerow_"+rowid+" >span.rowitem_martin")[0]).children()[0]).focus().select();
 	}
 
+	/**
+	 * @brief Generuje sloupec se vstupem pro tabulku.
+	 * @param rowid 		ID radku.
+	 * @param colwidth 		Sirka radku.
+	 * @param itemname 		Jmeno sloupce.
+	 * @param sendbutton 	Odesilaci tlacitko (pro udalosti).	
+	 * @returns Jeden sloupec radku.
+	 */
 	function generateColumnInput(rowid, colwidth, itemname, sendbutton) {
 		return $("<span>").addClass("column rowitem_martin")
-			.css({"width": toString(colwidth)+"px"})
+			.css({"width": toString(colwidth)+"%"})
 			.append(generateInput()
 				.attr({"placeholder":itemname})
-				.css({"width": toString(colwidth)+"px"})
+				.css({"width": toString(colwidth)+"%"})
+				// udalosti tlačítek
 				.on("keydown", sendbutton, function(e){
+					// enter
 					if(e.which == 13) {
 						e.stopPropagation();
+						// delegace na odesílací tlačítko
 						sendbutton.trigger("click");
+					// escape
 					} else if(e.which == 27) {
 						e.stopPropagation();
 						requestTableHtml(currentTableName);
@@ -346,24 +404,32 @@
 		;
 	}
 
+	/**
+	 * @brief Pridava radek se vstupy do tabulky.
+	 */
 	function addNewRow() {
+		// vypocet id - CHYBA! vzit z prvniho indexu
 		var lastid = $("#table").find('.appenditem').prev().children().first().prop('id').substr(9);
 		var rowid = parseInt(lastid) + 1;
+		// vypocet hashe
 		var lasthash = $("#table").find('.appenditem').prev().find('.enum-db').text();
 		var currhash = parseInt(lasthash.substr(1))+1;
 		if(lasthash == '') { currhash = 0; }
+		// pocet sloupcu tabulky
 		var colcount = parseInt($("#table").find('.column-top').length);
+		// tvuj vysostny vzorec
 		var colwidth = 95.0 / (colcount+1);
 
+		// vnitrni radek
 		var innerrow = $("<div>").addClass("row dir-bar no-margin center tableitem_martin")
 			.attr({"id": "tablerow_"+rowid})
 			.append($("<span>").addClass("enum-db").text("#"+currhash))
 		;
-		
+		// odesilaci tlacitko
 		var sendbutton = $("<button>").addClass("btn btn-align rename-align btn-success btn-text btn-table-send")
 			.text("Send")
 		;
-
+		// generovani jednotlivych sloupcu
 		var focused;
 		for(var iter = 1; iter <= colcount; iter++) {
 			var itemname = $("#1").children().eq(iter).text();
@@ -372,6 +438,7 @@
 			innerrow.append(colinput);
 		}
 
+		// udalost kliknuti na odesilaci tlacitko
 		sendbutton.click(function(){
 			var values = [currhash];
 			var fail = false;
@@ -388,6 +455,7 @@
 			else { alert("Invalid form input."); }
 		})
 		
+		// vlozeni radku do stranky
 		$("<div>").addClass("row dir-bar my-border-db no-margin")
 			.append(innerrow
 				.append(sendbutton)
@@ -396,13 +464,16 @@
 			.insertBefore( $("#table").find('.appenditem') )
 		;
 
+		// odebrani tlacitka pro zalozeni radku 
 		$("#table").find(".create").empty();
 
+		// zaostreni na prvni vstup
 		focused.focus().select();
 	}
 
 
     $(document).ready(function () {
+		// prvni zadost o data
         requestTableNames();
 	});
 	
