@@ -86,12 +86,12 @@
             <xsl:apply-templates select="record"/>
             <button>
                 <xsl:attribute name="class">btn btn-align rename-align btn-secondary btn-text btn-table-edit</xsl:attribute>
-                <xsl:attribute name="onclick">sendEditRow(<xsl:value-of select="position()-1"/>);</xsl:attribute>
+                <xsl:attribute name="onclick">sendEditRow(<xsl:value-of select="record"/>);</xsl:attribute>
                 <i class="fas fa-edit"></i></button>
             <xsl:value-of select="$lf"/>    <!-- newline -->
             <button>
                 <xsl:attribute name="class">btn btn-align btn-warning btn-text btn-table-del</xsl:attribute>
-                <xsl:attribute name="onclick">sendDeleteRow(<xsl:value-of select="position()-1"/>);</xsl:attribute>
+                <xsl:attribute name="onclick">sendDeleteRow(<xsl:value-of select="record"/>);</xsl:attribute>
                 <i class="fas fa-minus-circle"></i></button>
         </div>
         <div class="col-lg-4"></div>
