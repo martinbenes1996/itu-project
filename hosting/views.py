@@ -503,8 +503,6 @@ def deleteRow(request):
         projname = request.POST['projname']
         tablename = request.POST['tablename']
         rowid = request.POST['rowid']
-        print(tablename+": "+rowid)
-        return getDbData(request)
 
         # id of the row (hodnota primarniho klice, vzdy je v prvnim sloupci, muze to byt cokoli - cislo/string)
         try:
