@@ -398,7 +398,6 @@ def getDbData(request):
         testfile.write(str(result))
         testfile.close()
 
-
         jsonresponse = json.dumps({'html': str(result)})                          # send via json as string
         ''' Tady ti davam html obsah mezi <!-- DETAILY TABULKY X --> az <!-- DETAILY TABULKY X+1 -->
             Muzes se podivat do souboru testhtml.html jak to vypada.

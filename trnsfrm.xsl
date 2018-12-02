@@ -26,11 +26,14 @@
             <xsl:apply-templates select="definition"/>
             <xsl:apply-templates select="rows/row"/>
             <div class="create">
-				<button class="btn btn-primary btn-align btn-text"><i class="fas fa-plus-circle"></i><xsl:value-of select="$ampersand" disable-output-escaping="yes"/>nbsp;Add</button>
+				<button>
+                    <xsl:attribute name="class">btn btn-primary btn-align btn-text</xsl:attribute>
+                    <xsl:attribute name="onclick">addNewRow();</xsl:attribute>
+                    <i class="fas fa-plus-circle"></i><xsl:value-of select="$ampersand" disable-output-escaping="yes"/>nbsp;Add</button>
 				<xsl:value-of select="$lf"/>    <!-- newline -->
 				<button>
                     <xsl:attribute name="class">btn btn-primary btn-align btn-text</xsl:attribute>
-                    <xsl:attribute name="onclick">requestTableNames()</xsl:attribute>
+                    <xsl:attribute name="onclick">requestTableNames();</xsl:attribute>
                     <i class="fas fa-arrow-left"></i><xsl:value-of select="$ampersand" disable-output-escaping="yes"/>nbsp;Back</button>
 			</div>
         </div>
@@ -81,9 +84,15 @@
         <div class="row dir-bar no-margin center">
             <xsl:value-of select="$lf"/>    <!-- newline -->
             <xsl:apply-templates select="record"/>
-            <button class="btn btn-align rename-align btn-secondary btn-text btn-table-edit"><i class="fas fa-edit"></i></button>
+            <button>
+                <xsl:attribute name="class">btn btn-align rename-align btn-secondary btn-text btn-table-edit</xsl:attribute>
+                <xsl:attribute name="onclick">sendEditRow(<xsl:value-of select="position()-1"/>);</xsl:attribute>
+                <i class="fas fa-edit"></i></button>
             <xsl:value-of select="$lf"/>    <!-- newline -->
-            <button class="btn btn-align btn-warning btn-text btn-table-del"><i class="fas fa-minus-circle"></i></button>
+            <button>
+                <xsl:attribute name="class">btn btn-align btn-warning btn-text btn-table-del</xsl:attribute>
+                <xsl:attribute name="onclick">sendDeleteRow(<xsl:value-of select="position()-1"/>);</xsl:attribute>
+                <i class="fas fa-minus-circle"></i></button>
         </div>
         <div class="col-lg-4"></div>
     </div>
