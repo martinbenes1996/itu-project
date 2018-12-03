@@ -480,10 +480,10 @@ def DeleteTable(projName, tableName):
     tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
 def AddRow(projName, tableName, rowData):
-    ''' Add a new row into a table.
+    ''' Add a new row into a table or modify an existing one.
         projName   -> name of the project (string!)
         tableName  -> name of the table (string!)
-        rowData    -> list of records
+        rowData    -> list of records (match id to modify)
             example: ["0","Frodo","Pytlik","50+"]
     '''
     try:
@@ -503,6 +503,15 @@ def AddRow(projName, tableName, rowData):
             if int(columns) != len(rowData):                    # check if there is enough data provided
                 raise IncompatibleRowDataError
             rows = x.find("rows")                               # get rows element
+
+            rowlist = rows.findall("*")                         # go through rows and look for same id
+            for row in rowlist:
+                if row.find("record").text == str(rowData[0]):  # the first record is id
+                    for i,modr in enumerate(row.findall("*")):  # modify all elements of row
+                        modr.text = str(rowData[i])
+                    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
+                    return
+
             r = ET.SubElement(rows, "row")                      # add a subelement row
             for col in rowData:                                 # for each piece of data add a record
                 ET.SubElement(r, "record").text = str(col)
@@ -567,37 +576,6 @@ def GetTableContent(projName, tableName):
             return ET.tostring(table, "UTF-8")       # trying new things
 
     raise DoesNotExistError     # table not found
-
-
-
-    '''
-
-    return ET.tostring(elem, "UTF-8")       # trying new things
-
-    result = []
-    counter = 0
-    test = elem.findall("*")                                    # find children
-    for x in test:
-        result.append({"name":x.attrib['tablename']})                          # get name of the table
-        definition = x.find("definition")
-        defin = definition.findall("*")                         # find all definitions
-        result[counter]['definition'] = []
-        for d in defin:                                         # add them to the list
-            defunit = [d.text,d.attrib['datatype']]             # create a list of column name and data type
-            result[counter]['definition'].append(defunit)
-        rows = x.find("rows")
-        rowlist = rows.findall("row")                           # find all rows of a table
-        result[counter]['rows'] = []
-        for row in rowlist:                                     # for every row find records
-            recordlist = row.findall("record")
-            rowdata = []
-            for record in recordlist:                           # save every record of a row into a list
-                rowdata.append(record.text)
-            result[counter]['rows'].append(rowdata)             # append the list to a list of rows
-
-        counter = counter + 1
-    return result
-    '''
 
 def GetTableNames(projName):
     ''' Get the whole database in just one list!!!
@@ -712,13 +690,12 @@ DeleteTable("dat007", "balon")
 AddRow("dat007", "jabka", ["0","Granny Smith","green"])
 AddRow("dat007", "jabka", ["1","Moje jabko","red"])
 AddRow("dat007", "jabka", ["2","Taiwanska namka","orange"])
+#AddRow("dat007", "jabka", ["2","hehe","black"])
 AddColumn("dat007", "jabka", ["kyselost","i"], "0")
 AddColumn("dat007", "jabka", ["vune","s"])
 DeleteColumn("dat007", "jabka", "vune")
 #DeleteColumn("dat007", "jabka", "barva")
 #DeleteColumn("dat007", "jabka", "id")
-
-print(GetDatabase("dat007"))
 
 #AddRow("dat007", "hruska", ["0","Granny Smith","green"])
 #DeleteRow("dat007", "jabka", "1")

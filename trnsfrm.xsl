@@ -82,7 +82,7 @@
     <div class="row dir-bar my-border-db no-margin">
         <xsl:value-of select="$lf"/>    <!-- newline -->
         <div class="row dir-bar no-margin center tableitem_martin">
-            <xsl:attribute name="id">tablerow_<xsl:value-of select="position()-1"/></xsl:attribute>
+            <xsl:attribute name="id">tablerow_<xsl:value-of select="record"/></xsl:attribute>
             <xsl:value-of select="$lf"/>    <!-- newline -->
             <xsl:apply-templates select="record"/>
             <button>

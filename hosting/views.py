@@ -388,7 +388,7 @@ def getDbData(request):
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
-        #p = XML.GetTableContent( "dat007", "jabka" )   # get table as a xml string        
+        #p = XML.GetTableContent( "dat007", "jabka" )   # get table as a xml string
         p = XML.GetTableContent(enc(d['user'].pk,projname),tablename)
 
         xml = ET.fromstring(p)                              # load raw xml
@@ -396,23 +396,12 @@ def getDbData(request):
         transform = ET.XSLT(xsl)                            # create transform formula from xsl
         result = transform(xml)                             # transform xml
 
+        # a dump file for debug, later remove
         testfile = open("testhtml.html","w")                # save into a file (temporary)
         testfile.write(str(result))
         testfile.close()
 
         jsonresponse = json.dumps({'html': str(result)})                          # send via json as string
-        ''' Tady ti davam html obsah mezi <!-- DETAILY TABULKY X --> az <!-- DETAILY TABULKY X+1 -->
-            Muzes se podivat do souboru testhtml.html jak to vypada.
-            Mozna je spatne napsana predavka jsonovi, str(result) je retezec s html obsahem.
-        '''
-
-        #jsonresponse = json.dumps(generateDatabase())
-        '''
-        try:
-            #jsonresponse = json.dumps(XML.GetDatabase( enc(d['user'].pk,projname) ))
-        except DoesNotExistError:
-            d['message'] = 'Database does not exist.'
-        '''
         return HttpResponse(jsonresponse, content_type='application/json')
 
 @csrf_exempt
@@ -430,7 +419,7 @@ def createTable(request):
         # je treba to tu nejak poskladat, musi to byt seznamy kvuli poradi zaznamu...
         #definition = [["id","i"],["name","s"]]      # temporary definition
         definition = json.loads( request.POST['definition'] )
-        
+
         # odstran
         #print(tablename, definition)
         #print(getTableNames(request))
