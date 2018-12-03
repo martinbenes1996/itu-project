@@ -99,34 +99,53 @@
 
 	function newDnsLine() {
 		$("#dnsadder").empty();
+
+		var selectSuffix = $("<select>").addClass("form-control")
+			.attr({"id":"dnsSuffixSelect"})
+		;
+
+		var focused;
+
 		var dnsinput = $("<input>").addClass("form-control")
-			.attr({"type":"text", "value":"DNS.cz"})
+			.attr({"type":"text", "value":"yourDns"})
 			.on("keydown", function(e){
 				if(e.which == 13) {
-					alert("Here");
 					e.stopPropagation();
-					sendAddDns(this.value);
+					var domain = $("#dnsSuffixSelect option:selected").text();
+					sendAddDns(this.value + domain);
 					return;
 				} else if(e.which == 27) {
 					e.stopPropagation();
 					requestDnsData();
 				}
 			})
+			.on("mousedown", function(){ focused=true; })
 			.focusout(function(e){
 				e.stopPropagation();
-				sendAddDns(this.value);
-				//requestDnsData();
+				//sendAddDns(this.value);
+				if(focused) { focused = false; return; }
+				if(selectSuffix.is(":focus")) { return; }
+				requestDnsData();
 				return;
 			})
 		;
 		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
 			.text("Add DNS")
-			.click(dnsinput, function(event){
+			.on("mousedown", dnsinput, function(event){
 				e.stopPropagation();
-				alert(event.data.value);
-				sendAddDns(event.data.value);
+				var domain = $("#dnsSuffixSelect option:selected").text();
+				sendAddDns(event.data.value + domain);
 			})
 		;
+
+		selectSuffix.focusout(function(e){
+			e.stopPropagation();
+			//sendAddDns(this.value);
+			if(focused) { focused = false; return; }
+			requestDnsData();
+			return;
+		})
+			.on("mousedown", function(){ focused=true; })
 
 		$("#dnsadder").append($("<div>").addClass("row dir-bar my-border-users")
 			.append($("<div>").addClass("row dir-bar")
@@ -137,8 +156,7 @@
 					.append(dnsinput)
 				)
 				.append($("<div>").addClass("form-group")
-					.append($("<select>").addClass("form-control")
-						.attr({"id":"dnsSuffixSelect"})
+					.append(selectSuffix
 						.append($("<option>").text(".cz"))
 						.append($("<option>").text(".sk"))
 						.append($("<option>").text(".com"))
@@ -146,7 +164,7 @@
 				)
 				.append($("<button>").addClass("btn")
 					.text("Add DNS")
-					.click(dnsinput, function() {
+					.on("mousedown", dnsinput, function() {
 						var e = jQuery.Event("keydown");
 						e.which = 13;
 						dnsinput.trigger(e);

@@ -121,8 +121,8 @@
 			})
 		;
 		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
-			.text("Add user")
-			.click(emailinput, function(event){
+			.text("Add email")
+			.on("mousedown", emailinput, function(event){
 					alert(event.data.value)
 					sendNewEmail(event.data.value);
 			})
@@ -137,8 +137,8 @@
 					.append(emailinput)
 				)
 				.append($("<button>").addClass("btn")
-					.text("Add user")
-					.click(emailinput, function() {
+					.text("Add email")
+					.on("mousedown", emailinput, function() {
 						var e = jQuery.Event("keydown");
 						e.which = 13;
 						emailinput.trigger(e);

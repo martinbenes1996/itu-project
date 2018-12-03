@@ -104,7 +104,7 @@
 	function newUserLine() {
 		$("#useradder").empty();
 		var userinput = $("<input>").addClass("form-control")
-			.attr({"type":"text", "value":"new file"})
+			.attr({"type":"text", "value":"newuser"})
 			.on("keydown", function(e){
 				if(e.which == 13) {
 					e.stopPropagation();
@@ -124,7 +124,7 @@
 		;
 		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
 			.text("Add user")
-			.click(userinput, function(event){
+			.on("mousedown", userinput, function(event){
 					alert(event.data.value)
 					sendNewUser(event.data.value);
 			})
@@ -140,7 +140,7 @@
 				)
 				.append($("<button>").addClass("btn")
 					.text("Add user")
-					.click(userinput, function() {
+					.on("mousedown", userinput, function() {
 						var e = jQuery.Event("keydown");
 						e.which = 13;
 						userinput.trigger(e);
