@@ -40,6 +40,7 @@ urlpatterns = [
     path('createTable/', views.createTable, name='createtable'),
     path('deleteTable/', views.deleteTable, name='deletetable'),
     path('addRow/', views.addRow, name='addrow'),
+    path('editRow/', views.editRow, name='editrow'),
     path('deleteRow/', views.deleteRow, name='deleterow'),
     path('addColumn/', views.addColumn, name='addcolumn'),
     path('deleteColumn/', views.deleteColumn, name='deletecolumn'),

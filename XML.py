@@ -548,6 +548,32 @@ def DeleteRow(projName, tableName, rowid):
             tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
             return
 
+def GenerateID(projName, tableName):
+    ''' Get highest index in table + 1.
+        projName   -> name of the project (string!)
+        tableName  -> name of the table (string!)
+    '''
+    try:
+        tree = ET.parse("XML/"+str(projName)+".xml")
+        root = tree.getroot()
+    except:
+        raise DoesNotExistError
+
+    elem = FindInXML(root, [], "database")
+    if elem == None:                        # path does not exist - should not happen
+        raise DoesNotExistError
+
+    test = elem.findall("*")                # find children
+    rowid = 0
+    for x in test:
+        if x.attrib['tablename'] == str(tableName):                                 # find the requested table
+            rows = x.find("rows")                               # get rows element
+            row = rows.findall("row")                           # find all rows
+            for r in row:                                       # find a row that has requested id
+                if int(r.find("record").text) >= rowid:
+                    rowid = int(r.find("record").text) + 1
+    return rowid
+
 def GetTableContent(projName, tableName):
     ''' Nonsense...
         projName   -> name of the project (string!)

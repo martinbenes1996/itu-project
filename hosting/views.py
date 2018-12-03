@@ -371,7 +371,7 @@ def getTableNames(request):
     if request.method == 'POST':
         projname = request.POST['projname']
         try:
-            print( XML.GetTableNames(enc(d['user'].pk,projname)) )
+            #print( XML.GetTableNames(enc(d['user'].pk,projname)) )
             jsonresponse = json.dumps(XML.GetTableNames(enc(d['user'].pk,projname)))
         except:
             d['message'] = 'XML error, users do not exist.'
@@ -390,6 +390,7 @@ def getDbData(request):
         tablename = request.POST['tablename']
         #p = XML.GetTableContent( "dat007", "jabka" )   # get table as a xml string
         p = XML.GetTableContent(enc(d['user'].pk,projname),tablename)
+        #print(p)
 
         xml = ET.fromstring(p)                              # load raw xml
         xsl = ET.parse("trnsfrm.xsl")                       # load raw xsl
@@ -453,6 +454,33 @@ def deleteTable(request):
         return getTableNames(request)
 
 @csrf_exempt
+def editRow(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        tablename = request.POST['tablename']
+        # rowdata is a list of data: ["prvni sloupec","druhy sloupec",...]
+        # je treba to tu nejak poskladat, musi to byt seznam kvuli poradi zaznamu...
+        #rowdata = ["0","pepa"]      # temporary data
+        rowdata = json.loads( request.POST['rowdata'] )
+
+        try:
+            XML.AddRow(enc(d['user'].pk,projname), tablename, rowdata)
+        except XML.DoesNotExistError:
+            d['message'] = 'Database or table does not exist.'
+        except XML.IncompatibleRowDataError:
+            d['message'] = 'Row data incompatible.'
+        except XML.TableNotFoundError:
+            d['message'] = 'Table was not found.'
+        #print(d['message'])
+        return getDbData(request)
+
+@csrf_exempt
 def addRow(request):
     email = request.COOKIES.get('user')
     d = dict()
@@ -467,7 +495,8 @@ def addRow(request):
         # je treba to tu nejak poskladat, musi to byt seznam kvuli poradi zaznamu...
         #rowdata = ["0","pepa"]      # temporary data
         rowdata = json.loads( request.POST['rowdata'] )
-        print(tablename+": "+str(rowdata))
+
+        rowdata[0] = XML.GenerateID(enc(d['user'].pk,projname), tablename)
 
         try:
             XML.AddRow(enc(d['user'].pk,projname), tablename, rowdata)
@@ -479,6 +508,7 @@ def addRow(request):
             d['message'] = 'Table was not found.'
         #print(d['message'])
         return getDbData(request)
+        
 
 @csrf_exempt
 def deleteRow(request):
