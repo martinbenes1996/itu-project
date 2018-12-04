@@ -49,6 +49,16 @@
 		);
 	}
 
+	function sendEditUser(oldname, newname) {
+		$.post("{% url 'renameuser' %}",
+			{'projname': "{{page.name}}", 'oldusername': oldname, 'newusername': newname},
+			function(data) {
+				currentUsersData = data;
+				refreshUsersData();
+			}
+		);
+	}
+
 	function sendDeleteUser(username) {
 		$.post("{% url 'deleteuser' %}",
 			{'projname': "{{page.name}}", 'username': username},
@@ -60,7 +70,7 @@
 	}
 
     function generateUser(user, id) {
-        return $("<div>").addClass("row dir-bar my-border-users")
+		return $("<div>").addClass("row dir-bar my-border-users")
             .append($("<div>").addClass("row dir-bar")
                 .append($("<span>").addClass("enum pointer")
 					.text("#"+id)
@@ -70,7 +80,11 @@
                 )
                 .append($("<div>").addClass("col text-right")
                     .append($("<button>").addClass("btn btn-align rename-align btn-secondary")
-                        .text("Modify")
+						.text("Modify")
+						.on("mousedown", function(event){
+
+
+						})
                     )
                     .append($("<button>").addClass("btn btn-align btn-warning")
 						.text("Delete")
@@ -86,8 +100,56 @@
 
     function generateUsers() {
 		$("#userslist").empty();
-        $.each(currentUsersData, function (u) {
-			$("#userslist").append( generateUser(currentUsersData[u], u) );
+		$.each(currentUsersData, function (u) {
+			var userbox = $("<div>").addClass("col lead my-align pointer")
+				.text(currentUsersData[u])
+			;
+			var edituser = $("<input>").addClass("form-input")
+				.focusout(function(e){
+					e.stopPropagation();
+					requestUsersData();
+				})
+			;
+       
+			var row = $("<div>").addClass("row dir-bar my-border-users")
+				.append($("<div>").addClass("row dir-bar")
+					.append($("<span>").addClass("enum pointer")
+						.text("#"+(u+1))
+					)
+					.append(userbox)
+					.append($("<div>").addClass("col text-right")
+						.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text")
+							.append($("<i>").addClass("fas fa-edit"))
+							.html("&nbsp;modify")
+							.on("mousedown", function(event){
+								var txt = userbox.text();
+								userbox.empty();
+								userbox.append(edituser
+									.attr({"type":"text", "value": txt})
+									.on("keydown", function(e){
+										e.stopPropagation();
+										if(e.which == 13) {
+											sendEditUser(txt, this.value);
+										} else if(e.which == 27) {
+											requestUsersData();
+										}
+									})
+								);
+								setTimeout(function(){ edituser.select().focus() }, 10);
+							})
+						)
+						.append($("<button>").addClass("btn btn-align btn-warning btn-text")
+							.append($("<i>").addClass("fas fa-minus-circle"))
+							.html("&nbsp;delete")
+							.click(currentUsersData[u], function(event) {
+								sendDeleteUser(event.data);
+							})
+						)
+					)
+				)
+				.append($("<div>").addClass("col-lg-4"))
+			;
+			$("#userslist").append(row);
 		});
 		
 		$("#userslist").append($("<div>").addClass("create")
@@ -125,7 +187,6 @@
 		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
 			.text("Add user")
 			.on("mousedown", userinput, function(event){
-					alert(event.data.value)
 					sendNewUser(event.data.value);
 			})
 		;
@@ -133,7 +194,7 @@
 		$("#useradder").append($("<div>").addClass("row dir-bar my-border-users")
 			.append($("<div>").addClass("row dir-bar")
 				.append($("<span>").addClass("enum pointer")
-					.text("#"+currentUsersData.length)
+					.text("#"+(parseInt(currentUsersData.length) + 1))
 				)
 				.append($("<div>").addClass("col lead my-align pointer")
 					.append(userinput)

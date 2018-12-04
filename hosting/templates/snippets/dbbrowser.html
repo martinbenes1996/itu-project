@@ -359,8 +359,8 @@
 	 * @param rowid 		ID daneho radku.
 	 */
 	function editRow(rowid) {
-		alert();
 		var oldvals = [];
+		$("#tablerow_"+rowid).children().last().prev().prop("disabled",true);
 		// iterovani po sloupcich daneho radku
 		$("#tablerow_"+rowid+" >span.rowitem_martin").each(function(it, item){
 			oldvals.push(item.innerText);
@@ -381,6 +381,7 @@
 					} else if(e.which == 27) {
 						requestTableHtml(currentTableName);
 					}
+					$("#tablerow_"+rowid).children().last().prev().prop("disabled",false);
 				})
 			;
 			$(item).append(inp);
@@ -402,6 +403,7 @@
 						});
 					}
 				}, 10);
+				$("#tablerow_"+rowid).children().last().prev().prop("disabled",false);
 			})
 		});
 		$($($("#tablerow_"+rowid+" >span.rowitem_martin")[0]).children()[0]).focus().select();

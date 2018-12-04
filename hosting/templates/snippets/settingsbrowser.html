@@ -10,7 +10,21 @@
 	<div id="pathbar"></div>
 
 	<div class="form-group delete center">
-		<button type="submit" class="btn btn-bg btn-danger btn-create btn-huge"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Delete Page</button>
+		<form action="/deletepage/" method="post">
+			<input type="hidden" name="projname" value="{{ page.name }}"/>
+			<button type="submit" class="btn btn-bg btn-danger btn-create btn-huge">
+				<i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Delete Page
+			</button>
+		</form>
 	</div>
 
 </div>
+
+<script>
+	function deletePage(name) {
+		$.post("{% url 'deletepage' %}",
+			{'projname': '{{page.name}}'},
+			function(){}
+		);
+	}
+</script>

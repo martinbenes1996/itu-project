@@ -211,6 +211,7 @@ def logout(request):
     response.delete_cookie('user')
     return response
 
+@csrf_exempt
 def deletepage(request):
     email = request.COOKIES.get('user')
     d = dict()
@@ -221,13 +222,18 @@ def deletepage(request):
     else:
         if request.method == 'POST':
             project = request.POST['projname']
-            XML.DeleteProject( enc(d['user'].pk,project) )
-            # nejsem si jistý nasledujicima dvema radkama !!!
-            w = models.Webpage.objects.get(name=project, user=d['user'].pk)
-            w.remove()
+            try:
+                XML.DeleteProject( enc(d['user'].pk,project) )
+            except:
+                pass
+            try:
+                models.Webpage.objects.get(name=project, user=d['user']).delete()
+            except:
+                pass
 
     return redirect('dashboard')
 
+@csrf_exempt
 def renamepage(request):
     email = request.COOKIES.get('user')
     d = dict()

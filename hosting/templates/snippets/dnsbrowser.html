@@ -39,6 +39,16 @@
 		);
 	} 
 
+	function sendEditDns(oldname, newname) {
+		$.post("{% url 'renamedns' %}",
+			{'projname': "{{page.name}}", 'olddnsname': oldname, 'newdnsname': newname},
+			function(data) {
+				currentDnsData = data;
+				refreshDnsData();
+			}
+		);
+	}
+
 	function sendDeleteDns(name) {
 		$.post("{% url 'deletedns' %}",
 			{'projname': "{{page.name}}", 'dnsname':name},
@@ -49,38 +59,58 @@
 		);
 	}
 
-	function generateDnsRow(dns, i) {
-		return $("<div>").addClass("row dir-bar my-border-users no-margin")
-			.append($("<div>").addClass("row dir-bar no-margin")
-				.append($("<span>").addClass("enum pointer")
-					.text("#"+i)
-				)
-				.append($("<div>").addClass("col lead my-align pointer")
-					.text(dns)
-				)
-				.append($("<div>").addClass("col text-right")
-					.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text")
-						.append($("<i>").addClass("fas fa-edit"))
-						.html("&nbsp;modify")
-					)
-					.append($("<button>").addClass("btn btn-align btn-warning btn-text")
-						.append($("<i>").addClass("fas fa-minus-circle"))
-						.html("&nbsp;delete")
-						.click(dns, function(event){ 
-							event.stopPropagation();
-							sendDeleteDns(event.data);
-						})
-					)
-				)
-			)
-			.append($("<div>").addClass("col-lg-4"))
-		;
-	}
-
 	function generateDns() {
 		$("#dnslist").empty();
         $.each(currentDnsData, function (u) {
-			$("#dnslist").append( generateDnsRow(currentDnsData[u], u) );
+			var textfield = $("<div>");
+			var inputdiver = $("<div>").addClass("row dir-bar my-border-users no-margin")
+				.append($("<div>").addClass("row dir-bar no-margin")
+					.append($("<span>").addClass("enum pointer")
+						.text("#"+(u+1))
+					)
+					.append(textfield.addClass("col lead my-align pointer")
+						.text(currentDnsData[u])
+					)
+					.append($("<div>").addClass("col text-right")
+						.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text")
+							.append($("<i>").addClass("fas fa-edit"))
+							.html("&nbsp;modify")
+							.on("mousedown", function(event){
+								var txt = textfield.text();
+								textfield.empty();
+								var inp = $("<input>").addClass("form-input");
+								textfield.append(inp
+									.attr({"type":"text", "value": currentDnsData[u]})
+									.focusout(function(){
+										textfield.empty();
+										textfield.text(currentDnsData[u]);
+									})
+									.on("keydown", function(e) {
+										e.stopPropagation();
+										if(e.which == 13) {
+											sendEditDns(txt, inp.val());
+										} else if(e.which == 27) {
+											requestDnsData();
+										}
+									})
+								);
+								setTimeout(function(){ inp.select().focus(); }, 10);
+							})
+						)
+						.append($("<button>").addClass("btn btn-align btn-warning btn-text")
+							.append($("<i>").addClass("fas fa-minus-circle"))
+							.html("&nbsp;delete")
+							.click(currentDnsData[u], function(event){ 
+								event.stopPropagation();
+								sendDeleteDns(event.data);
+							})
+						)
+					)
+				)
+				.append($("<div>").addClass("col-lg-4"))
+			;
+			$("#dnslist").append(inputdiver);
+			
 		});
 		
 		$("#dnslist").append($("<div>").addClass("create")
@@ -94,18 +124,12 @@
 	}
 
 	function newDnsLine() {
-		alert("Add DNS");
-	}
-
-	function newDnsLine() {
 		$("#dnsadder").empty();
-
 		var selectSuffix = $("<select>").addClass("form-control")
 			.attr({"id":"dnsSuffixSelect"})
 		;
 
 		var focused;
-
 		var dnsinput = $("<input>").addClass("form-control")
 			.attr({"type":"text", "value":"yourDns"})
 			.on("keydown", function(e){
@@ -146,6 +170,17 @@
 			return;
 		})
 			.on("mousedown", function(){ focused=true; })
+			.on("keydown", dnsinput, function(event){
+				if(event.which == 13) {
+					event.stopPropagation();
+					var domain = $("#dnsSuffixSelect option:selected").text();
+					sendAddDns(event.data.val() + domain);
+					return;
+				} else if(event.which == 27) {
+					event.stopPropagation();
+					requestDnsData();
+				}
+			})
 
 		$("#dnsadder").append($("<div>").addClass("row dir-bar my-border-users")
 			.append($("<div>").addClass("row dir-bar")

@@ -49,30 +49,16 @@
 		);
 	}
 
-	function generateEmailRow(mail, i) {
-		return $("<div>").addClass("row dir-bar my-border-users no-margin")
-			.append($("<div>").addClass("row dir-bar no-margin")
-				.append($("<span>").addClass("enum pointer")
-					.text("#"+i)
-				)
-				.append($("<div>").addClass("col lead my-align pointer")
-					.text(mail)
-				)
-				.append($("<div>").addClass("col text-right")
-					.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text")
-						.append($("<i>").addClass("fas fa-edit"))
-						.html("&nbsp;modify")
-					)
-					.append($("<button>").addClass("btn btn-align btn-warning btn-text")
-						.append($("<i>").addClass("fas fa-minus-circle"))
-						.html("&nbsp;delete")
-						.click(mail, function(event){ sendDeleteEmail(event.data); })
-					)
-				)
-			)
-			.append($("<div>").addClass("col-lg-4"))
-		;
+	function sendEditEmail(oldname, newname) {
+		$.post("{% url 'renameemail' %}",
+			{'projname': "{{page.name}}", "oldemailname": oldname, "newemailname": newname},
+			function(data) {
+				currentEmailsData = data;
+				refreshEmailsData();
+			}
+		);
 	}
+
 
 	function newEmailLine() {
 		alert("Add email!");
@@ -80,8 +66,55 @@
 
 	function generateEmails() {
 		$("#emailslist").empty();
-		$.each(currentEmailsData, function(e) {
-			$("#emailslist").append( generateEmailRow(currentEmailsData[e], e) );
+		$.each(currentEmailsData, function(i) {
+			var mailbox = $("<div>").addClass("col lead my-align pointer")
+				.text(currentEmailsData[i])
+			;
+			var editmail = $("<input>").addClass("form-input")
+				.focusout(function(e){
+					e.stopPropagation();
+					requestEmailsData();
+					
+				})
+			;
+
+			$("#emailslist").append($("<div>").addClass("row dir-bar my-border-users no-margin")
+				.append($("<div>").addClass("row dir-bar no-margin")
+					.append($("<span>").addClass("enum pointer")
+						.text("#"+(i+1))
+					)
+					.append(mailbox)
+					.append($("<div>").addClass("col text-right")
+						.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text")
+							.append($("<i>").addClass("fas fa-edit"))
+							.html("&nbsp;modify")
+							.on("mousedown", function(event) {
+								var txt = mailbox.text();
+								mailbox.empty();
+								mailbox.append(editmail
+									.attr({"type":"text", "value": txt})
+									.on("keydown", function(e){
+										e.stopPropagation();
+										if(e.which == 13) {
+											sendEditEmail(txt, this.value);
+										} else if(e.which == 27) {
+											requestEmailsData();
+										}
+									})
+								);
+								setTimeout(function(){ editmail.select().focus(); }, 10);
+							})
+						)
+						.append($("<button>").addClass("btn btn-align btn-warning btn-text")
+							.append($("<i>").addClass("fas fa-minus-circle"))
+							.html("&nbsp;delete")
+							.click(currentEmailsData[i], function(event){ sendDeleteEmail(event.data); })
+						)
+					)
+				)
+				.append($("<div>").addClass("col-lg-4"))
+			);
+
 		});
 
 		$("#emailslist").append($("<div>").addClass("create")
@@ -102,7 +135,7 @@
 	function newEmailLine() {
 		$("#emailadder").empty();
 		var emailinput = $("<input>").addClass("form-control")
-			.attr({"type":"text", "value":"new email"})
+			.attr({"type":"text", "value":"new@email.com"})
 			.on("keydown", function(e){
 				if(e.which == 13) {
 					e.stopPropagation();

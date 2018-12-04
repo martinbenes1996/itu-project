@@ -18,7 +18,9 @@
     var currentDirData;
 
     function refreshFileData() {
-        //console.log(currentDirData);
+        $.each(currentDirData.content, function(k,v) {
+            v['name'] = k.split('.').join("");
+        });
         generatePathButtons(currentDirData.path);
         generateFileContent(currentDirData.content, undefined);
     }
@@ -150,7 +152,7 @@
 
         return $('<div>').addClass('row dir-bar')
             .append($('<div>').addClass('my-border dir-bar')
-                .append($('<div>').addClass('row dir-bar').attr("id", key)
+                .append($('<div>').addClass('row dir-bar').attr("id", val['name'])
                     .click({k: key, v: val}, function (event) {
 					    if (event.data.v['type'] == 'd') {
 							var lslice = currentDirData['path'].slice();
@@ -167,11 +169,11 @@
 					)
 					// right column
 					.append($('<div>').addClass('col text-right')
-						.append($('<button>').addClass('btn btn-align rename-align btn-secondary')
+						.append($('<button>').addClass('btn btn-align rename-align btn-secondary btn-text')
 							.text('rename')
 							.click({k: key, v: val}, function (event) {
                                 event.stopPropagation();
-                                var d = $("#"+key).find("div.showEditForm");
+                                var d = $("#"+val['name']+" >div.showEditForm");
                                 d.empty();
                                 var i = $("<input>").addClass("form-control")
                                     .attr({"type":"text", "value":event.data.k})
@@ -188,7 +190,7 @@
                                     })
                                     .focusout(function(e){
                                         e.stopPropagation();
-                                        sendRenameFile(currentDirData['path'], key, $(this).val());
+                                        requestFileData(currentDirData['path']);
                                         return;
                                     })
                                 ;
@@ -248,15 +250,12 @@
                 sendCreateFile(currentDirData.path, f.name, f.size);
             })
         ;
-        
 
         $('#dircontent')
             .append($('<div>').addClass('create row')
-
                 .append($('<div>').addClass('col text-left')
                     .append(filereader)
                 )
-
                 .append($('<div>').addClass('col text-right')   
                     .append($('<div>').addClass('row')
                         .append($('<div>').addClass('col text-right')
@@ -282,24 +281,48 @@
     function showProperties(key, val) {
         $('#dircontent').empty();
         $('#dircontent').append($('<button>')
-            .addClass('btn btn-sm btn-info')
+            .addClass('btn btn-sm btn-info btn-text')
             .text("Go back")
             .click({content: currentDirData.content, mode: undefined}, function (event) {
                 generateFileContent(event.data.content, event.data.mode);
             })
         );
-        var t = $('<table>');
+        
+        var t = $('<table>').addClass("table")
+            .append($("<thead>").addClass("thead-light")
+                .append($("<tr>")
+                    .append($("<th>").addClass("col").text(""))
+                    .append($("<th>").addClass("col text-left").text(""))
+                )
+            )
+        ;
+        var bd = $("<tbody>");
+        t.append(bd);
+        //
         $.each(val, function (k, v) {
-            t.append($('<tr>')
+            var value;
+            if(k == 'name') { value = key; }
+            else { value = v; }
+            bd.append($('<tr>')
                 .append($('<td>')
                     .text(k)
                 )
                 .append($('<td>')
-                    .text(v)
+                    .text(value)
                 )
             );
         });
-        $('#dircontent').append(t);
+
+        $("#dircontent").append($("<h2>").addClass("text-center text-secondary")
+            .text(key)
+        );
+        $('#dircontent').append($("<div>").addClass("row")
+            .append($("<div>").addClass("col-lg-2"))
+            .append($("<div>").addClass("col-lg-8")
+                .append(t)
+            )
+            .append($("<div>").addClass("col-lg-2"))
+        );
     }
 
     $(document).ready(function () {
