@@ -84,7 +84,9 @@
         <div class="row dir-bar no-margin center tableitem_martin">
             <xsl:attribute name="id">tablerow_<xsl:value-of select="record"/></xsl:attribute>
             <xsl:value-of select="$lf"/>    <!-- newline -->
-            <xsl:apply-templates select="record"/>
+            <xsl:apply-templates select="record">
+                <xsl:with-param name="lineID" select="position()"/>     <!-- pass parameter -->
+            </xsl:apply-templates>
             <button>
                 <xsl:attribute name="class">btn btn-align rename-align btn-secondary btn-text btn-table-edit</xsl:attribute>
                 <xsl:attribute name="onclick">editRow(<xsl:value-of select="record"/>);</xsl:attribute>
@@ -102,9 +104,10 @@
 </xsl:template>
 
 <xsl:template match="record">
+    <xsl:param name="lineID"/>
     <xsl:choose>
         <xsl:when test="position() = 1">
-            <span class="enum-db">#<xsl:value-of select="."/></span>
+            <span class="enum-db">#<xsl:value-of select="$lineID"/></span>
             <xsl:value-of select="$lf"/>    <!-- newline -->
         </xsl:when>
         <xsl:otherwise>

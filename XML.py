@@ -453,6 +453,30 @@ def CreateTable(projName, tableName, definition):
 
     tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
+def ModifyTable(projName, tableName, newTableName):
+    ''' Delete table from a database. If it does not find an object to delete, it does nothing.
+        projName     -> name of the project (string!)
+        tableName    -> name of the modifyed table (string!)
+        newTableName -> new name of the table (string!)
+    '''
+    try:
+        tree = ET.parse("XML/"+str(projName)+".xml")
+        root = tree.getroot()
+    except:
+        raise DoesNotExistError
+
+    elem = FindInXML(root, [], "database")
+    if elem == None:                        # path does not exist - should not happen
+        raise DoesNotExistError
+
+    test = elem.findall("*")                # find children
+    for x in test:
+        if x.attrib['tablename'] == str(tableName):
+            x.attrib['tablename'] = str(newTableName)
+            tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
+            return
+    raise DoesNotExistError     # table not found
+
 def DeleteTable(projName, tableName):
     ''' Delete table from a database. If it does not find an object to delete, it does nothing.
         projName  -> name of the project (string!)
@@ -662,6 +686,37 @@ def AddColumn(projName, tableName, column, defaultValue="NULL"):
 
     tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
 
+def ModifyColumn(projName, tableName, column, newColumnName):
+    ''' Delete column from a table.
+        projName   -> name of the project (string!)
+        tableName  -> name of the table (string!)
+        column     -> name of the modifyed column (string!)
+            example: "name"
+        column     -> new name of the column (string!)
+    '''
+    try:
+        tree = ET.parse("XML/"+str(projName)+".xml")
+        root = tree.getroot()
+    except:
+        raise DoesNotExistError
+
+    elem = FindInXML(root, [], "database")
+    if elem == None:                    # path does not exist - should not happen
+        raise DoesNotExistError
+
+    test = elem.findall("*")                                    # find children
+    for x in test:
+        if x.attrib['tablename'] == str(tableName):             # find the right table
+            definition = x.find("definition")
+            deflist = definition.findall("def")                 # find all defs
+            for d in deflist:
+                if d.text == column:                            # rename the right column
+                    d.text = str(newColumnName)
+                    tree.write("XML/"+str(projName)+".xml", encoding='UTF-8', xml_declaration=True)
+                    return
+    raise DoesNotExistError
+
+
 def DeleteColumn(projName, tableName, column):
     ''' Delete column from a table.
         projName   -> name of the project (string!)
@@ -711,6 +766,7 @@ CreateProject("dat007", "Ondrej")
 CreateTable("dat007", "hrusky", [["id","i"],["jmeno","s"],["odruda","s"]])
 CreateTable("dat007", "jabka", [["id","i"],["jmeno","s"],["barva","s"]])
 CreateTable("dat007", "balon", [["neco","s"]])
+#ModifyTable("dat007", "hrusky", "heheheh")
 DeleteTable("dat007", "balon")
 
 AddRow("dat007", "jabka", ["0","Granny Smith","green"])
@@ -719,6 +775,8 @@ AddRow("dat007", "jabka", ["2","Taiwanska namka","orange"])
 #AddRow("dat007", "jabka", ["2","hehe","black"])
 AddColumn("dat007", "jabka", ["kyselost","i"], "0")
 AddColumn("dat007", "jabka", ["vune","s"])
+AddColumn("dat007", "hrusky", ["prijmeni","s"])
+ModifyColumn("dat007", "hrusky", "jmeno", "FUNGUJETO")
 DeleteColumn("dat007", "jabka", "vune")
 #DeleteColumn("dat007", "jabka", "barva")
 #DeleteColumn("dat007", "jabka", "id")
