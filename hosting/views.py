@@ -241,10 +241,10 @@ def renamepage(request):
             newproject = request.POST['newprojname']
             try:
                 XML.RenameProject( enc(d['user'].pk,oldproject), enc(d['user'].pk,newproject) )
-            except AlreadyExistsError:
+            except XML.AlreadyExistsError:
                 d['message'] = 'New project already exists.'
                 return redirect('dashboard')
-            except AlreadyExistsError:
+            except XML.AlreadyExistsError:
                 d['message'] = 'Old project does not exist.'
                 return redirect('dashboard')
             # nejsem si jistý nasledujicima dvema radkama !!!
@@ -267,7 +267,7 @@ def getDirData(request):
         project = request.POST['projname']
         try:
             jsonresponse = json.dumps(XML.GetInfoFromFiletree(enc(d['user'].pk,project), path))
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'Directory with given path does not exist.'
         return HttpResponse(jsonresponse, content_type='application/json')
 
@@ -310,13 +310,13 @@ def createFile(request):
         size = request.POST['size']
         try:
             XML.AddToFiletree(enc(d['user'].pk,projname), path, name, 'f', "unknown", size)
-        except NameContainsWrongCharError:
+        except XML.NameContainsWrongCharError:
             d['message'] = 'File/dir name contains unacceptable characters (only [a-zA-Z0-9_.]).'
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'Path or directory does not exist.'
-        except WrongTypeError:
+        except XML.WrongTypeError:
             d['message'] = 'You cannot put things into file.'
-        except AlreadyExistsError:
+        except XML.AlreadyExistsError:
             d['message'] = 'File/dir with the same name already exists.'
         return getDirData(request)
 
@@ -335,9 +335,9 @@ def renameFile(request):
         newname = request.POST['newname']
         try:
             XML.RenameInFiletree(enc(d['user'].pk,projname), path, oldname, newname)
-        except NameContainsWrongCharError:
+        except XML.NameContainsWrongCharError:
             d['message'] = 'File/dir name contains unacceptable characters (only [a-zA-Z0-9_.]).'
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'File/dir does not exist.'
         return getDirData(request)
 
@@ -355,7 +355,7 @@ def deleteFile(request):
         name = request.POST['name']
         try:
             XML.DeleteFromFiletree(enc(d['user'].pk,projname), path, name)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'File/dir does not exist.'
         return getDirData(request)
 
@@ -429,9 +429,29 @@ def createTable(request):
 
         try:
             XML.CreateTable(enc(d['user'].pk,projname), tablename, definition)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'Database does not exist.'
-        except AlreadyExistsError:
+        except XML.AlreadyExistsError:
+            d['message'] = 'Table already exists.'
+        return getTableNames(request)
+
+@csrf_exempt
+def modifyTable(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        tablename = request.POST['tablename']
+        newtablename = json.loads( request.POST['newtablename'] )
+        try:
+            XML.ModifyTable(enc(d['user'].pk,projname), tablename, newtablename)
+        except XML.DoesNotExistError:
+            d['message'] = 'Database does not exist.'
+        except XML.AlreadyExistsError:
             d['message'] = 'Table already exists.'
         return getTableNames(request)
 
@@ -449,7 +469,7 @@ def deleteTable(request):
 
         try:
             XML.DeleteTable(enc(d['user'].pk,projname), tablename)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'Database or table does not exist.'
         return getTableNames(request)
 
@@ -508,7 +528,7 @@ def addRow(request):
             d['message'] = 'Table was not found.'
         #print(d['message'])
         return getDbData(request)
-        
+
 
 @csrf_exempt
 def deleteRow(request):
@@ -526,7 +546,7 @@ def deleteRow(request):
         # id of the row (hodnota primarniho klice, vzdy je v prvnim sloupci, muze to byt cokoli - cislo/string)
         try:
             XML.DeleteRow(enc(d['user'].pk,projname), tablename, rowid)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'Database or table does not exist.'
         return getDbData(request)
 
@@ -546,7 +566,26 @@ def addColumn(request):
         defaultvalue = request.POST['defaultvalue']
         try:
             XML.AddColumn(enc(d['user'].pk,projname), tablename, column, defaultvalue)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
+            d['message'] = 'Database does not exist.'
+        return getDbData(request)
+
+@csrf_exempt
+def modifyColumn(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+    if request.method == 'POST':
+        projname = request.POST['projname']
+        tablename = request.POST['tablename']
+        column = request.POST['column']
+        newcolumnname = request.POST['newcolumnname']
+        try:
+            XML.ModifyColumn(enc(d['user'].pk,projname), tablename, column, newcolumnname)
+        except XML.DoesNotExistError:
             d['message'] = 'Database does not exist.'
         return getDbData(request)
 
@@ -564,7 +603,7 @@ def deleteColumn(request):
         columnname = request.POST['columnname']     # name of the deleted column
         try:
             XML.DeleteColumn(enc(d['user'].pk,projname), tablename, columnname)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'Database does not exist.'
         return getDbData(request)
 
@@ -581,7 +620,7 @@ def getUserData(request):
         projname = request.POST['projname']
         try:
             jsonresponse = json.dumps(XML.GetUser(enc(d['user'].pk,projname)))
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, users do not exist.'
         return HttpResponse(jsonresponse, content_type='application/json')
 
@@ -598,9 +637,9 @@ def addUser(request):
         username = request.POST['username']
         try:
             XML.AddUser(enc(d['user'].pk,projname), username)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, users do not exist.'
-        except AlreadyExistsError:
+        except XML.AlreadyExistsError:
             d['message'] = 'User already exists in this project.'
         return getUserData(request)
 
@@ -617,7 +656,7 @@ def deleteUser(request):
         username = request.POST['username']
         try:
             XML.DeleteUser(enc(d['user'].pk,projname), username)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, users do not exist.'
         return getUserData(request)
 
@@ -636,9 +675,9 @@ def renameUser(request):
         try:
             XML.AddUser(enc(d['user'].pk,projname), newusername)
             XML.DeleteUser(enc(d['user'].pk,projname), oldusername)     # might be changed in the future
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, users do not exist.'
-        except AlreadyExistsError:
+        except XML.AlreadyExistsError:
             d['message'] = 'User already exists in this project.'
         return getUserData(request)
 
@@ -654,7 +693,7 @@ def getDnsData(request):
         projname = request.POST['projname']
         try:
             jsonresponse = json.dumps(XML.GetDNS(enc(d['user'].pk,projname)))
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, dnses do not exist.'
         return HttpResponse(jsonresponse, content_type='application/json')
 
@@ -671,9 +710,9 @@ def addDns(request):
         dnsname = request.POST['dnsname']
         try:
             XML.AddDNS(enc(d['user'].pk,projname), dnsname)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, dnses do not exist.'
-        except AlreadyExistsError:
+        except XML.AlreadyExistsError:
             d['message'] = 'Dns already exists in this project.'
         return getDnsData(request)
 
@@ -690,7 +729,7 @@ def deleteDns(request):
         dnsname = request.POST['dnsname']
         try:
             XML.DeleteDNS(enc(d['user'].pk,projname), dnsname)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, dnses do not exist.'
         return getDnsData(request)
 
@@ -709,9 +748,9 @@ def renameDns(request):
         try:
             XML.AddDNS(enc(d['user'].pk,projname), newdnsname)
             XML.DeleteDNS(enc(d['user'].pk,projname), olddnsname)     # might be changed in the future
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, dnses do not exist.'
-        except AlreadyExistsError:
+        except XML.AlreadyExistsError:
             d['message'] = 'Dns already exists in this project.'
         return getDnsData(request)
 
@@ -763,7 +802,7 @@ def deleteEmail(request):
         emailname = request.POST['emailname']
         try:
             XML.DeleteEmail(enc(d['user'].pk,projname), emailname)
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, emails do not exist.'
         return getEmailData(request)
 
@@ -782,9 +821,9 @@ def renameEmail(request):
         try:
             XML.AddEmail(enc(d['user'].pk,projname), newemailname)
             XML.DeleteEmail(enc(d['user'].pk,projname), oldemailname)     # might be changed in the future
-        except DoesNotExistError:
+        except XML.DoesNotExistError:
             d['message'] = 'XML error, emails do not exist.'
-        except AlreadyExistsError:
+        except XML.AlreadyExistsError:
             d['message'] = 'Email already exists in this project.'
         return getEmailData(request)
 
