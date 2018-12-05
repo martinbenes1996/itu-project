@@ -77,3 +77,6 @@ $(function()
       });
 });
 
+function scrollDown() {
+    $('#scroller').animate({ scrollTop: $('#scroller').height()}, 1000);
+}
