@@ -150,9 +150,9 @@
         if(val['type'] == 'd') { iconclass = 'far fa-folder folder-align'; }
         else { iconclass = 'far fa-file file-align'; }
 
-        return $('<div>').addClass('row dir-bar')
-            .append($('<div>').addClass('my-border dir-bar')
-                .append($('<div>').addClass('row dir-bar').attr("id", val['name'])
+        return $('<div>').addClass('dir-bar my-border-users no-margin')
+            .append($('<div>').addClass('row dir-bar no-margin')
+                .append($('<div>').addClass('row dir-bar no-margin').attr("id", val['name'])
                     .click({k: key, v: val}, function (event) {
 					    if (event.data.v['type'] == 'd') {
 							var lslice = currentDirData['path'].slice();
@@ -162,9 +162,11 @@
 							showProperties(event.data.k, event.data.v);
 						}
 					})
-					.append($('<i>').addClass(iconclass))
+					.append($('<i>').addClass(iconclass)
+								.css("cursor", "pointer"))
+
                     // left column
-					.append($('<div>').addClass('col lead my-align showEditForm')
+					.append($('<div>').addClass('col lead my-align-dns showEditForm pointer ftp-top')
                         .text(key)
 					)
 					// right column
@@ -198,7 +200,7 @@
                                 i.focus().select();
                             })
 						)
-						.append($('<button>').addClass('btn btn-align btn-warning')
+						.append($('<button>').addClass('btn btn-align btn-warning btn-text')
 							.text('delete')
 							.click({k: key, v: val}, function (event) {
                                 event.stopPropagation();
@@ -227,7 +229,7 @@
             // tady bude rozhodovani podle mode (typ zobrazeni)
         });
         
-        var i = $('<input>').addClass('form-control')
+        var i = $('<input>').addClass('form-control input-ftp')
             .attr({"type":"text"})
             .on("keydown", this, function(e){
 				if(e.which == 13) {
@@ -245,6 +247,7 @@
         
         var filereader = $('<input>')
             .attr({'type':'file', 'name':'input-file', 'id':'input-file'})
+						.css({"display":"none"})
             .bind('change', function() {
                 var f = this.files[0];
                 sendCreateFile(currentDirData.path, f.name, f.size);
@@ -254,23 +257,24 @@
         $('#dircontent')
             .append($('<div>').addClass('create row')
                 .append($('<div>').addClass('col text-left')
-                    .append(filereader)
-                )
-                .append($('<div>').addClass('col text-right')   
-                    .append($('<div>').addClass('row')
-                        .append($('<div>').addClass('col text-right')
-                            .append(i)
-                        )
-                        .append($('<div>').addClass('col text-left')
-				            .append($('<button>').addClass('btn btn-primary')
+
+										.append($('<div>')
+												.addClass('folder-line')
+										.append($('<button>').addClass('btn btn-primary btn-align-ftp btn-text')
                                 .attr({'id':'folderadder'})
                                 .text('New Folder')
 					            .click(i, function (event) {
                                     sendCreateFolder(currentDirData.path, i.val());
                                 })
                             )
-                        )
-                    )    
+										.append(i)
+										)
+
+                    .append(filereader)
+										.append($('<input>')
+												.addClass('input-file-button btn btn-primary btn-align-ftp btn-text')
+												.attr({"type":"button","onclick":"document.getElementById('input-file').click()", "value":"Browse..."})
+										)
                 )
                 
 			)
@@ -280,19 +284,12 @@
 
     function showProperties(key, val) {
         $('#dircontent').empty();
-        $('#dircontent').append($('<button>')
-            .addClass('btn btn-sm btn-info btn-text')
-            .text("Go back")
-            .click({content: currentDirData.content, mode: undefined}, function (event) {
-                generateFileContent(event.data.content, event.data.mode);
-            })
-        );
-        
+
         var t = $('<table>').addClass("table")
             .append($("<thead>").addClass("thead-light")
                 .append($("<tr>")
-                    .append($("<th>").addClass("col").text(""))
                     .append($("<th>").addClass("col text-left").text(""))
+                    .append($("<th>").addClass("col text-right2").text(""))
                 )
             )
         ;
@@ -305,9 +302,11 @@
             else { value = v; }
             bd.append($('<tr>')
                 .append($('<td>')
+										.addClass("col text-left border-style-left")
                     .text(k)
                 )
                 .append($('<td>')
+										.addClass("col text-right2")
                     .text(value)
                 )
             );
@@ -316,13 +315,22 @@
         $("#dircontent").append($("<h2>").addClass("text-center text-secondary")
             .text(key)
         );
-        $('#dircontent').append($("<div>").addClass("row")
-            .append($("<div>").addClass("col-lg-2"))
-            .append($("<div>").addClass("col-lg-8")
+        $('#dircontent').append($("<div>").addClass("row file-info no-margin")
+            .append($("<div>").addClass("col-lg-3"))
+            .append($("<div>").addClass("col-lg-6")
                 .append(t)
             )
-            .append($("<div>").addClass("col-lg-2"))
+            .append($("<div>").addClass("col-lg-3"))
         );
+
+        $('#dircontent').append($('<button>')
+            .addClass('btn btn-primary btn-align-ftp btn-text margin-left')
+            .text("Go back")
+            .click({content: currentDirData.content, mode: undefined}, function (event) {
+                generateFileContent(event.data.content, event.data.mode);
+            })
+        );
+
     }
 
     $(document).ready(function () {
