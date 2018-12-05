@@ -7,6 +7,8 @@
 		</p>
 	</div>
 
+	<div class="space"></div>
+
 	<div class="my-container dir-bar">
 		<div class="container-fluid" id="emailslist">
 		</div>
@@ -153,7 +155,7 @@
 				return;
 			})
 		;
-		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
+		var inputSend = $("<button>").addClass("btn btn-primary btn-align btn-add-dns")
 			.text("Add email")
 			.on("mousedown", emailinput, function(event){
 					alert(event.data.value)
@@ -161,15 +163,15 @@
 			})
 		;
 
-		$("#emailadder").append($("<div>").addClass("row dir-bar my-border-users")
-			.append($("<div>").addClass("row dir-bar")
+		$("#emailadder").append($("<div>").addClass("dir-bar my-border-users no-margin")
+			.append($("<div>").addClass("row dir-bar no-margin")
 				.append($("<span>").addClass("enum pointer")
 					.text("#"+currentEmailsData.length)
 				)
-				.append($("<div>").addClass("col lead my-align pointer")
+				.append($("<div>").addClass("lead my-align pointer pad-top")
 					.append(emailinput)
 				)
-				.append($("<button>").addClass("btn")
+				.append($("<button>").addClass("btn btn-align btn-success btn-text btn-add-table btn-add-dns")
 					.text("Add email")
 					.on("mousedown", emailinput, function() {
 						var e = jQuery.Event("keydown");

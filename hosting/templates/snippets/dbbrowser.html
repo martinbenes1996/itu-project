@@ -420,10 +420,10 @@
 	 */
 	function generateColumnInput(rowid, colwidth, itemname, sendbutton) {
 		return $("<span>").addClass("column rowitem_martin")
-			.css({"width": toString(colwidth)+"%"})
+			.width(colwidth+"%")
 			.append(generateInput()
 				.attr({"placeholder":itemname})
-				.css({"width": toString(colwidth)+"%"})
+				//.width(toString(colwidth)+"%")
 				// udalosti tlačítek
 				.on("keydown", sendbutton, function(e){
 					// enter
