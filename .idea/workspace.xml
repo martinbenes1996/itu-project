@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="090f3933-ff7b-41ec-ae29-9f23e2ed4bfa" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/XML/8_MyPage.xml" afterPath="$PROJECT_DIR$/XML/8_MyPage.xml" />
       <change beforePath="$PROJECT_DIR$/hosting/static/css/snippets/base.css" afterPath="$PROJECT_DIR$/hosting/static/css/snippets/base.css" />
+      <change beforePath="$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html" afterPath="$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html" />
       <change beforePath="$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html" afterPath="$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html" />
+      <change beforePath="$PROJECT_DIR$/testhtml.html" afterPath="$PROJECT_DIR$/testhtml.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -32,7 +35,7 @@
         <entry file="file://$PROJECT_DIR$/hosting/templates/pageboard.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="952">
-              <caret line="58" column="69" lean-forward="false" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="69" />
+              <caret line="58" column="47" lean-forward="false" selection-start-line="58" selection-start-column="47" selection-end-line="58" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -51,8 +54,8 @@
       <file leaf-file-name="base.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hosting/static/css/snippets/base.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="714">
-              <caret line="42" column="32" lean-forward="false" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="32" />
+            <state relative-caret-position="794">
+              <caret line="360" column="13" lean-forward="false" selection-start-line="360" selection-start-column="13" selection-end-line="360" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -61,8 +64,8 @@
       <file leaf-file-name="dbbrowser.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="421" column="39" lean-forward="false" selection-start-line="421" selection-start-column="39" selection-end-line="421" selection-end-column="39" />
+            <state relative-caret-position="221">
+              <caret line="422" column="45" lean-forward="true" selection-start-line="422" selection-start-column="45" selection-end-line="422" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -71,17 +74,18 @@
       <file leaf-file-name="dashboardbrowser.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+            <state relative-caret-position="17">
+              <caret line="1" column="33" lean-forward="false" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
               <folding>
-                <element signature="e#306#312#0#HTML" expanded="true" />
-                <element signature="e#312#318#0#HTML" expanded="true" />
-                <element signature="e#722#728#0#HTML" expanded="true" />
-                <element signature="e#728#734#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#321#327#0#HTML" expanded="true" />
+                <element signature="e#327#333#0#HTML" expanded="true" />
+                <element signature="e#717#723#0#HTML" expanded="true" />
+                <element signature="e#723#729#0#HTML" expanded="true" />
+                <element signature="e#1046#1052#0#HTML" expanded="true" />
                 <element signature="e#1052#1058#0#HTML" expanded="true" />
-                <element signature="e#1058#1064#0#HTML" expanded="true" />
+                <element signature="e#1504#1510#0#HTML" expanded="true" />
                 <element signature="e#1510#1516#0#HTML" expanded="true" />
-                <element signature="e#1516#1522#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -100,8 +104,8 @@
       <file leaf-file-name="dnsbrowser.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="8" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+            <state relative-caret-position="493">
+              <caret line="197" column="9" lean-forward="true" selection-start-line="197" selection-start-column="9" selection-end-line="197" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -120,11 +124,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>my-container</find>
-      <find>column-</find>
-      <find>enum</find>
-      <find>column{</find>
-      <find>my-border-user</find>
       <find>enum-d</find>
       <find>btn-tabl</find>
       <find>columns</find>
@@ -150,6 +149,11 @@
       <find>add-i</find>
       <find>my-align</find>
       <find>my-border-users</find>
+      <find>pad-to</find>
+      <find>pad-top</find>
+      <find>margin-top:</find>
+      <find>my-ali</find>
+      <find>add dn</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -184,8 +188,8 @@
         <option value="$PROJECT_DIR$/hosting/templates/snippets/emailbrowser.html" />
         <option value="$PROJECT_DIR$/hosting/templates/snippets/settingsbrowser.html" />
         <option value="$PROJECT_DIR$/hosting/templates/dashboard.html" />
-        <option value="$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html" />
         <option value="$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html" />
+        <option value="$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html" />
         <option value="$PROJECT_DIR$/hosting/static/css/snippets/base.css" />
         <option value="$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html" />
       </list>
@@ -580,7 +584,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="244" column="6" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="375" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -632,7 +635,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="969">
           <caret line="57" column="7" lean-forward="false" selection-start-line="57" selection-start-column="7" selection-end-line="57" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -640,7 +642,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3366">
           <caret line="198" column="30" lean-forward="false" selection-start-line="198" selection-start-column="30" selection-end-line="198" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -648,14 +649,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hosting/templates/pageboard.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="952">
-          <caret line="58" column="69" lean-forward="false" selection-start-line="58" selection-start-column="36" selection-end-line="58" selection-end-column="69" />
+          <caret line="58" column="47" lean-forward="false" selection-start-line="58" selection-start-column="47" selection-end-line="58" selection-end-column="47" />
           <folding />
         </state>
       </provider>
@@ -688,7 +688,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -696,47 +695,47 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1593">
           <caret line="238" column="35" lean-forward="false" selection-start-line="238" selection-start-column="35" selection-end-line="238" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="422" column="45" lean-forward="true" selection-start-line="422" selection-start-column="45" selection-end-line="422" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dashboardbrowser.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state relative-caret-position="17">
+          <caret line="1" column="33" lean-forward="false" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
           <folding>
-            <element signature="e#306#312#0#HTML" expanded="true" />
-            <element signature="e#312#318#0#HTML" expanded="true" />
-            <element signature="e#722#728#0#HTML" expanded="true" />
-            <element signature="e#728#734#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#321#327#0#HTML" expanded="true" />
+            <element signature="e#327#333#0#HTML" expanded="true" />
+            <element signature="e#717#723#0#HTML" expanded="true" />
+            <element signature="e#723#729#0#HTML" expanded="true" />
+            <element signature="e#1046#1052#0#HTML" expanded="true" />
             <element signature="e#1052#1058#0#HTML" expanded="true" />
-            <element signature="e#1058#1064#0#HTML" expanded="true" />
+            <element signature="e#1504#1510#0#HTML" expanded="true" />
             <element signature="e#1510#1516#0#HTML" expanded="true" />
-            <element signature="e#1516#1522#0#HTML" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dbbrowser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="421" column="39" lean-forward="false" selection-start-line="421" selection-start-column="39" selection-end-line="421" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hosting/static/css/snippets/base.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="42" column="32" lean-forward="false" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="32" />
+        <state relative-caret-position="794">
+          <caret line="360" column="13" lean-forward="false" selection-start-line="360" selection-start-column="13" selection-end-line="360" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hosting/templates/snippets/dnsbrowser.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="8" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+        <state relative-caret-position="493">
+          <caret line="197" column="9" lean-forward="true" selection-start-line="197" selection-start-column="9" selection-end-line="197" selection-end-column="9" />
           <folding />
         </state>
       </provider>
