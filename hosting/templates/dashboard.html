@@ -50,7 +50,7 @@
 	<div class="dashboard">
 
 		<!-- SIDE MENU -->
-		<div class="col-2 menu">
+		<div class="col-lg-2 menu">
 
 			<!-- MENU HEADER -->
 			<div class="user">
@@ -71,68 +71,122 @@
 			<!-- CREATE PAGE -->
 			<div class="form-group row logout">
 				<form method="post" action="/createpage/">{% csrf_token %}
-					<input class="form-control" name="name" placeholder="Name" autocomplete="off">
-					<button type="submit" class="btn .btn-sm btn-warning btn-create">Create Page</button>
+					<input class="form-control" name="name" placeholder="What about a new page?" autocomplete="off">
+					<button type="submit" class="btn .btn-sm btn-success btn-create">Create Page</button>
 				</form>
 			</div>
 
 		</div>
 
-		<div class="col-10">
-			<div class="inner-body">
-				<h1 class="center">Welcome to the Dashboard</h1>
+		<div class="col-lg-10">
+			<div class="inner-body" id="scroller">
+				<h1 class="center">Dashboard</h1>
 
-				<div class="container lead center">
-					<p>
-						. . . where you can manage everything and even more.
-					</p>
-				</div>
-				<div class="two-columns" style="margin-top: 40%">
-					<div class="col-1"></div>
-					<div class="col-5 center">
-						<p class="lead justify">First time with us? Read our short help.</p>
-						<ul class="my-list minus-left">
-							<li class="lead no-indent minus-bottom"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Creating a New Page</li>
-							<p class="indent plus-bottom">To create a new page fill the form on the left panel and click on the button 'Create
-								Page'. New website will appear in the left panel and you can choose it by a single click on its
-								name.</p>
-							<li class="lead no-indent minus-bottom"><i class="fas fa-user-circle fa-fw"></i>&nbsp;&nbsp;Account Manager</li>
-							<p class="indent plus-bottom">On the right top you can see the user icon with your name. By clicking on it some
-								multiple options will come out. You can change your settings there or log out.</p>
-							<li class="lead no-indent minus-bottom"><i class="fas fa-envelope"></i>&nbsp;&nbsp;Contact Us</li>
-							<p class="indent plus-bottom">Do you have any problem with using the system? Would you appreciate a little help with
-								setting the things up? There is not an easier way to get some help then sending us an email through the
-								'Help' icon placed just next to the user icon on the top bar. Fill the form with your Name and a correct
-								email and send your message. We will answer you as soon as possible.</p>
-						</ul>
+				<form method="post" action="/createpage/">{% csrf_token %}
+					<div class="row">
+						<div class="col-lg-2"></div>
+						<div class="col-lg-8">
+							<div class="form-group row" style="margin-top: 50px">
+								<div class="col-lg-10" style="margin-top: 7px">
+									<input class="form-control" name="name"
+										style="height: 40px" placeholder="What about a new page?" autocomplete="off" />
+								</div>
+								<div class="col-lg-2">
+									<button type="submit" class="btn .btn-sm btn-dark btn-create" style="height: 40px">Create Page</button>
+								</div>	
+							</div>
+						</div>
+						<div class="col-lg-2"></div>
 					</div>
-
-					<div class="col-5 center">
-						<p class="lead justify">After selecting a created page. New options will come out. </p>
-						<ul class="my-list minus-left">
-							<li class="lead no-indent minus-bottom"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;Dashboard</li>
-							<p class="indent plus-bottom">In the first tab you can see your statistics.</p>
-							<li class="lead no-indent minus-bottom"><i class="fas fa-file-alt"></i>&nbsp;&nbsp;FTP</li>
-							<p class="indent plus-bottom">FTP or File Transfer Protocol allows you to control your repositories. You can browse
-								you directories, view your files info or rename and delete them. You can create a new folder or a file
-								too.</p>
-							<li class="lead no-indent minus-bottom"><i class="fas fa-file-signature"></i>&nbsp;&nbsp;DNS</li>
-							<p class="indent plus-bottom">Domain Name System is there to help you manage your web addresses. There you can find
-								settings as what domains can your website use and more.</p>
-							<li class="lead no-indent minus-bottom"><i class="fas fa-database"></i>&nbsp;&nbsp;Database</li>
-							<p class="indent plus-bottom">The whole database on one place. Browse your tabs and look up for any record in your
-								database. Creating, editing and deleting tabs and rows has never been easier.</p>
-							<li class="lead no-indent minus-bottom"><i class="fas fa-at"></i>&nbsp;&nbsp;Email</li>
-							<p class="indent plus-bottom">Check your emails with our system. You can read the incoming email and send a new
-								ones.</p>
-							<li class="lead no-indent minus-bottom"><i class="fas fa-users"></i>&nbsp;&nbsp;Users</li>
-							<p class="indent plus-bottom">Watch all the registered users on your website. You can delete their accounts or change
-								their credentials.</p>
-						</ul>
+				</form>
+				{% if page_list %}
+				<div class="row" style="margin-top: 50px">
+					<div class="col-lg-4"></div>
+					<div class="col-lg-4">
+						<table class="table">
+							<thead>
+								<tr>
+									<th class="text-center">Your webpages</th>
+								</tr>	
+							</thead>
+									
+							{% for page in page_list %}
+							<tr>
+								<td class="text-center">
+									<a href="/pageboard/?id={{ page.id }}">
+										<button class="btn btn-lg btn-light"
+											style="width: 100%; height: 60px; border: 1px solid grey">
+											{{ page.name }}
+										</button>
+									</a>
+								</td>
+							</tr>
+							{% endfor %}
+						</table>
 					</div>
-
+					<div class="col-lg-4"></div>
 				</div>
+				{% else %}
+				<div class="row" style="margin-top: 70px">
+					<div class="col-lg-12 text-center">
+						<a href="#tutorial">
+							<button id="tutorialshower"
+								class="btn btn-lg btn-primary">
+								Show tutorial
+							</button>
+						</a>
+					</div>
+				</div>		
+				{% endif %}
+			</div>
 
+			<div class="row" id="tutorial">
+				<div class="col-lg-12 text-center">
+					<h1>Tutorial</h1>
+				</div>
+			</div>
+			<div class="two-columns" style="margin-top: 70px">
+				<div class="col-1"></div>
+				<div class="col-5 center">
+					<p class="lead justify">First time with us? Read our short help.</p>
+					<ul class="my-list minus-left">
+						<li class="lead no-indent minus-bottom"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Creating a New Page</li>
+						<p class="indent plus-bottom">To create a new page fill the form on the left panel and click on the button 'Create
+							Page'. New website will appear in the left panel and you can choose it by a single click on its
+							name.</p>
+						<li class="lead no-indent minus-bottom"><i class="fas fa-user-circle fa-fw"></i>&nbsp;&nbsp;Account Manager</li>
+						<p class="indent plus-bottom">On the right top you can see the user icon with your name. By clicking on it some
+							multiple options will come out. You can change your settings there or log out.</p>
+						<li class="lead no-indent minus-bottom"><i class="fas fa-envelope"></i>&nbsp;&nbsp;Contact Us</li>
+						<p class="indent plus-bottom">Do you have any problem with using the system? Would you appreciate a little help with
+							setting the things up? There is not an easier way to get some help then sending us an email through the
+							'Help' icon placed just next to the user icon on the top bar. Fill the form with your Name and a correct
+							email and send your message. We will answer you as soon as possible.</p>
+					</ul>
+				</div>
+				<div class="col-5 center">
+					<p class="lead justify">After selecting a created page. New options will come out. </p>
+					<ul class="my-list minus-left">
+						<li class="lead no-indent minus-bottom"><i class="fas fa-chart-line"></i>&nbsp;&nbsp;Dashboard</li>
+						<p class="indent plus-bottom">In the first tab you can see your statistics.</p>
+						<li class="lead no-indent minus-bottom"><i class="fas fa-file-alt"></i>&nbsp;&nbsp;FTP</li>
+						<p class="indent plus-bottom">FTP or File Transfer Protocol allows you to control your repositories. You can browse
+							you directories, view your files info or rename and delete them. You can create a new folder or a file
+							too.</p>
+						<li class="lead no-indent minus-bottom"><i class="fas fa-file-signature"></i>&nbsp;&nbsp;DNS</li>
+						<p class="indent plus-bottom">Domain Name System is there to help you manage your web addresses. There you can find
+							settings as what domains can your website use and more.</p>
+						<li class="lead no-indent minus-bottom"><i class="fas fa-database"></i>&nbsp;&nbsp;Database</li>
+						<p class="indent plus-bottom">The whole database on one place. Browse your tabs and look up for any record in your
+							database. Creating, editing and deleting tabs and rows has never been easier.</p>
+						<li class="lead no-indent minus-bottom"><i class="fas fa-at"></i>&nbsp;&nbsp;Email</li>
+						<p class="indent plus-bottom">Check your emails with our system. You can read the incoming email and send a new
+							ones.</p>
+						<li class="lead no-indent minus-bottom"><i class="fas fa-users"></i>&nbsp;&nbsp;Users</li>
+						<p class="indent plus-bottom">Watch all the registered users on your website. You can delete their accounts or change
+							their credentials.</p>
+					</ul>
+				</div>
 
 			</div>
 
@@ -178,3 +232,11 @@
 		</div>
 
 {% endblock %}
+
+<script>
+	$("#tutorialshower").click(function() {
+		$('#scroller').animate({
+			scrollTop: $("#tutorial").offset().top
+		}, 2000);
+	});
+</script>
