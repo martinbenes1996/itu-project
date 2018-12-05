@@ -66,8 +66,9 @@
         </xsl:when>
         <xsl:otherwise>
             <span> <!-- 93/(column count + 1) -->
-                <xsl:attribute name="class">column-top</xsl:attribute>
+                <xsl:attribute name="class">column-top martin_colclass_<xsl:value-of select="."/></xsl:attribute>
                 <xsl:attribute name="style">width: <xsl:value-of select="93 div /table/definition/@length"/>%</xsl:attribute>
+                <xsl:attribute name="onclick">editColumnName("<xsl:value-of select="."/>");</xsl:attribute>
                 <xsl:value-of select="."/>
             </span>
             <xsl:value-of select="$lf"/>    <!-- newline -->

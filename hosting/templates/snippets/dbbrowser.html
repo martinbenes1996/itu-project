@@ -150,17 +150,17 @@
 		);
 	}
 
-	/**
-	 * @brief Upraveni jednoho sloupce daneho radku tabulky.
-	 * @param rowid 		ID radku.
-	 * @param itemname 		Nazev sloupce.
-	 * @param itemval 		Nova hodnota sloupce.
-	 */
-	function sendEditRowItem(rowid, itemname, itemval) {
-		alert("table "+currentTableName+": row "+rowid+": set item "+itemname+" to "+itemval+".");
-		//$.post();
+	function sendEditColumnName(oldname, newname) {
+		$.post("{% url 'modifycolumn' %}",
+			{'projname': "{{page.name}}", 'tablename': currentTableName,
+			'column': oldname, 'newcolumnname': newname},
+			function(data) {
+				currentDbData = data.html;
+				refreshTableHtml();
+			}
+		);
 	}
-	
+
 	/**
 	 * @brief Generate database content.
 	 */
@@ -506,6 +506,26 @@
 		// zaostreni na prvni vstup
 		innerrow.children().eq(1).children().first().focus().select();
 		//focused.focus().select();
+	}
+
+	function editColumnName(colname) {
+		var oldcolname = colname;
+		var colitem = $("#1").find(".martin_colclass_"+colname);
+		colitem.empty();
+		var inp = $("<input>").addClass("form-input");
+
+		colitem.append(inp
+			.attr({"type":"text", "value": oldcolname})
+			.on("keydown", function(e){
+				e.stopPropagation();
+				if(e.which == 13) {
+					sendEditColumnName(oldcolname, this.value);
+				} else if(e.which == 27) {
+					requestTableHtml(currentTableName);
+				}
+			})
+		);
+		setTimeout(function(){ inp.select().focus(); }, 10);
 	}
 
 
