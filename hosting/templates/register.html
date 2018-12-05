@@ -27,7 +27,7 @@
 					<div class="section-heading">
 						<h2>Register</h2>
 					</div>
-					<p class="lead">Register a new account or <a href="{% url '' %}login">log in</a> with an existing account.</p>
+					<p class="lead">Create a new account or <a href="{% url '' %}login">login</a>.</p>
 
 					<div>
 						<form method="post" action="">{% csrf_token %}
@@ -75,7 +75,7 @@
 
 							<div class="form-group row">
 								<div class="col-4">
-									<label for="smFormGroupInput" class="col-2 col-form-label">Repeat</label>
+									<label for="smFormGroupInput" class="col-2 col-form-label">Password again</label>
 								</div>
 								<div class="col-8">
 									<input class="form-control" type="password" id="password-input">
@@ -85,7 +85,7 @@
 
 							<div class="form-group row">
 								<div class="col-2"></div>
-								<div class="col-8">
+								<div class="col-10">
 									<button type="Submit" class="btn btn-warning btn-lg col-12">Register</button>
 								</div>
 							</div>
@@ -94,7 +94,10 @@
 						</form>
 
 					</div>
-					<p class="lead">Go <a href="{% url '' %}">Back</a> to main page.</p>
+					<div class="row">
+						<div class="col-2"></div>
+						<div class="col-lg-10 text-center"><a href="{% url 'login' %}">Go to login</a></div>
+					</div>
 				</div>
 			</div>
 		</div>
