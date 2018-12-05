@@ -45,12 +45,41 @@
 
 .create {
     padding: 15px;
+    width: 80%;
+    margin: 1em auto;
+}
+
+.input-file{
+    display: none;
+}
+
+.btn-align-ftp{
+    margin-right: 10px;
+    margin-top: 8px;
+    width: 120px;
+}
+
+.file-info{
+    width: 100%;
+}
+
+.input-ftp{
+    width: 200px;
+    margin-top: 8px;
 }
 
 .btn-align {
     margin-right: 10px;
     margin-top: 8px;
     width: 100px;
+}
+
+.text-left{
+    width: 100px;
+}
+
+.text-right2{
+    text-align: right !important;
 }
 
 .text-right {
@@ -60,6 +89,15 @@
 .no-margin {
     margin-right: 0 !important;
     margin-left: 0 !important;
+}
+
+.btn-spec-align{
+    margin: 1em;
+}
+
+.folder-line{
+    display: flex;
+    max-width: 350px;
 }
 
 .my-align {
@@ -87,6 +125,17 @@
 }
 .my-border-db:hover {
     background-color: #e5e5e5;
+}
+
+.border-style-left{
+    background-color: #e9ecef;
+    border-right: solid;
+    border-color: #dee2e6;
+    min-width: 80px;
+}
+
+.margin-left{
+    margin-left: 333px;
 }
 
 #pathbar {
@@ -360,4 +409,10 @@ a.pathButton {
 
 .btn-add-dns{
     margin-left: 150px;
+}
+
+.ftp-top{
+    padding-top: 9px;
+    padding-bottom: 20px;
+    margin-bottom: 0;
 }
