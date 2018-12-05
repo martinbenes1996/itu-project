@@ -14,6 +14,8 @@
 		</p>
 	</div>
 
+	<div class="space"></div>
+
 	<div class="my-container dir-bar">
 		<div id="userslist" class="container-fluid">
 
@@ -111,8 +113,8 @@
 				})
 			;
        
-			var row = $("<div>").addClass("row dir-bar my-border-users")
-				.append($("<div>").addClass("row dir-bar")
+			var row = $("<div>").addClass("dir-bar my-border-users no-margin")
+				.append($("<div>").addClass("row dir-bar no-margin")
 					.append($("<span>").addClass("enum pointer")
 						.text("#"+(u+1))
 					)
@@ -184,22 +186,22 @@
 				return;
 			})
 		;
-		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
+		var inputSend = $("<button>").addClass("btn btn-primary btn-align btn-add-dns")
 			.text("Add user")
 			.on("mousedown", userinput, function(event){
 					sendNewUser(event.data.value);
 			})
 		;
 
-		$("#useradder").append($("<div>").addClass("row dir-bar my-border-users")
-			.append($("<div>").addClass("row dir-bar")
+		$("#useradder").append($("<div>").addClass("dir-bar my-border-users no-margin")
+			.append($("<div>").addClass("row dir-bar no-margin")
 				.append($("<span>").addClass("enum pointer")
 					.text("#"+(parseInt(currentUsersData.length) + 1))
 				)
-				.append($("<div>").addClass("col lead my-align pointer")
+				.append($("<div>").addClass("lead my-align pointer pad-top")
 					.append(userinput)
 				)
-				.append($("<button>").addClass("btn")
+				.append($("<button>").addClass("btn btn-align btn-success btn-text btn-add-table btn-add-dns")
 					.text("Add user")
 					.on("mousedown", userinput, function() {
 						var e = jQuery.Event("keydown");
