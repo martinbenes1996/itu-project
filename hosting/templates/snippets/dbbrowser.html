@@ -7,6 +7,8 @@
 		</p>
 	</div>
 
+	<div class="space"></div>
+
 	<div class="my-container dir-bar" id="dbcontent"></div>
 
 </div>
@@ -176,7 +178,6 @@
 				.append($("<span>").addClass("columns-top").text("Columns"))
 				.append($("<span>").addClass("rows-top").text("Rows"))
 			)
-			.append($("<div>").addClass("col-lg-4"))
 		;
 		// data tabulky
         $.each(currentDbData, function (index, tab) {
@@ -209,7 +210,6 @@
 						requestTableHtml(e.data.name)
 					})
 				)
-				.append($("<div>").addClass("col-lg-4"))
 			);
 		});
 
@@ -302,8 +302,7 @@
 		});
 
 		// vlastnosti odesilaciho tlacitka
-		inputSend.addClass("btn btn-success btn-sm")
-			.css({"width": "80px", "margin-right": "85px"})
+		inputSend.addClass("btn btn-align btn-success btn-text btn-add-table")
 			.text("Add table")
 			.on("mousedown", function(e) {
 				sendClicked = 2;
@@ -327,21 +326,23 @@
 				.append($("<span>").addClass("enum pointer")
 					.text("#"+(parseInt(currentDbData.length)+1))
 				)
-				.append($("<div>").addClass("col lead my-align pointer")
+				.append($("<div>").addClass("col lead my-align pointer table-name")
 					.append(nameinput)
 				)
-				.append($("<div>").addClass("col lead my-align pointer")
+				.append($("<div>").addClass("col lead my-align pointer column-count")
 					.append(columninput)
 				)
-				.append($("<div>").addClass("col lead my-align pointer"))
+				.append($("<div>").addClass("col lead my-align pointer row-count"))
+
 				.append(inputSend)
 			)
-			.append($("<div>").addClass("col-lg-4"))
 		.insertBefore($("#dbadder"));
 		
 		// nastaveni zaostreni (focus)
 		nameinput.focus().select();
 	}
+
+
 
 	/**
 	 * @brief Vygeneruje textovy input
@@ -349,7 +350,7 @@
 	 * @returns jQuery object.
 	 */
 	function generateInput(val) {
-		return $("<input>").addClass("form-control")
+		return $("<input>").addClass("form-control input-margin")
 			.attr({"type": "text", "value": val})
 		;
 	}
@@ -496,7 +497,6 @@
 			.append(innerrow
 				.append(sendbutton)
 			)
-			.append($("<div>").addClass("col-lg-4"))
 			.insertBefore( $("#table").find('.appenditem') )
 		;
 

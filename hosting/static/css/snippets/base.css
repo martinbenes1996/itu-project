@@ -1,5 +1,9 @@
 .inner-body {
     max-width: 1550px;
+    max-height: 885px;
+    min-height: 885px;
+    overflow-y: auto;
+    margin-top: 10px;
 }
 
 .dir-bar {
@@ -13,6 +17,25 @@
     margin-left: auto;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+.btn-add-table{
+    margin-right: 50px;
+    margin-bottom: 8px;
+}
+
+
+.table-name{
+    max-width: 225px;
+}
+
+.column-count{
+    max-width: 140px;
+    margin-left: 30px;
+}
+
+.row-count{
+    max-width: 200px;
 }
 
 .create {
@@ -63,6 +86,14 @@
 
 #pathbar {
     margin: 7em 5em 1em 13em;
+}
+
+.space{
+    margin: 7em 5em 1em 13em;
+}
+
+.small-space{
+    margin: 4em 5em 1em 13em;
 }
 
 #pathbar a {
@@ -223,9 +254,17 @@ a.pathButton {
 }
 
 .two-columns {
-
-    display: inline-flex;
+    display: flex;
     width: 100%;
+}
+
+.chart {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.two-columns-dash{
+
 }
 
 .justify {
@@ -249,7 +288,7 @@ a.pathButton {
 
 .log {
     width: 400px;
-    height: 500px;
+    height: 300px;
     overflow-y: auto;
     overflow-x: auto;
 }
@@ -287,7 +326,7 @@ a.pathButton {
     font-size: large;
     font-weight: bold;
     min-width: 10% !important;
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: auto;
 }
 
@@ -296,4 +335,16 @@ a.pathButton {
     min-width: 10% !important;
     overflow-y: auto;
     overflow-x: auto;
+}
+
+.input-margin{
+
+    margin: -8px 2px 2px 0;
+}
+
+.form-input{
+    width: 100%;
+    margin-top: -3px;
+    padding-left: 5px;
+    color: black;
 }
