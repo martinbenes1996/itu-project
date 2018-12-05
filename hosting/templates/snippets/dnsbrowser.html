@@ -7,6 +7,14 @@
 		</p>
 	</div>
 
+	<!--
+				.append($("<div>").addClass("input-group-append")
+						.append($("<span>").addClass("input-group-text")
+								.text(".")))
+-->
+
+	<div class="space"></div>
+
 	<div class="my-container dir-bar">
 		<div class="container-fluid" id="dnslist"></div>
 	</div>
@@ -63,12 +71,12 @@
 		$("#dnslist").empty();
         $.each(currentDnsData, function (u) {
 			var textfield = $("<div>");
-			var inputdiver = $("<div>").addClass("row dir-bar my-border-users no-margin")
+			var inputdiver = $("<div>").addClass("dir-bar my-border-users no-margin")
 				.append($("<div>").addClass("row dir-bar no-margin")
 					.append($("<span>").addClass("enum pointer")
 						.text("#"+(u+1))
 					)
-					.append(textfield.addClass("col lead my-align pointer")
+					.append(textfield.addClass("col lead my-align-dns pointer")
 						.text(currentDnsData[u])
 					)
 					.append($("<div>").addClass("col text-right")
@@ -153,6 +161,7 @@
 				return;
 			})
 		;
+
 		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
 			.text("Add DNS")
 			.on("mousedown", dnsinput, function(event){
@@ -182,12 +191,12 @@
 				}
 			})
 
-		$("#dnsadder").append($("<div>").addClass("row dir-bar my-border-users")
-			.append($("<div>").addClass("row dir-bar")
+		$("#dnsadder").append($("<div>").addClass("dir-bar my-border-users no-margin")
+			.append($("<div>").addClass("row dir-bar no-margin")
 				.append($("<span>").addClass("enum pointer")
 					.text("#"+currentDnsData.length)
 				)
-				.append($("<div>").addClass("col lead my-align pointer")
+				.append($("<div>").addClass("col lead my-align pointer pad-top")
 					.append(dnsinput)
 				)
 				.append($("<div>").addClass("form-group")
