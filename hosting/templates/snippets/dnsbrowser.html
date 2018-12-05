@@ -76,7 +76,7 @@
 					.append($("<span>").addClass("enum pointer")
 						.text("#"+(u+1))
 					)
-					.append(textfield.addClass("col lead my-align-dns pointer")
+					.append(textfield.addClass("col lead my-align-dns pointer dns-top")
 						.text(currentDnsData[u])
 					)
 					.append($("<div>").addClass("col text-right")
@@ -162,7 +162,7 @@
 			})
 		;
 
-		var inputSend = $("<button>").addClass("btn btn-primary btn-align")
+		var inputSend = $("<button>").addClass("btn btn-primary btn-align btn-add-dns")
 			.text("Add DNS")
 			.on("mousedown", dnsinput, function(event){
 				e.stopPropagation();
@@ -196,17 +196,17 @@
 				.append($("<span>").addClass("enum pointer")
 					.text("#"+currentDnsData.length)
 				)
-				.append($("<div>").addClass("col lead my-align pointer pad-top")
+				.append($("<div>").addClass("lead my-align pointer pad-top")
 					.append(dnsinput)
 				)
-				.append($("<div>").addClass("form-group")
+				.append($("<div>").addClass("form-group pad-top")
 					.append(selectSuffix
 						.append($("<option>").text(".cz"))
 						.append($("<option>").text(".sk"))
 						.append($("<option>").text(".com"))
 					)
 				)
-				.append($("<button>").addClass("btn")
+				.append($("<button>").addClass("btn btn-align btn-success btn-text btn-add-table btn-add-dns")
 					.text("Add DNS")
 					.on("mousedown", dnsinput, function() {
 						var e = jQuery.Event("keydown");

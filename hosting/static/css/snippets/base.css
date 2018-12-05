@@ -353,3 +353,11 @@ a.pathButton {
     padding-left: 5px;
     color: black;
 }
+
+.dns-top{
+    margin-top: 9px;
+}
+
+.btn-add-dns{
+    margin-left: 150px;
+}

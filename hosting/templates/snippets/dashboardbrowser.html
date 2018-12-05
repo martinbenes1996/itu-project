@@ -1,16 +1,16 @@
 <div class="inner-body">
-	<h1 class="center">Welcome to Your Page Dashboard</h1>
+	<h1 class="center">{{ page.name }} Dashboard</h1>
 
 	<div class="container lead center">
-		<p>
-			Here you are just one click away from all you need.
+		<p style="font-style: italic">
+			Just one click away from all you need.
 		</p>
 	</div>
 
-	<div class="space"></div>
+	<div class="small-space"></div>
 
 		<div class="chart">
-			<p class="lead justify"><i class="fas fa-chart-area"></i>&nbsp;&nbsp;Your Web Page Visit Graph</p>
+			<p class="lead justify"><i class="fas fa-chart-area"></i>&nbsp;&nbsp;Visit</p>
 			<div class="card mb-3">
 				<div class="card-body">
 					<canvas id="myAreaChart" width="100%" height="30"></canvas>
@@ -24,7 +24,7 @@
 	<div class="chart two-columns">
 
 		<div class="col-4">
-			<p class="lead"><i class="fas fa-chart-pie"></i>&nbsp;&nbsp;Pie Chart</p>
+			<p class="lead"><i class="fas fa-chart-pie"></i>&nbsp;&nbsp;Audience</p>
 			 <div class="card mb-3">
 				<div class="card-body">
 					<canvas id="myPieChart" width="100%" height="100"></canvas>
@@ -46,7 +46,7 @@
 		</div>
 
 		<div class="col-4">
-			<p class="lead"><i class="fas fa-envelope"></i>&nbsp;&nbsp;New Messages</p>
+			<p class="lead"><i class="fas fa-envelope"></i>&nbsp;&nbsp;Messages</p>
 			<ul class="my-list log">
 				<li>No New Messages</li>
 			</ul>
