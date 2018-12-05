@@ -32,6 +32,7 @@
 					<p class="lead">Just a little step from your own webpages. You are almost there. 
 					</p>
 					<div class="row">
+						{% if user %}
 						<div class="col-lg-6">
 							<span class="text-center" style="text-align:center">New here?</span>
 							<a href="register" class="col-12 btn btn-warning px-4 py-2 btn-sm">Register</a>
@@ -40,6 +41,14 @@
 							<span class="text-center" style="text-align:center">Have an account?</span>
 							<a href="login" class="col-12 btn btn-success px-4 py-2 btn-sm">Login</a>
 						</div>
+						{% else %}
+						<div class="col-lg-2"></div>
+						<div class="col-lg-8">
+							<span class="text-center" style="text-align:center">Hi {{user.first_name}}!</span>
+							<a href="dashboard" class="col-12 btn btn-warning px-4 py-2 btn-sm">Go to dashboard</a>
+						</div>
+						<div class="col-lg-2"></div>
+						{% endif %}
 					</div>
 
 				</div>

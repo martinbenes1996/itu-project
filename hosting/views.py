@@ -89,6 +89,12 @@ def index(request):
     #User.objects.all().delete()
     #u = User(name="Martin", surname="Beneš", email="martinbenes1996@gmail.com")
     #u.save()
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        pass
     if request.method == 'POST':
         pk = request.POST.get('pk')
         User.objects.get(pk=pk).delete()
