@@ -3,7 +3,7 @@
 
 	<div class="container lead center">
 		<p>
-			Click on your table or create a new one. After selecting a table you can edit the rows and columns.
+			Click on a table or create a new one. After selecting a table you can edit the rows and columns.
 		</p>
 	</div>
 
@@ -32,12 +32,12 @@
 	function refreshTableHtml() {
         $('#dbcontent').empty();
 		$('#dbcontent').removeClass('my-container').addClass('my-container-email');
-		$('#dbcontent').html(currentDbData);
-		$('#dbcontent').first().insertBefore($("<div>").addClass("row")
+		$('#dbcontent').append($("<div>").addClass("row")
 			.append($("<div>").addClass("col-lg-12 text-center")
 				.append($("<h3>").text("Table "+currentTableName+" content"))
 			)
 		);
+		$('#dbcontent').append($("<span>").html(currentDbData));
 		$("<span>").addClass("appenditem").insertBefore('.create');
 	}
 
