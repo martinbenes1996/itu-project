@@ -3,7 +3,7 @@
 
 	<div class="container lead center">
 		<p>
-			Check the list of all Domain Name Servers. Modify and delete them or add a new one.
+			Check the list of all domains your page is accessible through. Modify and delete them or add a new one.
 		</p>
 	</div>
 
@@ -80,7 +80,7 @@
 						.text(currentDnsData[u])
 					)
 					.append($("<div>").addClass("col text-right")
-						.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text")
+						.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text martin_edit")
 							.append($("<i>").addClass("fas fa-edit"))
 							.html("&nbsp;modify")
 							.on("mousedown", function(event){
@@ -92,6 +92,10 @@
 									.focusout(function(){
 										textfield.empty();
 										textfield.text(currentDnsData[u]);
+										inputdiver.find(".martin_submit").remove();
+										inputdiver.find(".martin_edit").show();
+										inputdiver.find(".martin_delete").show();
+										sendEditDns(txt, inp.val());
 									})
 									.on("keydown", function(e) {
 										e.stopPropagation();
@@ -102,10 +106,16 @@
 										}
 									})
 								);
+								$(this).hide();
+								$(this).next().hide();
+								$(this).parent().append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text martin_submit")
+									.append($("<i>").addClass("fas fa-edit"))
+									.html("&nbsp;submit")
+								);
 								setTimeout(function(){ inp.select().focus(); }, 10);
 							})
 						)
-						.append($("<button>").addClass("btn btn-align btn-warning btn-text")
+						.append($("<button>").addClass("btn btn-align btn-warning btn-text martin_delete")
 							.append($("<i>").addClass("fas fa-minus-circle"))
 							.html("&nbsp;delete")
 							.click(currentDnsData[u], function(event){ 
@@ -164,7 +174,7 @@
 		;
 
 		var inputSend = $("<button>").addClass("btn btn-primary btn-align btn-add-dns")
-			.text("Add DNS")
+			.text("Submit")
 			.on("mousedown", dnsinput, function(event){
 				e.stopPropagation();
 				var domain = $("#dnsSuffixSelect option:selected").text();
@@ -209,7 +219,7 @@
 					)
 				)
 				.append($("<button>").addClass("btn btn-align btn-success btn-text btn-add-table btn-add-dns")
-					.text("Add DNS")
+					.text("Submit")
 					.on("mousedown", dnsinput, function() {
 						var e = jQuery.Event("keydown");
 						e.which = 13;

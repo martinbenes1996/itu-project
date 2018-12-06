@@ -92,7 +92,7 @@
 					)
 					.append(mailbox)
 					.append($("<div>").addClass("col text-right")
-						.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text")
+						.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text martin_edit")
 							.append($("<i>").addClass("fas fa-edit"))
 							.html("&nbsp;modify")
 							.on("mousedown", function(event) {
@@ -100,21 +100,43 @@
 								mailbox.empty();
 								mailbox.append(editmail
 									.attr({"type":"text", "value": txt})
+									.focusout(function(){
+										mailbox.empty();
+										mailbox.text(currentEmailsData[i]);
+										mailbox.find(".martin_submit").remove();
+										mailbox.find(".martin_edit").show();
+										mailbox.find(".martin_delete").show();
+										sendEditDns(txt, $(this).val());
+									})
 									.on("keydown", function(e){
 										e.stopPropagation();
 										if(e.which == 13) {
 											if(isValidEmailAddress(this.value)) {
 												sendEditEmail(txt, this.value);
+											} else {
+												alert("Invalid email!");
 											}
 										} else if(e.which == 27) {
 											requestEmailsData();
 										}
 									})
 								);
+								$(this).hide();
+								$(this).next().hide();
+								$(this).parent().append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text martin_submit")
+									.append($("<i>").addClass("fas fa-edit"))
+									.html("&nbsp;submit")
+									.on("mousedown", function(e){
+										e.stopPropagation();
+										var e = jQuery.Event("keydown");
+										e.which = 13;
+										editmail.trigger(e);
+									})
+								);
 								setTimeout(function(){ editmail.select().focus(); }, 10);
 							})
 						)
-						.append($("<button>").addClass("btn btn-align btn-warning btn-text")
+						.append($("<button>").addClass("btn btn-align btn-warning btn-text martin_delete")
 							.append($("<i>").addClass("fas fa-minus-circle"))
 							.html("&nbsp;delete")
 							.click(currentEmailsData[i], function(event){ sendDeleteEmail(event.data); })
@@ -164,7 +186,7 @@
 			})
 		;
 		var inputSend = $("<button>").addClass("btn btn-primary btn-align btn-add-dns")
-			.text("Add email")
+			.text("Submit")
 			.on("mousedown", emailinput, function(event){
 					alert(event.data.value)
 					if(isValidEmailAddress(event.data.value)) {
@@ -182,7 +204,7 @@
 					.append(emailinput)
 				)
 				.append($("<button>").addClass("btn btn-align btn-success btn-text btn-add-table btn-add-dns")
-					.text("Add email")
+					.text("Submit")
 					.on("mousedown", emailinput, function() {
 						var e = jQuery.Event("keydown");
 						e.which = 13;

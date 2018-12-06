@@ -32,7 +32,7 @@
 					<p class="lead">Create a new account or <a href="{% url 'login' %}">login</a>.</p>
 
 					<div>
-						<form method="post" action="">{% csrf_token %}
+						<form method="post" action="/register/">{% csrf_token %}
 
 							<div class="form-group row">
 								<div class="col-4">
@@ -61,7 +61,7 @@
 								</div>
 								<div class="col-8">
 									<input name="email" value="{{ email }}" class="form-control" type="email"
-												 placeholder="johny.bart@example.com">
+												 placeholder="johny.bart@example.com" autocomplete="off" value="" />
 									<div class="form-control-feedback error-text">{{ message }}</div>
 								</div>
 							</div>
@@ -71,7 +71,7 @@
 									<label for="smFormGroupInput" class="col-2 col-form-label">Password</label>
 								</div>
 								<div class="col-8">
-									<input class="form-control" type="password" id="password-input">
+									<input class="form-control" type="password" id="password-input" autocomplete="off" value="" />
 								</div>
 							</div>
 
@@ -80,7 +80,7 @@
 									<label for="smFormGroupInput" class="col-2 col-form-label">Password again</label>
 								</div>
 								<div class="col-8">
-									<input class="form-control" type="password" id="password-input">
+									<input class="form-control" type="password" id="password-input" autocomplete="off" value="" />
 								</div>
 							</div>
 
