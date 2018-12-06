@@ -52,38 +52,6 @@ def generateDatabase():
                   'rows': [['0', 'Granny Smith', 'green'], ['1', 'Moje jabko', 'red'],['2', 'Taiwanska namka', 'orange']],
                   'definition': [['id','i'],['jmeno','s'],['barva','s']]}
             ]
-    '''
-    return {
-        'name': 'databaze1',
-        'tables': {
-            'tabulka1': {
-                'columns': {
-                    'jmeno': 's',
-                    'prijmeni': 's',
-                    'stastne_cislo': 'i'
-                },
-                'data': [
-                    {'jmeno': 'matej', 'prijmeni': 'navratil', 'stastne_cislo': 666},
-                    {'jmeno': 'adolf', 'prijmeni': 'hitler', 'stastne_cislo': 13},
-                    {'jmeno': 'ondrej', 'prijmeni': 'polansky', 'stastne_cislo': 42},
-                    {'jmeno': 'martin', 'prijmeni': 'benes', 'stastne_cislo': 69}
-                ]
-            },
-            'tabulka2': {
-                'columns': {
-                    'carodej': 's',
-                    'kouzlo': 's'
-                },
-                'data': [
-                    {'carodej': 'kolovrat', 'kouzlo': 'abrakadabra'},
-                    {'carodej': 'uchomaz', 'kouzlo': 'ententyky'},
-                    {'carodej': 'lapiduch', 'kouzlo': 'popokatepetl'}
-                ]
-            }
-        }
-    }
-    '''
-
 
 def index(request):
     #User.objects.all().delete()
@@ -164,24 +132,29 @@ def info(request):
     return render(request, "info.html", {"authors": authors})
 
 def dashboard(request):
-    email = request.COOKIES.get('user')
     d = dict()
+    email = request.COOKIES.get('user')
+
     try:
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     else:
         d['page_list'] = models.Webpage.getWebpages(d['user'])
 
     return render(request, "dashboard.html", d)
 
 def pageboard(request):
-    email = request.COOKIES.get('user')
     d = dict()
+    email = request.COOKIES.get('user')
     try:
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     else:
         pass
     pageid = request.GET['id']
@@ -194,12 +167,14 @@ def enc(userPk, projName):
     return str(userPk)+"_"+str(projName)
 
 def createpage(request):
-    email = request.COOKIES.get('user')
     d = dict()
+    email = request.COOKIES.get('user')
     try:
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     else:
         if request.method == 'POST':
             d['name'] = request.POST['name']
@@ -221,12 +196,14 @@ def logout(request):
 
 @csrf_exempt
 def deletepage(request):
-    email = request.COOKIES.get('user')
     d = dict()
+    email = request.COOKIES.get('user')
     try:
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     else:
         if request.method == 'POST':
             project = request.POST['projname']
@@ -243,12 +220,14 @@ def deletepage(request):
 
 @csrf_exempt
 def renamepage(request):
-    email = request.COOKIES.get('user')
     d = dict()
+    email = request.COOKIES.get('user')
     try:
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     else:
         if request.method == 'POST':
             oldproject = request.POST['projname']
@@ -270,12 +249,14 @@ def renamepage(request):
 
 @csrf_exempt
 def getDirData(request):
-    email = request.COOKIES.get('user')
     d = dict()
+    email = request.COOKIES.get('user')
     try:
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         path = json.loads( request.POST['requestpath'] )
         project = request.POST['projname']
@@ -293,6 +274,8 @@ def createDir(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         path = json.loads( request.POST['requestpath'] )
@@ -317,6 +300,8 @@ def createFile(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         path = json.loads( request.POST['requestpath'] )
@@ -342,6 +327,8 @@ def renameFile(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         path = json.loads( request.POST['requestpath'] )
@@ -363,6 +350,8 @@ def deleteFile(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         path = json.loads( request.POST['requestpath'] )
@@ -382,6 +371,8 @@ def getTableNames(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         try:
@@ -399,6 +390,8 @@ def getDbData(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
@@ -427,19 +420,14 @@ def createTable(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
         # definition is a list of lists like this: [["nazev sloupce","datovy typ"],...]
         # je treba to tu nejak poskladat, musi to byt seznamy kvuli poradi zaznamu...
-        #definition = [["id","i"],["name","s"]]      # temporary definition
         definition = json.loads( request.POST['definition'] )
-
-        # odstran
-        #print(tablename, definition)
-        #print(getTableNames(request))
-        #return getTableNames(request)
-        # odstran
 
         try:
             XML.CreateTable(enc(d['user'].pk,projname), tablename, definition)
@@ -457,6 +445,8 @@ def modifyTable(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
@@ -477,6 +467,8 @@ def deleteTable(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
@@ -495,6 +487,8 @@ def editRow(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
@@ -522,6 +516,8 @@ def addRow(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
@@ -552,6 +548,8 @@ def deleteRow(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
@@ -572,6 +570,8 @@ def addColumn(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
@@ -592,6 +592,8 @@ def modifyColumn(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
@@ -611,6 +613,8 @@ def deleteColumn(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         tablename = request.POST['tablename']
@@ -630,6 +634,8 @@ def getUserData(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         try:
@@ -646,6 +652,8 @@ def addUser(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         username = request.POST['username']
@@ -665,6 +673,8 @@ def deleteUser(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         username = request.POST['username']
@@ -682,6 +692,8 @@ def renameUser(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         newusername = request.POST['newusername']
@@ -703,6 +715,8 @@ def getDnsData(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         try:
@@ -719,6 +733,8 @@ def addDns(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         dnsname = request.POST['dnsname']
@@ -738,6 +754,8 @@ def deleteDns(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         dnsname = request.POST['dnsname']
@@ -755,6 +773,8 @@ def renameDns(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         newdnsname = request.POST['newdnsname']
@@ -776,6 +796,8 @@ def getEmailData(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         try:
@@ -792,6 +814,8 @@ def addEmail(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         emailname = request.POST['emailname']
@@ -811,6 +835,8 @@ def deleteEmail(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         emailname = request.POST['emailname']
@@ -828,6 +854,8 @@ def renameEmail(request):
         d['user'] = User.objects.get(email=email)
     except:
         d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
     if request.method == 'POST':
         projname = request.POST['projname']
         newemailname = request.POST['newemailname']
