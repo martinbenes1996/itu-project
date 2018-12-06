@@ -10,7 +10,7 @@
 	<div id="pathbar"></div>
 
 	<div class="form-group delete center">
-		<form action="/deletepage/" method="post">
+		<form action="/deletepage/" method="post" onsubmit="return confirm('Are you sure?');">
 			<input type="hidden" name="projname" value="{{ page.name }}"/>
 			<button type="submit" class="btn btn-bg btn-danger btn-create btn-huge">
 				<i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Delete Page

@@ -16,6 +16,11 @@
  </div>
 
 <script>
+	function isValidEmailAddress(emailAddress) {
+		var pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
+		return pattern.test(emailAddress);
+	};
+
 	var currentEmailsData;
 	function refreshEmailsData() {
         generateEmails();
@@ -98,7 +103,9 @@
 									.on("keydown", function(e){
 										e.stopPropagation();
 										if(e.which == 13) {
-											sendEditEmail(txt, this.value);
+											if(isValidEmailAddress(this.value)) {
+												sendEditEmail(txt, this.value);
+											}
 										} else if(e.which == 27) {
 											requestEmailsData();
 										}
@@ -137,11 +144,13 @@
 	function newEmailLine() {
 		$("#emailadder").empty();
 		var emailinput = $("<input>").addClass("form-control")
-			.attr({"type":"text", "value":"new@email.com"})
+			.attr({"type":"text", "placeholder":"new@email.com"})
 			.on("keydown", function(e){
 				if(e.which == 13) {
 					e.stopPropagation();
-					sendNewEmail(this.value);
+					if(isValidEmailAddress(this.value)) {
+						sendNewEmail(this.value);
+					}
 					return;
 				} else if(e.which == 27) {
 					e.stopPropagation();
@@ -150,7 +159,6 @@
 			})
 			.focusout(function(e){
 				e.stopPropagation();
-				//sendNewEmail(this.value);
 				requestEmailsData();
 				return;
 			})
@@ -159,14 +167,16 @@
 			.text("Add email")
 			.on("mousedown", emailinput, function(event){
 					alert(event.data.value)
-					sendNewEmail(event.data.value);
+					if(isValidEmailAddress(event.data.value)) {
+						sendNewEmail(event.data.value);
+					}
 			})
 		;
 
 		$("#emailadder").append($("<div>").addClass("dir-bar my-border-users no-margin")
 			.append($("<div>").addClass("row dir-bar no-margin")
 				.append($("<span>").addClass("enum pointer")
-					.text("#"+currentEmailsData.length)
+					.text("#"+(currentEmailsData.length+1))
 				)
 				.append($("<div>").addClass("lead my-align pointer pad-top")
 					.append(emailinput)

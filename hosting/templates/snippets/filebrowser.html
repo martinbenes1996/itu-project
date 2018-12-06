@@ -172,7 +172,9 @@
 					// right column
 					.append($('<div>').addClass('col text-right')
 						.append($('<button>').addClass('btn btn-align rename-align btn-secondary btn-text')
-							.text('rename')
+                            .text('rename')
+                            .attr({"data-toggle":"tooltip", "data-html":"true",
+                            "title":"Rename file / directory"})
 							.click({k: key, v: val}, function (event) {
                                 event.stopPropagation();
                                 var d = $("#"+val['name']+" >div.showEditForm");
@@ -233,7 +235,6 @@
             .attr({"type":"text"})
             .on("keydown", this, function(e){
 				if(e.which == 13) {
-                    alert("enter");
                     e.stopPropagation();
                     sendCreateFolder(currentDirData.path, $(this).val());
 					return;

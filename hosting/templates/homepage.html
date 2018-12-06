@@ -21,7 +21,9 @@
 
 				<!-- FLAMINGO IMG -->
 				<div class="col-lg-7 pr-lg-5 mb-5 mb-lg-0">
-					<img src="{% static 'img/flamingo.png' %}" alt="Image placeholder" class="img-fluid" width="75%">
+					<a href="{% url '' %}">
+						<img src="{% static 'img/flamingo.png' %}" alt="Image placeholder" class="img-fluid" width="75%">
+					</a>		
 				</div>
 
 				<!-- RIGHT TEXT -->
@@ -32,7 +34,20 @@
 					<p class="lead">Just a little step from your own webpages. You are almost there. 
 					</p>
 					<div class="row">
-						{% if user %}
+						{% if logged %}
+						<div class="col-lg-2"></div>
+						<div class="col-lg-8">
+							<span class="text-center" style="text-align:center">
+								Welcome back, {{ user.first_name }}!
+							</span>
+							<a href="{% url 'dashboard' %}" class="col-12 btn btn-primary px-4 py-2 btn-lg" style="margin-top:10px">Go to dashboard</a>
+							<a href="{% url 'logout' %}" class="col-12 btn btn-info px-4 py-2 btn-lg" style="margin-top:10px">Logout</a>
+							<div class="row">
+								<div class="col-lg-12 text-center" style="margin-top:10px"><a href="{% url 'login' %}">Login as somebody else</a></div>
+							</div>
+						</div>
+						<div class="col-lg-2"></div>
+						{% else %}
 						<div class="col-lg-6">
 							<span class="text-center" style="text-align:center">New here?</span>
 							<a href="register" class="col-12 btn btn-warning px-4 py-2 btn-sm">Register</a>
@@ -41,13 +56,6 @@
 							<span class="text-center" style="text-align:center">Have an account?</span>
 							<a href="login" class="col-12 btn btn-success px-4 py-2 btn-sm">Login</a>
 						</div>
-						{% else %}
-						<div class="col-lg-2"></div>
-						<div class="col-lg-8">
-							<span class="text-center" style="text-align:center">Hi {{user.first_name}}!</span>
-							<a href="dashboard" class="col-12 btn btn-warning px-4 py-2 btn-sm">Go to dashboard</a>
-						</div>
-						<div class="col-lg-2"></div>
 						{% endif %}
 					</div>
 

@@ -81,7 +81,8 @@
 		<div class="col-lg-10">
 		<div class="inner-body" id="scroller">
 			<div class="inner-body">
-				<h1 class="center">Dashboard</h1>
+				<h1 class="center">Projects dashboard</h1>
+				<p class="lead site-subheading mb-4 site-animate text-center">Manage all your webpages</p>
 
 				<form method="post" action="/createpage/">{% csrf_token %}
 					<div class="create-page">
@@ -187,6 +188,23 @@
 
 
 			</div>
+			<form method="post" action="/createpage/">{% csrf_token %}
+				<div class="create-page" >
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8">
+						<div class="form-group row">
+							<div class="col-lg-10" style="margin-top: 7px">
+								<input class="form-control" name="name"
+									style="height: 40px" placeholder="What about a new page?" autocomplete="off" />
+							</div>
+							<div class="col-lg-2">
+								<button type="submit" class="btn .btn-sm btn-dark btn-create" style="height: 40px">Create Page</button>
+							</div>	
+						</div>
+					</div>
+					<div class="col-lg-2"></div>
+				</div>
+			</form>
 			<div class="big-space"></div>
 
 

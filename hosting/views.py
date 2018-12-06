@@ -93,14 +93,15 @@ def index(request):
     d = dict()
     try:
         d['user'] = User.objects.get(email=email)
-    except:
-        pass
+        d['logged'] = True
+    except ObjectDoesNotExist:
+        d['logged'] = False
     if request.method == 'POST':
         pk = request.POST.get('pk')
         User.objects.get(pk=pk).delete()
         return HttpResponseRedirect('')
-    authors = User.objects.all()
-    return render(request, "homepage.html", {"authors": authors})
+    d['authors'] = User.objects.all()
+    return render(request, "homepage.html", d)
 
 def register(request):
     if request.method == 'POST':
@@ -125,6 +126,7 @@ def register(request):
 
         if 'message' in d:
             return render(request, "register.html", d)
+
 
 
         user = User.objects.create_user(d['email'], password='')
