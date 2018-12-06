@@ -80,7 +80,7 @@
 						.text(currentDnsData[u])
 					)
 					.append($("<div>").addClass("col text-right")
-						.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text martin_edit")
+						.append($("<button>").addClass("btn btn-align rename-align btn-warning btn-text martin_edit")
 							.append($("<i>").addClass("fas fa-edit"))
 							.html("&nbsp;modify")
 							.on("mousedown", function(event){
@@ -108,14 +108,14 @@
 								);
 								$(this).hide();
 								$(this).next().hide();
-								$(this).parent().append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text martin_submit")
+								$(this).parent().append($("<button>").addClass("btn btn-align rename-align btn-success btn-text martin_submit")
 									.append($("<i>").addClass("fas fa-edit"))
 									.html("&nbsp;submit")
 								);
 								setTimeout(function(){ inp.select().focus(); }, 10);
 							})
 						)
-						.append($("<button>").addClass("btn btn-align btn-warning btn-text martin_delete")
+						.append($("<button>").addClass("btn btn-align btn-danger btn-text martin_delete")
 							.append($("<i>").addClass("fas fa-minus-circle"))
 							.html("&nbsp;delete")
 							.click(currentDnsData[u], function(event){ 

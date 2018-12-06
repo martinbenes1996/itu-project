@@ -35,6 +35,9 @@
 		$('#dbcontent').append($("<div>").addClass("row")
 			.append($("<div>").addClass("col-lg-12 text-center")
 				.append($("<h3>").text("Table "+currentTableName+" content"))
+				.append($("<span>").addClass("font-italic")
+					.text("Change a column name: click it, type it, hit enter.")
+				)	
 			)
 		);
 		$('#dbcontent').append($("<span>").html(currentDbData));
@@ -198,16 +201,11 @@
 					.append($("<span>").addClass("columns").text(tab.columncount-1))
 					.append($("<span>").addClass("rows").text(tab.rowcount))
 					// editovat tabulku
-					.append($("<button>").addClass("btn btn-align rename-align btn-secondary btn-text btn-table-edit-main")
+					.append($("<button>").addClass("btn btn-align rename-align btn-warning btn-text btn-table-edit-main")
 						.append($("<i>").addClass("fas fa-edit"))
-						//.prop("disabled", true)
-						.click(tab, function(e) {
-							e.stopPropagation();
-							alert("Edit table not implemented");
-						})
 					)
 					// smazat tabulku
-					.append($("<button>").addClass("btn btn-align btn-warning btn-text btn-table btn-table-del-main")
+					.append($("<button>").addClass("btn btn-align btn-danger btn-text btn-table btn-table-del-main")
 						.append($("<i>").addClass("fas fa-minus-circle"))
 						.click(tab.name, function(e){
 							e.stopPropagation();

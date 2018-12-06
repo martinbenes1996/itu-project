@@ -3,7 +3,7 @@
 	<h1 class="center">FTP</h1>
 
 	<div class="container lead center">
-		<p>This is the right place, where you can manage your directories and files. Easily start by opening your root
+		<p>This is the right place, where you can manage your folders and files. Easily start by opening your root
 			directory. You can create new folders, upload new files or rename them as quick as deleting them.</p>
 	</div>
 
@@ -171,38 +171,54 @@
 					)
 					// right column
 					.append($('<div>').addClass('col text-right')
-						.append($('<button>').addClass('btn btn-align rename-align btn-secondary btn-text')
+						.append($('<button>').addClass('btn btn-align rename-align btn-warning btn-text martin_edit')
                             .text('rename')
                             .attr({"data-toggle":"tooltip", "data-html":"true",
                             "title":"Rename file / directory"})
 							.click({k: key, v: val}, function (event) {
                                 event.stopPropagation();
+                                var txt = event.data.k;
                                 var d = $("#"+val['name']+" >div.showEditForm");
                                 d.empty();
                                 var i = $("<input>").addClass("form-control")
-                                    .attr({"type":"text", "value":event.data.k})
-                                    .click(function(event){ event.stopPropagation(); })
-                                    .on("keydown", function(e){
-                                        if(e.which == 13) {
-                                            e.stopPropagation();
-                                            sendRenameFile(currentDirData['path'], key, this.value);
-                                            return;
-                                        } else if(e.which == 27) {
-                                            e.stopPropagation();
-                                            requestFileData(currentDirData['path']);
-                                        }
-                                    })
+                                    .attr({"type": "text", "value": txt})
                                     .focusout(function(e){
                                         e.stopPropagation();
-                                        requestFileData(currentDirData['path']);
-                                        return;
+                                        d.empty();
+                                        d.text(txt);
+                                        $("#"+val['name']).find(".martin_edit").show();
+                                        $("#"+val['name']).find(".martin_delete").show();
+                                        $("#"+val['name']).find('.martin_submit').remove();
+                                        sendRenameFile(currentDirData['path'], key, this.value);
+                                    })
+                                    .on("mousedown", function(e){ e.stopPropagation(); })
+                                    .click(function(e){
+                                        e.stopPropagation();
+                                        if(e.which == 13) {
+                                            sendRenameFile(currentDirData['path'], key, this.value);
+                                        } else if(e.which == 27) {
+                                            requestFileData(currentDirData['path']);
+                                        }
                                     })
                                 ;
                                 d.append(i);
                                 i.focus().select();
+
+                                $("#"+val['name']).find(".martin_edit").hide();
+                                $("#"+val['name']).find(".martin_delete").hide();
+                                $("#"+val['name']).children().last().append($("<button>").addClass("btn btn-align rename-align btn-success btn-text martin_submit")
+                                    .append($("<i>").addClass("fas fa-edit"))
+                                    .html("&nbsp;submit")
+                                    .on("mousedown", function(e){
+										e.stopPropagation();
+										var e = jQuery.Event("keydown");
+										e.which = 13;
+										$("#"+val['name']).find(".martin_edit").trigger(e);
+									})
+                                );
                             })
 						)
-						.append($('<button>').addClass('btn btn-align btn-warning btn-text')
+						.append($('<button>').addClass('btn btn-align btn-danger btn-text martin_delete')
 							.text('delete')
 							.click({k: key, v: val}, function (event) {
                                 event.stopPropagation();
@@ -232,7 +248,7 @@
         });
         
         var i = $('<input>').addClass('form-control input-ftp')
-            .attr({"type":"text"})
+            .attr({"type":"text", "placeholder":"Folder name"})
             .on("keydown", this, function(e){
 				if(e.which == 13) {
                     e.stopPropagation();
@@ -274,7 +290,7 @@
                     .append(filereader)
 										.append($('<input>')
 												.addClass('input-file-button btn btn-primary btn-align-ftp btn-text')
-												.attr({"type":"button","onclick":"document.getElementById('input-file').click()", "value":"Browse..."})
+												.attr({"type":"button","onclick":"document.getElementById('input-file').click()", "value":"Upload file"})
 										)
                 )
                 
