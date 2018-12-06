@@ -131,7 +131,7 @@ def register(request):
         user.first_name = d['name']
         user.last_name = d['surname']
         user.save()
-        return redirect('')
+        return redirect('login')
     else:
         return render(request, "register.html", {})
 

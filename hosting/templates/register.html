@@ -32,7 +32,7 @@
 					<p class="lead">Create a new account or <a href="{% url 'login' %}">login</a>.</p>
 
 					<div>
-						<form method="post" action="">{% csrf_token %}
+						<form method="post" action="/register/">{% csrf_token %}
 
 							<div class="form-group row">
 								<div class="col-4">

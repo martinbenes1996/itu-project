@@ -16,7 +16,7 @@
 	border-radius: 0;
 	margin-bottom: 0;">
 
-		<img src="{% static 'img/icon.png' %}/" class="flamingo-icon">
+		<img src="{% static 'img/icon.png' %}" class="flamingo-icon">
 		<a class="navbar-brand mr-1" href="/">GoFlamingo</a>
 
 		<ul class="navbar-nav ml-auto mr-md-0">
@@ -71,7 +71,7 @@
 			<!-- CREATE PAGE -->
 			<div class="form-group row logout">
 				<form method="post" action="/createpage/">{% csrf_token %}
-					<input class="form-control" name="name" placeholder="What about a new page?" autocomplete="off">
+					<input class="form-control" name="name" placeholder="Page name" autocomplete="off">
 					<button type="submit" class="btn .btn-sm btn-success btn-create">Create Page</button>
 				</form>
 			</div>
@@ -91,7 +91,7 @@
 							<div class="form-group row" style="margin-top: 50px">
 								<div class="col-lg-10" style="margin-top: 7px">
 									<input class="form-control" name="name"
-										style="height: 40px" placeholder="What about a new page?" autocomplete="off" />
+										style="height: 40px" placeholder="Page name" autocomplete="off" />
 								</div>
 								<div class="col-lg-2">
 									<button type="submit" class="btn .btn-sm btn-dark btn-create" style="height: 40px">Create Page</button>
@@ -195,7 +195,7 @@
 						<div class="form-group row">
 							<div class="col-lg-10" style="margin-top: 7px">
 								<input class="form-control" name="name"
-									style="height: 40px" placeholder="What about a new page?" autocomplete="off" />
+									style="height: 40px" placeholder="Page name" autocomplete="off" />
 							</div>
 							<div class="col-lg-2">
 								<button type="submit" class="btn .btn-sm btn-dark btn-create" style="height: 40px">Create Page</button>
