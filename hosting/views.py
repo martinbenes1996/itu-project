@@ -86,9 +86,6 @@ def generateDatabase():
 
 
 def index(request):
-    #User.objects.all().delete()
-    #u = User(name="Martin", surname="Beneš", email="martinbenes1996@gmail.com")
-    #u.save()
     email = request.COOKIES.get('user')
     d = dict()
     try:
@@ -410,11 +407,6 @@ def getDbData(request):
         xsl = ET.parse("trnsfrm.xsl")                       # load raw xsl
         transform = ET.XSLT(xsl)                            # create transform formula from xsl
         result = transform(xml)                             # transform xml
-
-        # a dump file for debug, later remove
-        testfile = open("testhtml.html","w")                # save into a file (temporary)
-        testfile.write(str(result))
-        testfile.close()
 
         jsonresponse = json.dumps({'html': str(result)})                          # send via json as string
         return HttpResponse(jsonresponse, content_type='application/json')
