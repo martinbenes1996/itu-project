@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load static %}
+
+    <div class="container" style="margin-top: 100px">
+        <div class="row">
+            <div class="col text-center" id="page">
+                {% if first %}
+                <img src="{% static 'img/flamingo.png' %}" alt="Image placeholder" class="img-fluid" width="15%">
+                <h1>Welcome to GoFlamingo</h1>
+                <h3>Webhosting service</h3>
+
+                <div style="margin-top: 100px"><h3>Let's create your first webpage.</h3></div>
+                <i style="margin-top: 100px">Type the name of the webpage.</i>
+                <form method="post" action="/settleProject/">{% csrf_token %}
+					<input class="form-control" name="name" placeholder="Café Louvre Webpage" autocomplete="off" required />
+					<button type="submit" class="btn btn-lg btn-success btn-create">Create Page</button>
+                </form>
+                {% elif second %}
+                <h2>DNS</h2>
+                <p>
+                    Public names for your page.
+                </p>
+                <div>
+                <img src="{% static 'img/tutorial/dns_tutorial.png' %}" alt="Image placeholder" style="width: 70%; margin-top: 50px" class="img-fluid">
+                </div>
+                <button class="btn btn-lg btn-primary">Next</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    function showCascade(a) {
+        if(a.length == 0) { return; }
+        setTimeout( function(){
+            a.first().fadeIn(500);
+            showCascade(a.slice(1));
+        }, 500);
+    }
+    
+    function showDiv() {
+        showCascade($("#page").children());
+    }
+
+    function toSecond() {
+        $.each($("#page").children(), function(d,v){
+            $(v).fadeOut(200);
+        });
+        setTimeout(function(){
+            $('#page').children().eq(0).text("FTP");
+            $('#page').children().eq(1).html("Your files and folders.")
+            $('#page').children().eq(2).children().first().attr('src', "{% static 'img/tutorial/ftp_tutorial.png' %}");
+        }, 200);
+        $('#page').children().eq(3).click(function(){ toThird(); });
+        showDiv();
+    }
+
+    function toThird() {
+        $.each($("#page").children(), function(d,v){
+            $(v).fadeOut(200);
+        });
+        setTimeout(function(){
+            $('#page').children().eq(0).text("Database");
+            $('#page').children().eq(1).html("Tables and its content.")
+            $('#page').children().eq(2).children().first().attr('src', "{% static 'img/tutorial/database_tutorial.png' %}");
+        }, 200);
+        $('#page').children().eq(3).click(function(){ toFourth(); });
+        showDiv();
+    }
+
+    function toFourth() {
+        $.each($("#page").children(), function(d,v){
+            $(v).fadeOut(200);
+        });
+        setTimeout(function(){
+            $('#page').children().eq(0).text("Email");
+            $('#page').children().eq(1).html("Email addresses assigned to the project.")
+            $('#page').children().eq(2).children().first().attr('src', "{% static 'img/tutorial/email_tutorial.png' %}");
+        }, 200);
+        $('#page').children().eq(3).click(function(){ toFifth(); });
+        showDiv();
+    }
+
+    function toFifth() {
+        $.each($("#page").children(), function(d,v){
+            $(v).fadeOut(200);
+        });
+        setTimeout(function(){
+            $('#page').children().eq(0).text("Users");
+            $('#page').children().eq(1).html("List of registered users.")
+            $('#page').children().eq(2).children().first().attr('src', "{% static 'img/tutorial/users_tutorial.png' %}");
+        }, 200);
+        $('#page').children().eq(3).click(function(){ toDashboard(); });
+        showDiv();
+    }
+
+    function toDashboard() {
+        $.each($("#page").children(), function(d,v){
+            $(v).fadeOut(200);
+        });
+        
+
+        setTimeout(function(){
+            $('#page').hide();
+            $('#page').empty();
+            $('#page').append($("<h1>").text("That's it!"));
+            $('#page').append($("<a>").attr('href',"{% url 'pageboard'%}?id={{page.pk}}")
+                .append($('<button>').addClass('btn btn-lg btn-primary')
+                    .text("Finish!")
+                    .click( function(){
+                    })
+                )
+            );
+            $.each($("#page").children(), function(d,v){
+                $(v).hide();
+            });
+            $('#page').show();
+            showDiv();
+        }, 200);
+    }
+
+    $(document).ready(function () {
+        $('#page').children().eq(3).click(function(){ toSecond(); });
+        showDiv();
+    });
+
+    $.each($("#page").children(), function(d,v){
+        $(v).hide();
+    });
+    
+</script>
+
+
+
+{% endblock %}

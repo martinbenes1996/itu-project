@@ -143,6 +143,17 @@ def dashboard(request):
 
     return render(request, "dashboard.html", d)
 
+
+def showTutorial(request):
+    email = request.COOKIES.get('user')
+    d = dict()
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        return redirect('')
+    d['first'] = True
+    return render(request, "tutorial.html", d)
+
 def pageboard(request):
     d = dict()
     email = request.COOKIES.get('user')
@@ -185,6 +196,30 @@ def createpage(request):
             w.save()
 
     return redirect('dashboard')
+
+def createpageT(request):
+    d = dict()
+    email = request.COOKIES.get('user')
+    try:
+        d['user'] = User.objects.get(email=email)
+    except:
+        d['message'] = 'Unknown user.'
+        d['redirect'] = "/"                         # redirect to main page
+        return redirect("/")
+    if request.method == 'POST':
+        d['name'] = request.POST['name']
+        # second argument is owner, default=unknown
+        try:
+            XML.CreateProject( enc(d['user'].pk,d['name']) )
+        except:
+            d['message'] = 'Project already exists.'
+            return redirect('dashboard')
+        w = models.Webpage(name=d['name'], user=d['user'])
+        w.save()
+
+    d['second'] = True
+    d['page'] = models.Webpage.objects.get(name=d['name'], user=d['user'])
+    return render(request, "tutorial.html", d)
 
 def logout(request):
     response = redirect('')
@@ -261,6 +296,7 @@ def getDirData(request):
             jsonresponse = json.dumps(XML.GetInfoFromFiletree(enc(d['user'].pk,project), path))
         except XML.DoesNotExistError:
             d['message'] = 'Directory with given path does not exist.'
+            return HttpResponse(json.dumps(d), content_type='application/json')
         return HttpResponse(jsonresponse, content_type='application/json')
 
 @csrf_exempt

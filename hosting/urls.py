@@ -57,7 +57,9 @@ urlpatterns = [
     path('addEmail/', views.addEmail, name='addemail'),
     path('deleteEmail/', views.deleteEmail, name='deleteemail'),
     path('renameEmail/', views.renameEmail, name='renameemail'),
-    path('getEmailData/', views.getEmailData, name='emaildata')
+    path('getEmailData/', views.getEmailData, name='emaildata'),
+    path('tutorial/', views.showTutorial, name='tutorial'),
+    path('settleProject/', views.createpageT, name='createpageT')
     # here add new pages
     # path(keyword, views.function)
 ]
