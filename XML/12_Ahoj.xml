@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project name="12_Ahoj"><FTP><home date="2018-12-10" owner="unknown" size="0" type="d" /></FTP><DNS /><database><table tablename="Tabulka"><definition length="4"><def datatype="s">id</def><def datatype="s">Jméno</def><def datatype="s">Příjmení</def><def datatype="s">col3</def></definition><rows><row><record>0</record><record>Martin</record><record>Benes</record><record>1996</record></row></rows></table></database><emails /><users /></project>
